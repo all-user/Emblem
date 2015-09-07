@@ -31,14 +31,14 @@ const _BASE_DOM = (() => {
 /*
  * Parts className table.
  */
-const _G_R0   = "part arc gold rotate0 require-rotate";
-const _G_R90  = "part arc gold rotate90 require-rotate";
-const _G_R180 = "part arc gold rotate180 require-rotate";
-const _G_R270 = "part arc gold rotate270 require-rotate";
-const _S_R0   = "part arc silver rotate0 require-rotate";
-const _S_R90  = "part arc silver rotate90 require-rotate";
-const _S_R180 = "part arc silver rotate180 require-rotate";
-const _S_R270 = "part arc silver rotate270 require-rotate";
+const _G_R0   = "part arc gold rotate0 rotate-default";
+const _G_R90  = "part arc gold rotate90 rotate-default";
+const _G_R180 = "part arc gold rotate180 rotate-default";
+const _G_R270 = "part arc gold rotate270 rotate-default";
+const _S_R0   = "part arc silver rotate0 rotate-default";
+const _S_R90  = "part arc silver rotate90 rotate-default";
+const _S_R180 = "part arc silver rotate180 rotate-default";
+const _S_R270 = "part arc silver rotate270 rotate-default";
 const _P1     = "part pole1 gray";
 const _P2_V   = "part pole2_v gray";
 const _P2_H   = "part pole2_h gray";

@@ -254,7 +254,7 @@ function _changeStyle(c) { // @bind this
             pos = `pos_${ idx % 3 }_${ idx / 3 | 0 }`;
         }
         node.className = `${ specifyPos ? formation[0] : formation } ${ pos }`;
-        if (node.classList.contains('arc')) { return; }
+        if (node.classList.contains('rotate-dafault')) { return; }
         node.classList.add(_ROTATE_TABLE[Math.random() * 4 | 0]);
     });
 }
