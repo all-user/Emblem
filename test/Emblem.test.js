@@ -80,7 +80,7 @@ describe('Emblem test', () => {
                     done();
                 });
 
-                describe('emblem2020.optionsにオブジェクトを渡して設定', () => {
+                describe('emblem.optionsにオブジェクトを渡して設定', () => {
                     let opt = {
                         size:        800,
                         displayTime: 3000,
@@ -166,7 +166,7 @@ describe('Emblem test', () => {
                     done();
                 });
 
-                describe('emblem2020.optionsにオブジェクトを渡して設定', () => {
+                describe('emblem.optionsにオブジェクトを渡して設定', () => {
                     let opt = {
                         size:        800,
                         displayTime: 3000,
@@ -201,9 +201,9 @@ describe('Emblem test', () => {
 
     describe('DOM', () => {
         let testField = document.createElement('div');
-        testField.id = 'emblem2020-test-field';
+        testField.id = 'emblem-test-field';
         appendCSS(`
-            #emblem2020-test-field {
+            #emblem-test-field {
               width:    100%;
               display:  block;
               position: relative;
@@ -212,7 +212,7 @@ describe('Emblem test', () => {
             }
         `);
         appendCSS(`
-            #emblem2020-test-field .olympic-emblem {
+            #emblem-test-field .olympic-emblem {
               margin: ${ EMBLEM_SIZE / 3 }px;
               float: left;
             }

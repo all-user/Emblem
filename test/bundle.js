@@ -19372,6 +19372,9 @@ var _Object$keys = require('babel-runtime/core-js/object/keys')['default'];
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
+
+var _patternsOlympic2020IndexJs = require('./patterns/Olympic2020/index.js');
+
 var _CHAR_PROP = _Symbol();
 var _DOM_PROP = _Symbol();
 var _DISPLAY_TIME_PROP = _Symbol();
@@ -19429,7 +19432,7 @@ var Emblem = (function () {
         key: 'to',
         value: function to(c) {
             var _c = c && c.toLowerCase && c.toLowerCase();
-            if (!_formationTable[_c]) {
+            if (!_patternsOlympic2020IndexJs._formationTable[_c]) {
                 return false;
             }
             if (this[_CHAR_PROP] === _c) {
@@ -19670,7 +19673,7 @@ var Emblem = (function () {
     }], [{
         key: 'allValidChars',
         get: function get() {
-            return _Object$keys(_formationTable);
+            return _Object$keys(_patternsOlympic2020IndexJs._formationTable);
         }
     }]);
 
@@ -19678,14 +19681,14 @@ var Emblem = (function () {
 })();
 
 function _createDom() {
-    return _BASE_DOM.cloneNode(true);
+    return _patternsOlympic2020IndexJs._BASE_DOM.cloneNode(true);
 }
 
 function _changeStyle(c) {
     // @bind this
     var oldC = this[_CHAR_PROP];
-    var oldFormation = _formationTable[oldC];
-    var newFormation = _formationTable[c];
+    var oldFormation = _patternsOlympic2020IndexJs._formationTable[oldC];
+    var newFormation = _patternsOlympic2020IndexJs._formationTable[c];
     if (!newFormation) {
         return;
     }
@@ -19693,23 +19696,35 @@ function _changeStyle(c) {
     if (oldC) {
         diffFormation = newFormation.map(function (newStr, idx) {
             var oldStr = oldFormation[idx];
-            return newStr !== oldStr ? newStr : false;
+            var newStrIsArr = Array.isArray(newStr);
+            var oldStrIsArr = Array.isArray(oldStr);
+            if (newStrIsArr && oldStrIsArr) {
+                var strIsNotEq = newStr[0] !== oldStr[0];
+                var posIsNotEq = newStr[1] !== oldStr[1];
+                return strIsNotEq || posIsNotEq ? newStr : false;
+            } else {
+                if (newStrIsArr || oldStrIsArr) {
+                    return newStr;
+                }
+                return newStr !== oldStr ? newStr : false;
+            }
         });
     } else {
         diffFormation = newFormation;
     }
     [].forEach.call(this[_DOM_PROP].childNodes, function (node, idx) {
-        if (!diffFormation[idx]) {
+        var formation = diffFormation[idx];
+        var specifyPos = Array.isArray(formation);
+        if (!formation) {
             return;
         }
         var pos = undefined;
-        // fix for '/'
-        if (c === '/' && idx === 0) {
-            pos = 'pos_3_0';
+        if (specifyPos) {
+            pos = formation[1];
         } else {
             pos = 'pos_' + idx % 3 + '_' + (idx / 3 | 0);
         }
-        node.className = diffFormation[idx] + ' ' + pos;
+        node.className = (specifyPos ? formation[0] : formation) + ' ' + pos;
         if (node.classList.contains('arc')) {
             return;
         }
@@ -19721,7 +19736,7 @@ function _updateTransitionConfig() {
     var _this2 = this;
 
     // @bind this
-    var val = _TRANSITION_PROPS.reduce(function (str, prop, idx) {
+    var val = _patternsOlympic2020IndexJs._TRANSITION_PROPS.reduce(function (str, prop, idx) {
         return '' + str + (idx ? ',' : '') + ' ' + prop + ' ' + _this2[_DURATION_PROP] + 'ms ' + _this2[_EASING_PROP];
     }, '');
 
@@ -19737,117 +19752,12 @@ function _updateTransitionConfig() {
     }
 }
 
-/*
- * DOM in instance of Emblem.
- */
-var _BASE_DOM = (function () {
-    var wrapper = document.createElement('div');
-    var part = document.createElement('div');
-    var whiteCircleW = document.createElement('div');
-    var whiteCircle = document.createElement('div');
-    var docFrag = document.createDocumentFragment();
-
-    wrapper.className = 'olympic-emblem';
-    part.className = 'part';
-    whiteCircleW.className = 'white_circle_wrapper';
-    whiteCircle.className = 'white_circle';
-
-    whiteCircleW.appendChild(whiteCircle);
-    part.appendChild(whiteCircleW);
-
-    // in emmet syntax.
-    // div.wrapper > div.part * 9
-    for (var i = 0; i < 9; i++) {
-        var _part = part.cloneNode(true);
-        _part.classList.add('pos_' + i % 3 + '_' + (i / 3 | 0));
-        docFrag.appendChild(_part);
-    }
-    wrapper.appendChild(docFrag);
-
-    return wrapper;
-})();
-
 var _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
-
-/*
- * Parts className table.
- */
-var _G_R0 = "part arc gold rotate0";
-var _G_R90 = "part arc gold rotate90";
-var _G_R180 = "part arc gold rotate180";
-var _G_R270 = "part arc gold rotate270";
-var _S_R0 = "part arc silver rotate0";
-var _S_R90 = "part arc silver rotate90";
-var _S_R180 = "part arc silver rotate180";
-var _S_R270 = "part arc silver rotate270";
-var _P1 = "part pole1 gray";
-var _P2_V = "part pole2_v gray";
-var _P2_H = "part pole2_h gray";
-var _P3_V = "part pole3_v gray";
-var _P3_H = "part pole3_h gray";
-var _C_S = "part circle_s red";
-var _C_L = "part circle_l red";
-var _BL = "part blank";
-
-/*
- * Formation settings of all characters.
- */
-var _formationTable = {
-    "a": [_G_R180, _P1, _G_R270, _S_R0, _C_S, _S_R90, _P1, _BL, _P1],
-    "b": [_BL, _P3_V, _G_R90, _BL, _BL, _S_R90, _BL, _BL, _S_R180],
-    "c": [_S_R180, _P1, _G_R90, _P1, _BL, _BL, _G_R90, _P1, _S_R180],
-    "d": [_P3_V, _S_R90, _G_R270, _BL, _BL, _P1, _BL, _G_R180, _S_R0],
-    "e": [_BL, _P3_V, _G_R90, _BL, _BL, _C_S, _BL, _BL, _S_R180],
-    "f": [_BL, _P3_V, _S_R90, _BL, _BL, _C_S, _BL, _BL, _BL],
-    "g": [_P3_V, _G_R0, _BL, _BL, _BL, _S_R90, _BL, _C_S, _G_R180],
-    "h": [_P3_V, _BL, _P3_V, _BL, _C_S, _BL, _BL, _BL, _BL],
-    "i": [_BL, _C_S, _BL, _BL, _P2_V, _BL, _BL, _BL, _BL],
-    "j": [_BL, _BL, _P2_V, _BL, _BL, _BL, _S_R90, _C_S, _G_R180],
-    "k": [_P3_V, _BL, _G_R0, _BL, _C_S, _BL, _BL, _BL, _S_R270],
-    "l": [_P3_V, _BL, _BL, _BL, _BL, _BL, _BL, _C_S, _G_R180],
-    "m": [_G_R270, _BL, _S_R180, _P2_V, _C_S, _P2_V, _BL, _BL, _BL],
-    "n": [_P3_V, _G_R270, _P3_V, _BL, _C_S, _BL, _BL, _S_R90, _BL],
-    "o": [_S_R180, _P1, _G_R270, _P1, _BL, _P1, _G_R90, _P1, _S_R0],
-    "p": [_P3_V, _C_S, _G_R90, _BL, _S_R270, _BL, _BL, _BL, _BL],
-    "q": [_S_R180, _P1, _G_R270, _P1, _BL, _P1, _G_R90, _P1, _C_S],
-    "r": [_P3_V, _C_S, _S_R90, _BL, _P1, _S_R180, _BL, _BL, _G_R270],
-    "s": [_G_R180, _P3_V, _S_R90, _S_R90, _BL, _BL, _G_R270, _BL, _C_S],
-    "t": [_G_R0, _P3_V, _C_S, _BL, _BL, _BL, _BL, _BL, _S_R180],
-    "u": [_P2_V, _BL, _C_S, _P1, _BL, _P1, _G_R90, _P1, _S_R0],
-    "v": [_S_R270, _BL, _S_R180, _G_R90, _BL, _G_R0, _BL, _P1, _BL],
-    "w": [_S_R270, _BL, _G_R180, _S_R270, _P1, _G_R180, _G_R90, _BL, _S_R0],
-    "x": [_G_R90, _BL, _S_R0, _BL, _P1, _BL, _S_R180, _BL, _G_R270],
-    "y": [_G_R270, _BL, _S_R180, _BL, _C_S, _BL, _BL, _P1, _BL],
-    "z": [_G_R0, _P1, _S_R0, _BL, _C_S, _BL, _S_R180, _P1, _S_R180],
-    "1": [_G_R180, _P3_V, _BL, _BL, _BL, _BL, _BL, _BL, _BL],
-    "2": [_S_R0, _P3_V, _G_R270, _BL, _BL, _S_R0, _C_S, _BL, _G_R180],
-    "3": [_G_R0, _P1, _G_R270, _BL, _C_S, _BL, _S_R270, _P1, _S_R0],
-    "4": [_BL, _S_R180, _BL, _G_R180, _C_S, _P1, _BL, _P1, _BL],
-    "5": [_BL, _P1, _S_R0, _BL, _G_R90, _P1, _BL, _C_S, _S_R180],
-    "6": [_BL, _S_R0, _BL, _BL, _P2_V, _G_R90, _BL, _BL, _S_R180],
-    "7": [_G_R0, _C_S, _P3_V, _BL, _BL, _BL, _BL, _BL, _BL],
-    "8": [_S_R0, _C_S, _S_R90, _G_R0, _BL, _G_R90, _S_R270, _BL, _S_R180],
-    "9": [_G_R0, _P2_V, _BL, _S_R270, _BL, _BL, _BL, _G_R180, _BL],
-    "0": [_C_L, _BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL],
-    "!": [_P2_V, _BL, _BL, _BL, _BL, _BL, _C_S, _BL, _BL],
-    ".": [_BL, _BL, _BL, _BL, _BL, _BL, _P1, _BL, _BL],
-    "'": [_P1, _BL, _BL, _G_R0, _BL, _BL, _BL, _BL, _BL],
-    ":": [_P1, _BL, _BL, _BL, _BL, _BL, _P1, _BL, _BL],
-    ";": [_P1, _BL, _BL, _BL, _BL, _BL, _C_S, _BL, _BL],
-    "/": [_G_R0, _BL, _S_R180, _BL, _S_R180, _G_R0, _S_R180, _G_R0, _BL],
-    "_": [_BL, _BL, _BL, _BL, _BL, _BL, _P2_H, _BL, _BL],
-    " ": [_BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL]
-};
-
-/*
- * Transition settings.
- */
-var _TRANSITION_PROPS = ['top', 'left', 'background-color', 'border-radius'];
 
 exports['default'] = Emblem;
 module.exports = exports['default'];
 
-},{"babel-runtime/core-js/object/keys":11,"babel-runtime/core-js/promise":12,"babel-runtime/core-js/symbol":13,"babel-runtime/helpers/class-call-check":14,"babel-runtime/helpers/create-class":15}],139:[function(require,module,exports){
+},{"./patterns/Olympic2020/index.js":141,"babel-runtime/core-js/object/keys":11,"babel-runtime/core-js/promise":12,"babel-runtime/core-js/symbol":13,"babel-runtime/helpers/class-call-check":14,"babel-runtime/helpers/create-class":15}],139:[function(require,module,exports){
 'use strict';
 
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
@@ -20275,6 +20185,121 @@ window.Emblem = _EmblemJs2['default'];
 window.EmblemGroup = _EmblemGroupJs2['default'];
 
 },{"./Emblem.js":138,"./EmblemGroup.js":139,"babel-runtime/helpers/interop-require-default":16}],141:[function(require,module,exports){
+/*
+ * DOM in instance of Emblem.
+ */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+var _BASE_DOM = (function () {
+    var wrapper = document.createElement('div');
+    var part = document.createElement('div');
+    var whiteCircleW = document.createElement('div');
+    var whiteCircle = document.createElement('div');
+    var docFrag = document.createDocumentFragment();
+
+    wrapper.className = 'olympic-emblem';
+    part.className = 'part';
+    whiteCircleW.className = 'white_circle_wrapper';
+    whiteCircle.className = 'white_circle';
+
+    whiteCircleW.appendChild(whiteCircle);
+    part.appendChild(whiteCircleW);
+
+    // in emmet syntax.
+    // div.wrapper > div.part * 9
+    for (var i = 0; i < 9; i++) {
+        var _part = part.cloneNode(true);
+        _part.classList.add('pos_' + i % 3 + '_' + (i / 3 | 0));
+        docFrag.appendChild(_part);
+    }
+    wrapper.appendChild(docFrag);
+
+    return wrapper;
+})();
+
+/*
+ * Parts className table.
+ */
+var _G_R0 = "part arc gold rotate0 require-rotate";
+var _G_R90 = "part arc gold rotate90 require-rotate";
+var _G_R180 = "part arc gold rotate180 require-rotate";
+var _G_R270 = "part arc gold rotate270 require-rotate";
+var _S_R0 = "part arc silver rotate0 require-rotate";
+var _S_R90 = "part arc silver rotate90 require-rotate";
+var _S_R180 = "part arc silver rotate180 require-rotate";
+var _S_R270 = "part arc silver rotate270 require-rotate";
+var _P1 = "part pole1 gray";
+var _P2_V = "part pole2_v gray";
+var _P2_H = "part pole2_h gray";
+var _P3_V = "part pole3_v gray";
+var _P3_H = "part pole3_h gray";
+var _C_S = "part circle_s red";
+var _C_L = "part circle_l red";
+var _BL = "part blank";
+
+/*
+ * Formation settings of all characters.
+ */
+var _formationTable = {
+    "a": [_G_R180, _P1, _G_R270, _S_R0, _C_S, _S_R90, _P1, _BL, _P1],
+    "b": [_BL, _P3_V, _G_R90, _BL, _BL, _S_R90, _BL, _BL, _S_R180],
+    "c": [_S_R180, _P1, _G_R90, _P1, _BL, _BL, _G_R90, _P1, _S_R180],
+    "d": [_P3_V, _S_R90, _G_R270, _BL, _BL, _P1, _BL, _G_R180, _S_R0],
+    "e": [_BL, _P3_V, _G_R90, _BL, _BL, _C_S, _BL, _BL, _S_R180],
+    "f": [_BL, _P3_V, _S_R90, _BL, _BL, _C_S, _BL, _BL, _BL],
+    "g": [_P3_V, _G_R0, _BL, _BL, _BL, _S_R90, _BL, _C_S, _G_R180],
+    "h": [_P3_V, _BL, _P3_V, _BL, _C_S, _BL, _BL, _BL, _BL],
+    "i": [_BL, _C_S, _BL, _BL, _P2_V, _BL, _BL, _BL, _BL],
+    "j": [_BL, _BL, _P2_V, _BL, _BL, _BL, _S_R90, _C_S, _G_R180],
+    "k": [_P3_V, _BL, _G_R0, _BL, _C_S, _BL, _BL, _BL, _S_R270],
+    "l": [_P3_V, _BL, _BL, _BL, _BL, _BL, _BL, _C_S, _G_R180],
+    "m": [_G_R270, _BL, _S_R180, _P2_V, _C_S, _P2_V, _BL, _BL, _BL],
+    "n": [_P3_V, _G_R270, _P3_V, _BL, _C_S, _BL, _BL, _S_R90, _BL],
+    "o": [_S_R180, _P1, _G_R270, _P1, _BL, _P1, _G_R90, _P1, _S_R0],
+    "p": [_P3_V, _C_S, _G_R90, _BL, _S_R270, _BL, _BL, _BL, _BL],
+    "q": [_S_R180, _P1, _G_R270, _P1, _BL, _P1, _G_R90, _P1, _C_S],
+    "r": [_P3_V, _C_S, _S_R90, _BL, _P1, _S_R180, _BL, _BL, _G_R270],
+    "s": [_G_R180, _P3_V, _S_R90, _S_R90, _BL, _BL, _G_R270, _BL, _C_S],
+    "t": [_G_R0, _P3_V, _C_S, _BL, _BL, _BL, _BL, _BL, _S_R180],
+    "u": [_P2_V, _BL, _C_S, _P1, _BL, _P1, _G_R90, _P1, _S_R0],
+    "v": [_S_R270, _BL, _S_R180, _G_R90, _BL, _G_R0, _BL, _P1, _BL],
+    "w": [_S_R270, _BL, _G_R180, _S_R270, _P1, _G_R180, _G_R90, _BL, _S_R0],
+    "x": [_G_R90, _BL, _S_R0, _BL, _P1, _BL, _S_R180, _BL, _G_R270],
+    "y": [_G_R270, _BL, _S_R180, _BL, _C_S, _BL, _BL, _P1, _BL],
+    "z": [_G_R0, _P1, _S_R0, _BL, _C_S, _BL, _S_R180, _P1, _S_R180],
+    "1": [_G_R180, _P3_V, _BL, _BL, _BL, _BL, _BL, _BL, _BL],
+    "2": [_S_R0, _P3_V, _G_R270, _BL, _BL, _S_R0, _C_S, _BL, _G_R180],
+    "3": [_G_R0, _P1, _G_R270, _BL, _C_S, _BL, _S_R270, _P1, _S_R0],
+    "4": [_BL, _S_R180, _BL, _G_R180, _C_S, _P1, _BL, _P1, _BL],
+    "5": [_BL, _P1, _S_R0, _BL, _G_R90, _P1, _BL, _C_S, _S_R180],
+    "6": [_BL, _S_R0, _BL, _BL, _P2_V, _G_R90, _BL, _BL, _S_R180],
+    "7": [_G_R0, _C_S, _P3_V, _BL, _BL, _BL, _BL, _BL, _BL],
+    "8": [_S_R0, _C_S, _S_R90, _G_R0, _BL, _G_R90, _S_R270, _BL, _S_R180],
+    "9": [_G_R0, _P2_V, _BL, _S_R270, _BL, _BL, _BL, _G_R180, _BL],
+    "0": [_C_L, _BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL],
+    "!": [_P2_V, _BL, _BL, _BL, _BL, _BL, _C_S, _BL, _BL],
+    ".": [_BL, _BL, _BL, _BL, _BL, _BL, _P1, _BL, _BL],
+    "'": [_P1, _BL, _BL, _G_R0, _BL, _BL, _BL, _BL, _BL],
+    ":": [_P1, _BL, _BL, _BL, _BL, _BL, _P1, _BL, _BL],
+    ";": [_P1, _BL, _BL, _BL, _BL, _BL, _C_S, _BL, _BL],
+    "/": [[_G_R0, 'pos_3_0'], _BL, _S_R180, _BL, _S_R180, _G_R0, _S_R180, _G_R0, _BL],
+    "_": [_BL, _BL, _BL, _BL, _BL, _BL, _P2_H, _BL, _BL],
+    " ": [_BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL]
+};
+
+/*
+ * Transition settings.
+ */
+var _TRANSITION_PROPS = ['top', 'left', 'background-color', 'border-radius'];
+
+exports._BASE_DOM = _BASE_DOM;
+exports._TRANSITION_PROPS = _TRANSITION_PROPS;
+exports._formationTable = _formationTable;
+
+},{}],142:[function(require,module,exports){
 'use strict';
 
 var _Promise = require('babel-runtime/core-js/promise')['default'];
@@ -20368,7 +20393,7 @@ describe('Emblem test', function () {
                     done();
                 });
 
-                describe('emblem2020.optionsにオブジェクトを渡して設定', function () {
+                describe('emblem.optionsにオブジェクトを渡して設定', function () {
                     var opt = {
                         size: 800,
                         displayTime: 3000,
@@ -20453,7 +20478,7 @@ describe('Emblem test', function () {
                     done();
                 });
 
-                describe('emblem2020.optionsにオブジェクトを渡して設定', function () {
+                describe('emblem.optionsにオブジェクトを渡して設定', function () {
                     var opt = {
                         size: 800,
                         displayTime: 3000,
@@ -20487,9 +20512,9 @@ describe('Emblem test', function () {
 
     describe('DOM', function () {
         var testField = document.createElement('div');
-        testField.id = 'emblem2020-test-field';
-        (0, _appendCss2['default'])('\n            #emblem2020-test-field {\n              width:    100%;\n              display:  block;\n              position: relative;\n              margin:   0;\n              padding:  0;\n            }\n        ');
-        (0, _appendCss2['default'])('\n            #emblem2020-test-field .olympic-emblem {\n              margin: ' + EMBLEM_SIZE / 3 + 'px;\n              float: left;\n            }\n        ');
+        testField.id = 'emblem-test-field';
+        (0, _appendCss2['default'])('\n            #emblem-test-field {\n              width:    100%;\n              display:  block;\n              position: relative;\n              margin:   0;\n              padding:  0;\n            }\n        ');
+        (0, _appendCss2['default'])('\n            #emblem-test-field .olympic-emblem {\n              margin: ' + EMBLEM_SIZE / 3 + 'px;\n              float: left;\n            }\n        ');
 
         before('DOMContentLoaded待ち', function (done) {
             var link = document.createElement('link');
@@ -20618,7 +20643,7 @@ describe('Emblem test', function () {
     });
 });
 
-},{"append-css":7,"babel-runtime/core-js/promise":12,"babel-runtime/helpers/interop-require-default":16,"power-assert":82}],142:[function(require,module,exports){
+},{"append-css":7,"babel-runtime/core-js/promise":12,"babel-runtime/helpers/interop-require-default":16,"power-assert":82}],143:[function(require,module,exports){
 'use strict';
 
 var _Array$from = require('babel-runtime/core-js/array/from')['default'];
@@ -20902,11 +20927,11 @@ describe('EmblemGroup test', function () {
     });
 });
 
-},{"append-css":7,"babel-runtime/core-js/array/from":9,"babel-runtime/core-js/promise":12,"babel-runtime/helpers/interop-require-default":16,"power-assert":82}],143:[function(require,module,exports){
+},{"append-css":7,"babel-runtime/core-js/array/from":9,"babel-runtime/core-js/promise":12,"babel-runtime/helpers/interop-require-default":16,"power-assert":82}],144:[function(require,module,exports){
 'use strict';
 require('../src/js/index.js');
 require('./Emblem.test.js');
 require('./EmblemGroup.test.js');
 
 
-},{"../src/js/index.js":140,"./Emblem.test.js":141,"./EmblemGroup.test.js":142}]},{},[143]);
+},{"../src/js/index.js":140,"./Emblem.test.js":142,"./EmblemGroup.test.js":143}]},{},[144]);
