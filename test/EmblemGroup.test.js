@@ -3,7 +3,7 @@ import appendCSS from 'append-css'
 
 describe('EmblemGroup test', () => {
     const TITLE_COPY   = 'tokyo 2020';
-    const LONG_COPY    = 'olympic paralympic games';
+    const LONG_COPY    = 'emblem paralympic games';
     const SHORT_COPY   = 'a to z';
     const BLANK_COPY   = '                                                        ';
     const EMBLEM_SIZE  = 90;
@@ -257,7 +257,7 @@ describe('EmblemGroup test', () => {
 
             group.appendTo(testField);
 
-            it('全てのOlympic2020インスタンスがDOMに存在するか', done => {
+            it('全てのEmblemインスタンスがDOMに存在するか', done => {
                 group.emblems.forEach(e => {
                     assert.equal(e.dom.parentNode, testField);
                 });

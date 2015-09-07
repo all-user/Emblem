@@ -1,15 +1,15 @@
 # `EmblemGroup` Class
 
-`Olympic2020`のインスタンスをまとめて扱うためのクラス。<br>
-`Olympic2020`が１文字を表現するのに対し、`EmblemGroup`は文字列を表現することが出来る。<br>
-内部に[`Olympic2020`](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020-class)のインスタンスの配列を持ち、それらに対して様々な操作を行うことが出来る。
+`Emblem`のインスタンスをまとめて扱うためのクラス。<br>
+`Emblem`が１文字を表現するのに対し、`EmblemGroup`は文字列を表現することが出来る。<br>
+内部に[`Emblem`](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020-class)のインスタンスの配列を持ち、それらに対して様々な操作を行うことが出来る。
 
 ## Usage
 
 ```javascript
 var group = new EmblemGroup('tokyo 2020');
 console.log(group.toString()); // 'tokyo 2020'
-console.log(group.emblems);    // Array of Olympic2020 instances.
+console.log(group.emblems);    // Array of Emblem instances.
 
 document.addEventListener('DOMContentLoaded', e => {
 
@@ -62,10 +62,10 @@ document.addEventListener('DOMContentLoaded', e => {
 
 #### Arguments
 
-1. __`chars`__ _(string)_ : この文字列の各文字から`Olympic2020`のインスタンスを生成する。
+1. __`chars`__ _(string)_ : この文字列の各文字から`Emblem`のインスタンスを生成する。
 2. __`[opt]`__ _(Object)_ : その他のオプション。
-  - __`[opt.length]`__ _(number)_ : 内部的に保持する`Olympic2020`インスタンスの数を指定する。
-  - __`[opt.size]`__ _(number)_ : 内部に保持する`Olympic2020`のインスタンスに対してまとめてサイズを指定する、[`Olympic2020`のオプション](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#arguments)を参照。
+  - __`[opt.length]`__ _(number)_ : 内部的に保持する`Emblem`インスタンスの数を指定する。
+  - __`[opt.size]`__ _(number)_ : 内部に保持する`Emblem`のインスタンスに対してまとめてサイズを指定する、[`Emblem`のオプション](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#arguments)を参照。
   - __`[opt.displayTime]`__ _(number=1500)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、次のパターンへ切り替わるまでの`opt.duration`を含めた表示時間。
   - __`[opt.duration]`__ _(number)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、次のパターンへ切り替わるアニメーションに掛かる時間。
   - __`[opt.loop]`__ _(boolean)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、アニメーションをループさせるかどうか。
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', e => {
 ### `EmblemGroup.prototype.map(str)`
 
 グループが表現する文字列を引数で受け取った文字列で置き換える。<br>
-受け取った文字列に添って、内部に持つ`Olympic2020`インスタンスの文字を変更していく。<br>
+受け取った文字列に添って、内部に持つ`Emblem`インスタンスの文字を変更していく。<br>
 元の文字列の長さを超える部分はカットされ、元の長さに満たない部分は` `半角スペースで埋められる。
 
 #### Arguments
@@ -182,7 +182,7 @@ console.log(olm.options);
 
 ### `length`
 
-グループが表現する文字列の長さ、`Olympic2020`インスタンスの数。
+グループが表現する文字列の長さ、`Emblem`インスタンスの数。
 
 #### Type
 
@@ -225,7 +225,7 @@ _(boolean)_
 
 ### `emblems`
 
-`Olympic2020`のインスタンスの配列。
+`Emblem`のインスタンスの配列。
 
 #### Type
 

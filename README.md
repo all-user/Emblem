@@ -1,35 +1,36 @@
-# Olympic2020
+# Minimas
 
-Generate emblem of Olympic in 2020.
+Generate emblem composed of 3x3 elements.
 
 ## Usage
 
 ```shell
-npm i @all-user/olympic2020
+npm i minimas
 ```
 
 ```html
 <head>
-    <script src="path/to/olympic2020/dist/bundle.js"></script>
-    <link rel="stylesheet" href="path/to/olympic2020/dist/bundle.css">
+    <script src="path/to/square-patterner/dist/bundle.js"></script>
+    <link rel="stylesheet" href="path/to/square-patterner/dist/bundle.css">
 </head>
 <body>
     <script>
-        var olm = Olympic2020('t', { size: 300 }); // initial charactor and size in px.
+        var { Emblem, EmblemGroup } = SquarePatterner;
+        var emb = Emblem('a', { size: 300 }); // initial charactor and size in px.
 
         document.addEventListener('DOMContentLoaded', function() {
 
-            olm.appendTo(document.body);
+            emb.appendTo(document.body);
             // or other way.
-            // document.body.appendChild(olm.dom);
-            // olm.dom is instance of DOMElement.
+            // document.body.appendChild(emb.dom);
+            // emb.dom is instance of DOMElement.
 
-            olm.to('z'); // change to another charactor.
+            emb.to('z'); // change to another charactor.
 
-            olm.animateFromString('tokyo olympic 2020'); // animate from string.
+            emb.animateFromString("abc123!'.:;/_"); // animate from string.
 
             // grouping
-            var group = new EmblemGroup('tokyo 2020');
+            var group = new EmblemGroup('from any message.');
 
             group.appendTo(document.body);
         });
@@ -39,5 +40,5 @@ npm i @all-user/olympic2020
 
 ## Documentation
 
-- [__`Olympic2020`__](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md)
-- [__`EmblemGroup`__](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md)
+- [__`Emblem`__]()
+- [__`EmblemGroup`__]()

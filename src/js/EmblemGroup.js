@@ -1,6 +1,6 @@
 'use strict';
 
-import Olympic2020 from './Olympic2020.js';
+import Emblem from './Emblem.js';
 
 const _EMBLEMS_PROP      = Symbol();
 const _DISPLAY_TIME_PROP = Symbol();
@@ -33,12 +33,12 @@ class EmblemGroup {
             console.error('EmblemGroup constructor first argument should be string.');
         }
 
-        let emblems = _transfromToOlympic2020Array(chars, { size: size, duration: duration, easing: easing, pedal: pedal });
+        let emblems = _transfromToEmblemArray(chars, { size: size, duration: duration, easing: easing, pedal: pedal });
 
         if (emblems) {
             this[_EMBLEMS_PROP] = emblems;
         } else {
-            throw new Error('EmblemGroup arguments expect string or array of Olympic2020.')
+            throw new Error('EmblemGroup arguments expect string or array of Emblem.')
         }
     }
 
@@ -132,7 +132,7 @@ class EmblemGroup {
         let lenOld  = emblems.length;
 
         if (lenNew > lenOld) {
-            let blankArr = Array.from({ length: lenNew - lenOld }, () => new Olympic2020(' '));
+            let blankArr = Array.from({ length: lenNew - lenOld }, () => new Emblem(' '));
             this[_EMBLEMS_PROP] = emblems.concat(blankArr);
         } else if (lenNew < lenOld) {
             this[_EMBLEMS_PROP] = emblems.slice(0, lenNew);
@@ -188,15 +188,15 @@ class EmblemGroup {
     get isAnimating() { return this[_IS_ANIMATING_PROP]; }
 }
 
-function _transfromToOlympic2020Array(arg, opt) { // (string | [Olympic2020]) => [Olympic2020] | false
+function _transfromToEmblemArray(arg, opt) { // (string | [Emblem]) => [Emblem] | false
 
     let res;
     switch (typeof arg) {
         case 'string':
-            res = [].map.call(arg, c => new Olympic2020(c, opt));
+            res = [].map.call(arg, c => new Emblem(c, opt));
             break;
         case 'object':
-            if (Array.isArray(arg) && arg.every(o => o instanceof Olympic2020)) {
+            if (Array.isArray(arg) && arg.every(o => o instanceof Emblem)) {
                 res = arg;
             } else {
                 res = false;

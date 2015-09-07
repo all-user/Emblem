@@ -12,8 +12,8 @@ const _RANDOM_PROP       = Symbol();
 const _PEDAL_PROP        = Symbol();
 const _CANSELLER_PROP    = Symbol();
 
-class Olympic2020 {
-    constructor(c, { size, displayTime, duration, easing, loop = false, random = false, pedal = true } = {}) {
+class Emblem {
+    constructor(c, { size, displayTime, duration = 1000, easing, loop = false, random = false, pedal = true } = {}) {
         this[_IS_ANIMATING_PROP]  =   false;
         this[_RESUME_PROP]        =   null;
         this[_CHAR_PROP]          =   null;
@@ -22,7 +22,7 @@ class Olympic2020 {
 
         // --- options ---
         this.displayTime          =   (displayTime | 0) || 1500;
-        this.duration             =   (duration    | 0) || 1000;
+        this.duration             =   duration;
         this.loop                 =   loop;
         this.random               =   random;
         this.easing               =   easing            || 'cubic-bezier(.26,.92,.41,.98)';
@@ -133,7 +133,7 @@ class Olympic2020 {
             domStyle.width  = `${ size }px`;
             domStyle.height = `${ size }px`;
         } else {
-            console.error('Olympic2020.size should be type of zero or positive number.');
+            console.error('Emblem.size should be type of zero or positive number.');
         }
     }
     get size() { return +this[_DOM_PROP].style.width.replace('px', ''); }
@@ -145,7 +145,7 @@ class Olympic2020 {
         if (typeof time === 'number' && time > 0) {
             this[_DISPLAY_TIME_PROP] = time;
         } else {
-            console.error('Olympic2020.displayTime should be type of positive number.');
+            console.error('Emblem.displayTime should be type of positive number.');
         }
     }
     get displayTime() { return this[_DISPLAY_TIME_PROP]; }
@@ -158,7 +158,7 @@ class Olympic2020 {
             this[_DURATION_PROP] = time;
             _updateTransitionConfig.call(this);
         } else {
-            console.error('Olympic2020.duration should be type of zero or positive number.');
+            console.error('Emblem.duration should be type of zero or positive number.');
         }
     }
     get duration() { return this[_DURATION_PROP]; }
@@ -263,7 +263,7 @@ function _updateTransitionConfig() { // @bind this
 }
 
 /*
- * DOM in instance of Olympic2020.
+ * DOM in instance of Emblem.
  */
 const _BASE_DOM = (() => {
     let wrapper      = document.createElement('div');
@@ -552,4 +552,4 @@ const _TRANSITION_PROPS = [
     'border-radius',
 ];
 
-export default Olympic2020;
+export default Emblem;

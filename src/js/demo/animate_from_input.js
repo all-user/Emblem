@@ -11,14 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let init = 't';
     let olms = [];
-    olms.push(new Olympic2020(init[0], { size: sizeS }));
-//     olms.push(new Olympic2020(init[1], { size: sizeS }));
-//     olms.push(new Olympic2020(init[2], { size: sizeS }));
-//     olms.push(new Olympic2020(init[3], { size: sizeS }));
+    olms.push(new Emblem(init[0], { size: sizeS }));
+//     olms.push(new Emblem(init[1], { size: sizeS }));
+//     olms.push(new Emblem(init[2], { size: sizeS }));
+//     olms.push(new Emblem(init[3], { size: sizeS }));
     olms.forEach(e => { e.dom.style.margin = `${ MARGIN }px auto`; });
 
     let input   = document.querySelector('#user-input');
-    const allValidChars = Olympic2020.allValidChars;
+    const allValidChars = Emblem.allValidChars;
 
     olms.forEach(olm => {
         wrapper.appendChild(olm.dom);

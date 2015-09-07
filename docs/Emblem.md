@@ -1,11 +1,11 @@
-# `Olympic2020` class
+# `Emblem` class
 
 エンブレム１文字を表現するクラス。
 
 ## Usage
 
 ```javascript
-var olm = Olympic2020('t', { size: 300 }); // initial charactor and size in px.
+var olm = Emblem('t', { size: 300 }); // initial charactor and size in px.
 
 document.addEventListener('DOMContentLoaded', e => {
 
@@ -21,41 +21,41 @@ document.addEventListener('DOMContentLoaded', e => {
 ```
 
 ------------------------------
-#### `Olympic2020 Constructor`
-- [constructor](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020-constructor-1)
+#### `Emblem Constructor`
+- [constructor](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020-constructor-1)
 
-#### `Olympic2020 Instance Methods`
-- [to](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototypetoc)
-- [appendTo](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototypeappendtoparent)
-- [animateFromString](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototypeanimatefromstringstr-opt)
-- [stopAnimate](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototypestopanimate)
-- [resumeAnimate](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototyperesumeanimate)
+#### `Emblem Instance Methods`
+- [to](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototypetoc)
+- [appendTo](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototypeappendtoparent)
+- [animateFromString](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototypeanimatefromstringstr-opt)
+- [stopAnimate](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototypestopanimate)
+- [resumeAnimate](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototyperesumeanimate)
 
-#### `Olympic2020 Instance Properties`
-- [options](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#options)
-- [size](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#size)
-- [displayTime](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#displaytime)
-- [duration](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#duration)
-- [easing](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#easing)
-- [loop](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#loop)
-- [random](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#random)
-- [pedal](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#pedal)
+#### `Emblem Instance Properties`
+- [options](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#options)
+- [size](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#size)
+- [displayTime](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#displaytime)
+- [duration](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#duration)
+- [easing](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#easing)
+- [loop](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#loop)
+- [random](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#random)
+- [pedal](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#pedal)
 
-#### `Olympic2020 Class Getter Properties`
-- [allValidChars](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#allvalidchars)
+#### `Emblem Class Getter Properties`
+- [allValidChars](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#allvalidchars)
 
-#### `Olympic2020 Instance Getter Properties`
-- [dom](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#dom)
-- [char](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#char)
-- [isAnimating](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#isanimating)
+#### `Emblem Instance Getter Properties`
+- [dom](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#dom)
+- [char](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#char)
+- [isAnimating](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#isanimating)
 
 ------------------------------
 
-## _Olympic2020 Constructor_
+## _Emblem Constructor_
 
-### `Olympic2020(c, opt)`
+### `Emblem(c, opt)`
 
-`Olympic2020`のインスタンスを生成する。
+`Emblem`のインスタンスを生成する。
 
 #### Arguments
 
@@ -71,9 +71,9 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ------------------------------
 
-## _Olympic2020 Instance Methods_
+## _Emblem Instance Methods_
 
-### `Olympic2020.prototype.to(c)`
+### `Emblem.prototype.to(c)`
 
 エンブレムを別の文字に変化させる。
 
@@ -87,7 +87,7 @@ _(boolean)_ : 受け取った文字に変化した場合はtrue、文字が不�
 
 ------------------------------
 
-### `Olympic2020.prototype.appendTo(parent)`
+### `Emblem.prototype.appendTo(parent)`
 
 引数として受け取った要素にエンブレムを追加する。
 
@@ -97,7 +97,7 @@ _(boolean)_ : 受け取った文字に変化した場合はtrue、文字が不�
 
 ------------------------------
 
-### `Olympic2020.prototype.animateFromString(str, opt)`
+### `Emblem.prototype.animateFromString(str, opt)`
 
 受け取った文字列に沿って順に文字を変化せていく。
 
@@ -115,19 +115,19 @@ _(boolean)_ : 受け取った文字に変化した場合はtrue、文字が不�
 
 ------------------------------
 
-### `Olympic2020.prototype.stopAnimate()`
+### `Emblem.prototype.stopAnimate()`
 
-`Olympic2020.prototype.animateFromString()`の実行を中断する。
-
-------------------------------
-
-### `Olympic2020.prototype.resumeAnimate()`
-
-`Olympic2020.prototype.stopAnimate()`で中断したアニメーションを再開する。
+`Emblem.prototype.animateFromString()`の実行を中断する。
 
 ------------------------------
 
-## _Olympic2020 Instance Properties_
+### `Emblem.prototype.resumeAnimate()`
+
+`Emblem.prototype.stopAnimate()`で中断したアニメーションを再開する。
+
+------------------------------
+
+## _Emblem Instance Properties_
 
 
 ### `options`
@@ -141,7 +141,7 @@ _(Object)_
 
 #### Example
 ```javascript
-let olm = new Olympic2020('a' , { size: 5000, displayTime: 12000 });
+let olm = new Emblem('a' , { size: 5000, displayTime: 12000 });
 console.log(olm.options);
 // {
 //     size       : 5000,
@@ -214,7 +214,7 @@ _(string)_
 
 ### `loop`
 
-`Olympic2020.prototype.animateFromString`実行時、アニメーションをループさせるかどうか。
+`Emblem.prototype.animateFromString`実行時、アニメーションをループさせるかどうか。
 
 #### Type
 
@@ -224,7 +224,7 @@ _(boolean)_
 
 ### `random`
 
-このオプションが有効の時`Olympic2020.prototype.animateFromString`を実行すると、受け取った文字列から次に変化する文字をランダムで選ぶようになる。
+このオプションが有効の時`Emblem.prototype.animateFromString`を実行すると、受け取った文字列から次に変化する文字をランダムで選ぶようになる。
 
 #### Type
 
@@ -242,7 +242,7 @@ _(boolean)_
 
 ------------------------------
 
-## _Olympic2020 Class Getter Properties_
+## _Emblem Class Getter Properties_
 
 ### `allValidChars`
 
@@ -255,7 +255,7 @@ _(`Array`)_
 
 ------------------------------
 
-## _Olympic2020 Instance Getter Properties_
+## _Emblem Instance Getter Properties_
 
 ### `dom`
 
@@ -279,7 +279,7 @@ _(string|null)_
 
 ### `isAnimating`
 
-現在`Olympic2020.prototype.animateFromString`が実行中かどうか。
+現在`Emblem.prototype.animateFromString`が実行中かどうか。
 
 #### Type
 

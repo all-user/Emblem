@@ -1,7 +1,7 @@
 import assert from 'power-assert'
 import appendCSS from 'append-css'
 
-describe('Olympic2020 test', () => {
+describe('Emblem test', () => {
     const BASE_CHAR_LOWER   = 'a';
     const BASE_CHAR_UPPER   = 'A';
     const BASE_CHAR_INVALID = '$';
@@ -18,8 +18,8 @@ describe('Olympic2020 test', () => {
     describe('インスタンスの生成', () => {
 
         it('大文字小文字を区別しない', done => {
-            let lowerO = new Olympic2020(BASE_CHAR_LOWER);
-            let upperO = new Olympic2020(BASE_CHAR_UPPER);
+            let lowerO = new Emblem(BASE_CHAR_LOWER);
+            let upperO = new Emblem(BASE_CHAR_UPPER);
             assert.equal(lowerO.char, BASE_CHAR_LOWER);
             assert.equal(upperO.char, BASE_CHAR_LOWER);
             done();
@@ -29,13 +29,13 @@ describe('Olympic2020 test', () => {
             let o;
 
             beforeEach('インスタンス生成', done => {
-                o = new Olympic2020;
+                o = new Emblem;
                 done();
             })
 
             it('正しく生成されているか', done => {
                 assert.equal(o.char, null);
-                assert.ok(o instanceof Olympic2020);
+                assert.ok(o instanceof Emblem);
                 done();
             });
 
@@ -80,7 +80,7 @@ describe('Olympic2020 test', () => {
                     done();
                 });
 
-                describe('olympic2020.optionsにオブジェクトを渡して設定', () => {
+                describe('emblem2020.optionsにオブジェクトを渡して設定', () => {
                     let opt = {
                         size:        800,
                         displayTime: 3000,
@@ -115,13 +115,13 @@ describe('Olympic2020 test', () => {
             let o;
 
             beforeEach('インスタンス生成', done => {
-                o = new Olympic2020(BASE_CHAR_LOWER);
+                o = new Emblem(BASE_CHAR_LOWER);
                 done();
             })
 
             it('正しく生成されているか', done => {
                 assert.equal(o.char, BASE_CHAR_LOWER);
-                assert.ok(o instanceof Olympic2020);
+                assert.ok(o instanceof Emblem);
                 done();
             });
 
@@ -166,7 +166,7 @@ describe('Olympic2020 test', () => {
                     done();
                 });
 
-                describe('olympic2020.optionsにオブジェクトを渡して設定', () => {
+                describe('emblem2020.optionsにオブジェクトを渡して設定', () => {
                     let opt = {
                         size:        800,
                         displayTime: 3000,
@@ -201,9 +201,9 @@ describe('Olympic2020 test', () => {
 
     describe('DOM', () => {
         let testField = document.createElement('div');
-        testField.id = 'olympic2020-test-field';
+        testField.id = 'emblem2020-test-field';
         appendCSS(`
-            #olympic2020-test-field {
+            #emblem2020-test-field {
               width:    100%;
               display:  block;
               position: relative;
@@ -212,7 +212,7 @@ describe('Olympic2020 test', () => {
             }
         `);
         appendCSS(`
-            #olympic2020-test-field .olympic-emblem {
+            #emblem2020-test-field .olympic-emblem {
               margin: ${ EMBLEM_SIZE / 3 }px;
               float: left;
             }
@@ -240,7 +240,7 @@ describe('Olympic2020 test', () => {
 
 
         describe('aの文字を表示', () => {
-            let olm = new Olympic2020('a', { size: EMBLEM_SIZE });
+            let olm = new Emblem('a', { size: EMBLEM_SIZE });
             olm.appendTo(testField);
 
 
@@ -273,7 +273,7 @@ describe('Olympic2020 test', () => {
         });
 
         describe('/の文字を表示', () => {
-            let olm = new Olympic2020('/');
+            let olm = new Emblem('/');
             testField.appendChild(olm.dom);
 
             it('サイズが指定通りになっているか', done => {
@@ -301,7 +301,7 @@ describe('Olympic2020 test', () => {
         });
 
         describe('aの文字を表示後toでzに変換',() => {
-            let olm = new Olympic2020('a');
+            let olm = new Emblem('a');
             testField.appendChild(olm.dom);
 
             before('aを表示', done => {
@@ -337,7 +337,7 @@ describe('Olympic2020 test', () => {
         });
 
         describe('文字列に沿って順番に変化させる', () => {
-            let olm = new Olympic2020('a', { size : 500 });
+            let olm = new Emblem('a', { size : 500 });
             testField.appendChild(olm.dom);
             olm.dom.addEventListener('click', () => {
                 if (olm.isAnimating) {
@@ -352,9 +352,9 @@ describe('Olympic2020 test', () => {
         });
 
         describe('グローバルにインスタンスを配置', () => {
-            let olm = new Olympic2020('t');
+            let olm = new Emblem('t');
             testField.appendChild(olm.dom);
-            window.olympic = olm;
+            window.emblem = olm;
             olm.size = EMBLEM_SIZE;
 
             it('コンソールからテスト');
