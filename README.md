@@ -1,4 +1,4 @@
-# Minimas
+# SquarePatterner
 
 Generate emblem composed of 3x3 elements.
 
