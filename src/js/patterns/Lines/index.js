@@ -12,7 +12,7 @@ const _BASE_DOM = (() => {
     part.className            = 'part';
     whiteBoxWrapper.className = 'whitebox-wrapper';
 
-    for i of  [0, 1, 2, 3] {
+    for (i of [0, 1, 2, 3]) {
         let whiteBox = whiteBoxBase.cloneNode();
         whiteBox.className = `whitebox-${ i }`;
         whiteBoxWrapper.appendChild(whiteBox);
@@ -35,27 +35,27 @@ const _BASE_DOM = (() => {
 /*
  * Parts className table.
  */
-const _G_R0   = "part straight rotate0 rotate-default";
-const _G_R90  = "part straight rotate90 rotate-default";
-const _S_R0   = "part right-angle rotate0 rotate-default";
-const _S_R90  = "part right-angle rotate90 rotate-default";
-const _S_R180 = "part right-angle rotate180 rotate-default";
-const _S_R270 = "part right-angle rotate270 rotate-default";
-const _S_R0   = "part 3-way rotate0 rotate-default";
-const _S_R90  = "part 3-way rotate90 rotate-default";
-const _S_R180 = "part 3-way rotate180 rotate-default";
-const _S_R270 = "part 3-way rotate270 rotate-default";
-const _S_R0   = "part 1-way rotate0 rotate-default";
-const _S_R90  = "part 1-way rotate90 rotate-default";
-const _S_R180 = "part 1-way rotate180 rotate-default";
-const _S_R270 = "part 1-way rotate270 rotate-default";
-const _S_R270 = "part cross rotate0 rotate-default";
-const _BL     = "part blank";
+const _S_R0    = "part straight rotate0 rotate-default";
+const _S_R90   = "part straight rotate90 rotate-default";
+const _A_R0    = "part right-angle rotate0 rotate-default";
+const _A_R90   = "part right-angle rotate90 rotate-default";
+const _A_R180  = "part right-angle rotate180 rotate-default";
+const _A_R270  = "part right-angle rotate270 rotate-default";
+const _3W_R0   = "part 3-way rotate0 rotate-default";
+const _3W_R90  = "part 3-way rotate90 rotate-default";
+const _3W_R180 = "part 3-way rotate180 rotate-default";
+const _3W_R270 = "part 3-way rotate270 rotate-default";
+const _1W_R0   = "part 1-way rotate0 rotate-default";
+const _1W_R90  = "part 1-way rotate90 rotate-default";
+const _1W_R180 = "part 1-way rotate180 rotate-default";
+const _1W_R270 = "part 1-way rotate270 rotate-default";
+const _C_R0    = "part cross rotate0 rotate-default";
+const _BL      = "part blank";
 
 /*
  * Formation settings of all characters.
  */
-let _formationTable = {
+var _formationTable = {
     "a": [
         _G_R180, _P1,     _G_R270,
         _S_R0,   _C_S,    _S_R90,
@@ -289,4 +289,4 @@ const _TRANSITION_PROPS = [
     'border-radius',
 ];
 
-export { _BASE_DOM, _TRANSITION_PROPS, _formationTable }
+Emblem.define('Lines', { _BASE_DOM, _TRANSITION_PROPS, _formationTable });

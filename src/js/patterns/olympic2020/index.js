@@ -1,5 +1,5 @@
 /*
- * DOM in instance of Emblem.
+ * Base of DOM, use to clone into instance of Emblem.
  */
 const _BASE_DOM = (() => {
     let wrapper      = document.createElement('div');
@@ -285,4 +285,4 @@ const _TRANSITION_PROPS = [
     'border-radius',
 ];
 
-export { _BASE_DOM, _TRANSITION_PROPS, _formationTable }
+Emblem.define('Olympic2020', { _BASE_DOM, _TRANSITION_PROPS, _formationTable });

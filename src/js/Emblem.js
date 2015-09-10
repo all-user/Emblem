@@ -1,7 +1,6 @@
 'use strict';
 
-import { _BASE_DOM, _TRANSITION_PROPS, _formationTable } from './patterns/Olympic2020/index.js'
-
+const _PATTERN_PROP      = Symbol();
 const _CHAR_PROP         = Symbol();
 const _DOM_PROP          = Symbol();
 const _DISPLAY_TIME_PROP = Symbol();
@@ -14,12 +13,17 @@ const _RANDOM_PROP       = Symbol();
 const _PEDAL_PROP        = Symbol();
 const _CANSELLER_PROP    = Symbol();
 
+let patterns = {};
+
 class Emblem {
-    constructor(c, { size, displayTime, duration = 1000, easing, loop = false, random = false, pedal = true } = {}) {
+    constructor(c, { pattern='Olympic2020' , size, displayTime, duration=1000, easing, loop=false, random=false, pedal=true } = {}) {
+        if (patterns[pattern] == null) { console.error(`${ pattern } pattern is undefined.`); return; }
+
+        this[_PATTERN_PROP]       =   patterns[pattern];
         this[_IS_ANIMATING_PROP]  =   false;
         this[_RESUME_PROP]        =   null;
         this[_CHAR_PROP]          =   null;
-        this[_DOM_PROP]           =   _createDom();
+        this[_DOM_PROP]           =   _createDom.call(this);
         this[_CANSELLER_PROP]     =   () => {};
 
         // --- options ---
@@ -41,7 +45,7 @@ class Emblem {
 
     to(c) {
         let _c = c && c.toLowerCase && c.toLowerCase();
-        if (!_formationTable[_c])    { return false; }
+        if (!this[_PATTERN_PROP]._formationTable[_c]) { return false; }
         if (this[_CHAR_PROP] === _c) { return false; }
         _changeStyle.call(this, _c);
         this[_CHAR_PROP] = _c;
@@ -212,18 +216,26 @@ class Emblem {
 
 
     // --- allValidChars ---
-    static get allValidChars() { return Object.keys(_formationTable); }
+    get allValidChars() { return Object.keys(this[_PATTERN_PROP]._formationTable); }
+
+    static define(name, obj) {
+        if (!('_BASE_DOM' in obj) || !('_TRANSITION_PROPS' in obj) || !('_formationTable' in obj)) {
+            console.error('Pattern is invalid.')
+        }
+        patterns[name] = obj;
+    }
+
 }
 
 
 function _createDom() {
-    return _BASE_DOM.cloneNode(true);
+    return this[_PATTERN_PROP]._BASE_DOM.cloneNode(true);
 }
 
 function _changeStyle(c) { // @bind this
     let oldC         = this[_CHAR_PROP];
-    let oldFormation = _formationTable[oldC];
-    let newFormation = _formationTable[c];
+    let oldFormation = this[_PATTERN_PROP]._formationTable[oldC];
+    let newFormation = this[_PATTERN_PROP]._formationTable[c];
     if (!newFormation) { return; }
     let diffFormation;
     if (oldC) {
@@ -254,13 +266,13 @@ function _changeStyle(c) { // @bind this
             pos = `pos_${ idx % 3 }_${ idx / 3 | 0 }`;
         }
         node.className = `${ specifyPos ? formation[0] : formation } ${ pos }`;
-        if (node.classList.contains('rotate-dafault')) { return; }
+        if (node.classList.contains('rotate-default')) { return; }
         node.classList.add(_ROTATE_TABLE[Math.random() * 4 | 0]);
     });
 }
 
 function _updateTransitionConfig() { // @bind this
-    let val = _TRANSITION_PROPS.reduce((str, prop, idx) => {
+    let val = this[_PATTERN_PROP]._TRANSITION_PROPS.reduce((str, prop, idx) => {
         return `${ str }${ idx ? ',' : '' } ${ prop } ${ this[_DURATION_PROP] }ms ${ this[_EASING_PROP] }`;
     }, '');
 

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     olms.forEach(e => { e.dom.style.margin = `${ MARGIN }px auto`; });
 
     let input   = document.querySelector('#user-input');
-    const allValidChars = Emblem.allValidChars;
+    const allValidChars = olms[0].allValidChars;
 
     olms.forEach(olm => {
         wrapper.appendChild(olm.dom);

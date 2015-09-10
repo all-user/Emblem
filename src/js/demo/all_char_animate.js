@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bigEmblem.dom.style.margin = `${ MARGIN }px`;
     olms.push(bigEmblem);
 
-    const allValidChars = Emblem.allValidChars;
+    const allValidChars = bigEmblem.allValidChars;
 
     olms.forEach((olm, idx) => {
         olm.dom.addEventListener('click', () => {
