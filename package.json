@@ -33,11 +33,11 @@
     "release:copydirs": "ncp ./src/fonts ./dist/fonts",
     "release:copyfiles": "copyfiles -f ./src/*.html ./dist",
     "release:copy": "npm run release:copyfiles && npm run release:copydirs",
-    "release": "npm run release:mkdir && npm run release:copy && npm run release:css && npm run release:js && npm run release:demo && npm run release:patterns"
+    "release": "npm run release:mkdir && npm run release:copy && npm run release:css && npm run release:js && npm run release:demo && npm run release:patterns",
     "dogfood": "stylus -c ./dogfood/doc.styl -o ./dogfood/bundle.css -m",
     "server": "browser-sync start --server src",
     "watch": "npm run watch:css & npm run watch:js & npm run server & npm run watch:patterns:js & npm run watch:patterns:css",
-    "start": "npm run watch",
+    "start": "npm run watch"
   },
   "author": "Keita Okamoto <ok@aaa.email.ne.jp>",
   "license": "MIT",
