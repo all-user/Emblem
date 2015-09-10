@@ -21,9 +21,7 @@
     "build:demo": "npm run build:demo:common & npm run build:demo:all_char & npm run build:demo:str_anime & npm run build:demo:frm_txt & npm run build:demo:embed & npm run build:demo:embed_res",
     "watch:demo": "watch \"npm run build:demo\" ./src/js/demo/ & watch \"npm run build:demo\" ./src/stylus/demo/",
     "build:js": "browserify -t [ babelify --optional runtime ] ./src/js/index.js -d | exorcist ./src/bundle.js.map > ./src/bundle.js",
-    "build:css": "stylus -c ./src/stylus/index.styl -o ./src/bundle.css -m",
     "watch:js": "watchify -v -t [ babelify --optional runtime ] ./src/js/index.js -o \"exorcist ./src/bundle.js.map > ./src/bundle.js\" -d",
-    "watch:css": "watch \"npm run build:css\" ./src/stylus/",
     "release:js": "browserify -t [ babelify --optional runtime ] ./src/js/index.js | uglifyjs > ./dist/bundle.js",
     "release:css": "stylus -c ./src/stylus/index.styl -o ./dist/bundle.css",
     "release:demo": "ncp ./src/demo ./dist/demo",
@@ -36,7 +34,7 @@
     "release": "npm run release:mkdir && npm run release:copy && npm run release:css && npm run release:js && npm run release:demo && npm run release:patterns",
     "dogfood": "stylus -c ./dogfood/doc.styl -o ./dogfood/bundle.css -m",
     "server": "browser-sync start --server src",
-    "watch": "npm run watch:css & npm run watch:js & npm run server & npm run watch:patterns:js & npm run watch:patterns:css",
+    "watch": "npm run watch:js & npm run watch:demo & npm run watch:patterns:js & npm run watch:patterns:css & npm run server",
     "start": "npm run watch"
   },
   "author": "Keita Okamoto <ok@aaa.email.ne.jp>",
