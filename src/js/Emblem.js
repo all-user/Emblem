@@ -16,7 +16,7 @@ const _CANSELLER_PROP    = Symbol();
 let patterns = {};
 
 class Emblem {
-    constructor(c, { pattern='Olympic2020' , size, displayTime, duration=1000, easing, loop=false, random=false, pedal=true } = {}) {
+    constructor(c, { pattern='Lines' , size, displayTime, duration=200, easing, loop=false, random=false, pedal=true } = {}) {
         if (patterns[pattern] == null) { console.error(`${ pattern } pattern is undefined.`); return; }
 
         this[_PATTERN_PROP]       =   patterns[pattern];
