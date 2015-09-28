@@ -1,4 +1,6 @@
-.olympic-emblem
+@import 'nib'
+
+.lines-emblem
   margin     0
   padding    0
   display    block
@@ -7,255 +9,367 @@
   height     $base_len
   background transparent
 
-// .olympic-emblem .part,
-// .olympic-emblem .part .white_circle_wrapper,
-// .olympic-emblem .part .white_circle_wrapper .white_circle
-//   transition convert(gen_transition_prop($transition_props, $duration))
+.lines-emblem .part
+  will-change background-color
+.lines-emblem .part .whitebox-wrapper
+  will-change top, left, width, height
+.lines-emblem .part .whitebox-wrapper .whitebox
+  will-change border-radius, width, height, top, left, right, bottom
 
-.olympic-emblem .part
-  will-change top, left, background-color, border-radius, width, height
-.olympic-emblem .part .white_circle_wrapper
-  will-change top, left, width, height, visibility
-.olympic-emblem .part .white_circle_wrapper .white_circle
-  will-change top, left, visibility
-
-.part
-  margin     0
-  padding    0
-  display    block
-  position   absolute
-  width      $1_3
-  height     $1_3
-  overflow   hidden
-  border     none
-  background transparent
-
-
-// color
-
-.gold
-  background $gold
-
-.silver
-  background $silver
-
-.gray
-  background $dark_gray
-
-.red
-  background $sun_red
-
-.blank
-  background transparent
-  .white_circle_wrapper
-    visibility hidden
-
+.lines-emblem
+  .part
+    margin     0
+    padding    0
+    display    block
+    position   absolute
+    width      $1_3
+    height     $1_3
+    overflow   hidden
+    border     none
+    background transparent
 
 // detail
 
-// --- .pole ---
-.pole2_v
-  height $1_3 * 2
-.pole2_h
-  width $1_3 * 2
-.pole3_v
-  height $1_3 * 3
-.pole3_h
-  width $1_3 * 3
+for i in (0..6)
+  $half      = $half_weight[i]
+  $weight    = $half * 2
+  $box_side  = 100% - $weight
+  $wrap_side = 200% - $weight
+  $adjust    = 100% / $wrap_side
+  .lines-emblem.weight_{i}
+    .part
+      background $bg_color
+      .whitebox-wrapper
+        absolute top (-1 * (50% - $half)) left (-1 * (50% - $half))
+        size $wrap_side $wrap_side
+        .whitebox
+          background white
+          &.pos_0
+            absolute top 0 left 0
+          &.pos_1
+            absolute top 0 right 0
+          &.pos_2
+            absolute bottom 0 left 0
+          &.pos_3
+            absolute bottom 0 right 0
+    .part.i-shaped
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1, &.pos_2, &.pos_3
+            size $box_side * $adjust ($box_side + $half) * $adjust
+      &.rotate90
+        .whitebox
+          &.pos_0, &.pos_1, &.pos_2, &.pos_3
+            size ($box_side + $half) * $adjust $box_side * $adjust
+    .part.l-shaped
+      &.rotate0
+        .whitebox
+          &.pos_0
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_1, &.pos_2
+            size $box_side * $adjust $box_side * $adjust
+          &.pos_3
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+      &.rotate90
+        .whitebox
+          &.pos_2
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_0, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+          &.pos_1
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+      &.rotate180
+        .whitebox
+          &.pos_3
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_1, &.pos_2
+            size $box_side * $adjust $box_side * $adjust
+          &.pos_0
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+      &.rotate270
+        .whitebox
+          &.pos_1
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_0, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+          &.pos_2
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+    .part.l-shaped-radius
+      &.rotate0
+        .whitebox
+          &.pos_0
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_1
+            circle()
+          &.pos_1, &.pos_2
+            size $box_side * $adjust $box_side * $adjust
+          &.pos_3
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+      &.rotate90
+        .whitebox
+          &.pos_2
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_3
+            circle()
+          &.pos_0, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+          &.pos_1
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+      &.rotate180
+        .whitebox
+          &.pos_3
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_2
+            circle()
+          &.pos_1, &.pos_2
+            size $box_side * $adjust $box_side * $adjust
+          &.pos_0
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+      &.rotate270
+        .whitebox
+          &.pos_1
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_0
+            circle()
+          &.pos_0, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+          &.pos_2
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+    .part.t-shaped
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1
+            size ($box_side + $half) * $adjust $box_side * $adjust
+          &.pos_2, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate90
+        .whitebox
+          &.pos_1, &.pos_3
+            size $box_side * $adjust ($box_side + $half) * $adjust
+          &.pos_0, &.pos_2
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate180
+        .whitebox
+          &.pos_2, &.pos_3
+            size ($box_side + $half) * $adjust $box_side * $adjust
+          &.pos_0, &.pos_1
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate270
+        .whitebox
+          &.pos_0, &.pos_2
+            size $box_side * $adjust ($box_side + $half) * $adjust
+          &.pos_1, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+    .part.t-shaped-radius
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1
+            size ($box_side + $half) * $adjust $box_side * $adjust
+          &.pos_2, &.pos_3
+            circle()
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate90
+        .whitebox
+          &.pos_1, &.pos_3
+            size $box_side * $adjust ($box_side + $half) * $adjust
+          &.pos_0, &.pos_2
+            circle()
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate180
+        .whitebox
+          &.pos_2, &.pos_3
+            size ($box_side + $half) * $adjust $box_side * $adjust
+          &.pos_0, &.pos_1
+            circle()
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate270
+        .whitebox
+          &.pos_0, &.pos_2
+            size $box_side * $adjust ($box_side + $half) * $adjust
+          &.pos_1, &.pos_3
+            circle()
+            size $box_side * $adjust $box_side * $adjust
+    .part.t-shaped-l-radius
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1
+            size ($box_side + $half) * $adjust $box_side * $adjust
+          &.pos_2
+            circle()
+          &.pos_2, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate90
+        .whitebox
+          &.pos_1, &.pos_3
+            size $box_side * $adjust ($box_side + $half) * $adjust
+          &.pos_0
+            circle()
+          &.pos_0, &.pos_2
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate180
+        .whitebox
+          &.pos_2, &.pos_3
+            size ($box_side + $half) * $adjust $box_side * $adjust
+          &.pos_1
+            circle()
+          &.pos_0, &.pos_1
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate270
+        .whitebox
+          &.pos_0, &.pos_2
+            size $box_side * $adjust ($box_side + $half) * $adjust
+          &.pos_3
+            circle()
+          &.pos_1, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+    .part.t-shaped-r-radius
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1
+            size ($box_side + $half) * $adjust $box_side * $adjust
+          &.pos_3
+            circle()
+          &.pos_2, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate90
+        .whitebox
+          &.pos_1, &.pos_3
+            size $box_side * $adjust ($box_side + $half) * $adjust
+          &.pos_2
+            circle()
+          &.pos_0, &.pos_2
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate180
+        .whitebox
+          &.pos_2, &.pos_3
+            size ($box_side + $half) * $adjust $box_side * $adjust
+          &.pos_0
+            circle()
+          &.pos_0, &.pos_1
+            size $box_side * $adjust $box_side * $adjust
+      &.rotate270
+        .whitebox
+          &.pos_0, &.pos_2
+            size $box_side * $adjust ($box_side + $half) * $adjust
+          &.pos_1
+            circle()
+          &.pos_1, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+    .part.dash-shaped
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_2, &.pos_3
+            size ($box_side + $half) * $adjust $box_side * $adjust
+      &.rotate90
+        .whitebox
+          &.pos_1, &.pos_3
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+          &.pos_0, &.pos_2
+            size $box_side * $adjust ($box_side + $half) * $adjust
+      &.rotate180
+        .whitebox
+          &.pos_2, &.pos_3
+            size $box_side * $adjust ($box_side + $weight) * $adjust
+          &.pos_0, &.pos_1
+            size ($box_side + $half) * $adjust $box_side * $adjust
+      &.rotate270
+        .whitebox
+          &.pos_0, &.pos_2
+            size ($box_side + $weight) * $adjust $box_side * $adjust
+          &.pos_1, &.pos_3
+            size $box_side * $adjust ($box_side + $half) * $adjust
+    .part.cross-shaped
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1, &.pos_2, &.pos_3
+            size $box_side * $adjust $box_side * $adjust
+    .part.cross-shaped-radius
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1, &.pos_2, &.pos_3
+            circle()
+            size $box_side * $adjust $box_side * $adjust
+    .part.cross-shaped-3-radius
+      .whitebox
+        &.pos_0, &.pos_1, &.pos_2, &.pos_3
+          size $box_side * $adjust $box_side * $adjust
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1, &.pos_2
+            circle()
+      &.rotate90
+        .whitebox
+          &.pos_0, &.pos_1, &.pos_3
+            circle()
+      &.rotate180
+        .whitebox
+          &.pos_1, &.pos_2, &.pos_3
+            circle()
+      &.rotate270
+        .whitebox
+          &.pos_0, &.pos_2, &.pos_3
+            circle()
+    .part.cross-shaped-1-radius
+      .whitebox
+        &.pos_0, &.pos_1, &.pos_2, &.pos_3
+          size $box_side * $adjust $box_side * $adjust
+      &.rotate0
+        .whitebox
+          &.pos_0
+            circle()
+      &.rotate90
+        .whitebox
+          &.pos_1
+            circle()
+      &.rotate180
+        .whitebox
+          &.pos_3
+            circle()
+      &.rotate270
+        .whitebox
+          &.pos_2
+            circle()
+    .part.cross-shaped-2-radius
+      .whitebox
+        &.pos_0, &.pos_1, &.pos_2, &.pos_3
+          size $box_side * $adjust $box_side * $adjust
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_1
+            circle()
+      &.rotate90
+        .whitebox
+          &.pos_1, &.pos_3
+            circle()
+      &.rotate180
+        .whitebox
+          &.pos_2, &.pos_3
+            circle()
+      &.rotate270
+        .whitebox
+          &.pos_0, &.pos_2
+            circle()
+    .part.cross-shaped-diagonal-radius
+      .whitebox
+        &.pos_0, &.pos_1, &.pos_2, &.pos_3
+          size $box_side * $adjust $box_side * $adjust
+      &.rotate0
+        .whitebox
+          &.pos_0, &.pos_3
+            circle()
+      &.rotate90
+        .whitebox
+          &.pos_1, &.pos_2
+            circle()
+    .part.blank
+      .whitebox
+        &.pos_0, &.pos_1, &.pos_2, &.pos_3
+          size ($box_side + $half) * $adjust ($box_side + $half) * $adjust
 
-// --- .circle ---
-.circle_s,
-.circle_l
-  border-radius $half
-
-.circle_l
-  width  100%
-  height 100%
-
-// white_circle_wrapper
-
-.part
-  .white_circle_wrapper
-    display    block
-    position   absolute
-    background transparent
-    .white_circle
-      margin     auto
-      top        -10000%
-      left       -10000%
-      right      -10000%
-      bottom     -10000%
-      display    block
-      position   absolute
-      background white
-      border-radius $half
-
-.arc,
-.circle_s,
-.pole1,
-.blank
-  .white_circle_wrapper
-    width  100%
-    height 100%
-
-.pole2_v
-  .white_circle_wrapper
-    width  100%
-    height $half
-
-.pole2_h
-  .white_circle_wrapper
-    width  $half
-    height 100%
-
-.pole3_v
-  .white_circle_wrapper
-    width  100%
-    height $1_3
-
-.pole3_h
-  .white_circle_wrapper
-    width  $1_3
-    height 100%
-
-.circle_l
-  .white_circle_wrapper
-    width  $1_3
-    height $1_3
-
-.white_circle
-  width  $circle_radius * 2 * 3
-  height $circle_radius * 2 * 3
-
-.arc
-  &.rotate0
-    .white_circle_wrapper
-      top  100%
-      left 100%
-  &.rotate90
-    .white_circle_wrapper
-      top  100%
-      left -100%
-  &.rotate180
-    .white_circle_wrapper
-      top  -100%
-      left -100%
-  &.rotate270
-    .white_circle_wrapper
-      top  -100%
-      left 100%
 
 
-
-.circle_s,
-.pole1,
-.blank
-  &.rotate0
-    .white_circle_wrapper
-      top  $mod_square
-      left $mod_square
-  &.rotate90
-    .white_circle_wrapper
-      top  $mod_square
-      left -($mod_square)
-  &.rotate180
-    .white_circle_wrapper
-      top  -($mod_square)
-      left -($mod_square)
-  &.rotate270
-    .white_circle_wrapper
-      top  -($mod_square)
-      left $mod_square
-
-.pole2_h
-  &.rotate0
-    .white_circle_wrapper
-      top  $mod_square
-      left 100% + $mod_pole2
-  &.rotate90
-    .white_circle_wrapper
-      top  $mod_square
-      left -($mod_pole2)
-  &.rotate180
-    .white_circle_wrapper
-      top  -($mod_square)
-      left -($mod_pole2)
-  &.rotate270
-    .white_circle_wrapper
-      top  -($mod_square)
-      left 100% + $mod_pole2
-
-.pole3_h
-  &.rotate0
-    .white_circle_wrapper
-      top  $mod_square
-      left 100% + $mod_pole3
-  &.rotate90
-    .white_circle_wrapper
-      top  $mod_square
-      left -($mod_pole3)
-  &.rotate180
-    .white_circle_wrapper
-      top  -($mod_square)
-      left -($mod_pole3)
-  &.rotate270
-    .white_circle_wrapper
-      top  -($mod_square)
-      left 100% + $mod_pole3
-
-.pole2_v
-  &.rotate0
-    .white_circle_wrapper
-      top  100% + $mod_pole2
-      left $mod_square
-  &.rotate90
-    .white_circle_wrapper
-      top  100% + $mod_pole2
-      left -($mod_square)
-  &.rotate180
-    .white_circle_wrapper
-      top  -($mod_pole2)
-      left -($mod_square)
-  &.rotate270
-    .white_circle_wrapper
-      top  -($mod_pole2)
-      left $mod_square
-
-.pole3_v
-  &.rotate0
-    .white_circle_wrapper
-      top  100% + $mod_pole3
-      left $mod_square
-  &.rotate90
-    .white_circle_wrapper
-      top  100% + $mod_pole3
-      left -($mod_square)
-  &.rotate180
-    .white_circle_wrapper
-      top  -($mod_pole3)
-      left -($mod_square)
-  &.rotate270
-    .white_circle_wrapper
-      top  -($mod_pole3)
-      left $mod_square
-
-.circle_l
-  &.rotate0
-    .white_circle_wrapper
-      top  100% + $mod_pole3
-      left 100% + $mod_pole3
-  &.rotate90
-    .white_circle_wrapper
-      top  100% + $mod_pole3
-      left -($mod_pole3)
-  &.rotate180
-    .white_circle_wrapper
-      top  -($mod_pole3)
-      left -($mod_pole3)
-  &.rotate270
-    .white_circle_wrapper
-      top  -($mod_pole3)
-      left 100% + $mod_pole3
 
 // positioning
 .pos_0_0

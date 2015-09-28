@@ -3,21 +3,19 @@ $base_len = 500px
 $half     = 50%
 $1_3      = 100% / 3
 $1_6      = 100% / 6
-$circle_radius   = 52.70462766947299%
+
+$half_weight = 0% 2% 5% 25% 45% 48% 50%
 
 // color
-$gold      = #b49146
-$silver    = #b4b4b4
-$dark_gray = #373737
-$sun_red   = #e60314
+$bg_color = #0A49BF
+// $bg_color = black
 
 // transitions
-$transition_props = top left background-color border-radius
-$duration         = 800ms
-$easing           = 'cubic-bezier(.26,.92,.41,.98)'
+$transition_props = width height background-color border-radius
+$duration         = 300ms
+$easing           = 'cubic-bezier(.16,1.02,.67,1)'
+// $easing           = 'cubic-bezier(0.845, 0.025, 0.530, 0.015)'
 
-// white_circle_wrapper positioning
-$adjust       = 20%
-$mod_square   = 100% + 100% + $adjust
-$mod_pole2    = (100% + $adjust) / 2
-$mod_pole3    = (100% + $adjust) / 3
+// functions
+circle()
+  border-radius 50%
