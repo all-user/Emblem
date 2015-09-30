@@ -57,7 +57,7 @@ function generateSignboard(params) { // object => EmblemGroup
 
     if (!typeof params === 'object') { return; }
 
-    let { vertical, horizon, display, duration, msg } = params;
+    let { pattern, vertical, horizon, display, duration, msg } = params;
 
     vertical = vertical || 3;
     horizon  = horizon  || 7;
@@ -65,7 +65,7 @@ function generateSignboard(params) { // object => EmblemGroup
     let margin     = SIZE / (horizon * 5);
     let emblemSize = margin * 3;
 
-    let group = new EmblemGroup(msg[0], { length: vertical * horizon, size: emblemSize, displayTime: display, duration: duration });
+    let group = new EmblemGroup(msg[0], { pattern: pattern, length: vertical * horizon, size: emblemSize, displayTime: display, duration: duration });
 
     group.emblems.forEach(e => {
         e.dom.style.margin = `${ margin }px`;

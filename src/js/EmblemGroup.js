@@ -11,7 +11,7 @@ const _RANDOM_PROP       = Symbol();
 const _CANSELLER_PROP    = Symbol();
 
 class EmblemGroup {
-    constructor(chars, { length, displayTime, loop = false, random = false, size, duration, easing, pedal = true } = {}) {
+    constructor(chars, { pattern='Lines', length, displayTime, loop = false, random = false, size, duration, easing, pedal = true } = {}) {
         this[_IS_ANIMATING_PROP]  =   false;
         this[_RESUME_PROP]        =   null;
         this[_CANSELLER_PROP]     =   () => {};
@@ -33,7 +33,7 @@ class EmblemGroup {
             console.error('EmblemGroup constructor first argument should be string.');
         }
 
-        let emblems = _transfromToEmblemArray(chars, { size: size, duration: duration, easing: easing, pedal: pedal });
+        let emblems = _transfromToEmblemArray(chars, { pattern: pattern, size: size, duration: duration, easing: easing, pedal: pedal });
 
         if (emblems) {
             this[_EMBLEMS_PROP] = emblems;

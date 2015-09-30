@@ -192,7 +192,7 @@ var _formationTable = {
     "u":  [
         _D_R180,     _BL,         _D_R180,
         _I_R0,       _BL,         _I_R0,
-        _L_R0,       _I_R90,      _L_R270
+        _L_RD_R0,    _I_R90,      _L_RD_R270
     ],
     "v": [
         _D_R180,     _BL,         _D_R180,
@@ -398,6 +398,11 @@ var _formationTable = {
         _L_R90,      _T_RD_R180,  _L_R180,
         _D_R0,       _BL,         _D_R0,
         _BL,         _BL,         _BL
+    ],
+    "|": [
+        _BL,         _I_R0,       _BL,
+        _BL,         _I_R0,       _BL,
+        _BL,         _I_R0,       _BL
     ],
     "`": [
         _BL,         _L_RD_R180,  _BL,

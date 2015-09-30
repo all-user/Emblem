@@ -216,7 +216,7 @@ describe('EmblemGroup test', () => {
             }
         `);
         appendCSS(`
-            #emblemgroup-test-field .olympic-emblem {
+            #emblemgroup-test-field > div {
               margin: ${ EMBLEM_SIZE / 3 }px;
               float: left;
             }

@@ -4,9 +4,12 @@ import appendCSS from 'append-css'
 describe('Emblem test', () => {
     const BASE_CHAR_LOWER   = 'a';
     const BASE_CHAR_UPPER   = 'A';
-    const BASE_CHAR_INVALID = '$';
+    const BASE_CHAR_INVALID = 'あ';
     const ALL_VALID_CHARS   = "abcdefghijklmnopqrstuvwxyz1234567890!.':;/_";
-    const CSS_PATH          = 'src/bundle.css';
+    const CSS_PATHS         = [
+        'src/patterns/Lines/bundle.css',
+        'src/patterns/Olympic2020/bundle.css'
+    ];
     const DISPLAY_TIME      = 1000;
     const EMBLEM_SIZE       = 90;
     const GOLD      = 'rgb(180, 145, 70)';
@@ -212,16 +215,22 @@ describe('Emblem test', () => {
             }
         `);
         appendCSS(`
-            #emblem-test-field .olympic-emblem {
+            #emblem-test-field > div {
               margin: ${ EMBLEM_SIZE / 3 }px;
               float: left;
             }
         `);
 
         before('DOMContentLoaded待ち', done => {
-            let link = document.createElement('link');
-            link.setAttribute('rel',  'stylesheet');
-            link.setAttribute('href', CSS_PATH);
+            let link    = document.createElement('link');
+            let docFrag = document.createDocumentFragment();
+
+            CSS_PATHS.forEach(path => {
+                let _link = link.cloneNode();
+                _link.setAttribute('rel',  'stylesheet');
+                _link.setAttribute('href', path);
+                docFrag.appendChild(_link);
+            });
 
             new Promise((resolve, reject) => {
                 let readyState = document.readyState;
@@ -232,7 +241,7 @@ describe('Emblem test', () => {
                     window.onload = resolve;
                 }
             }).then(() => {
-                document.head.appendChild(link);
+                document.head.appendChild(docFrag);
                 document.body.appendChild(testField);
                 done();
             });
@@ -240,7 +249,7 @@ describe('Emblem test', () => {
 
 
         describe('aの文字を表示', () => {
-            let olm = new Emblem('a', { size: EMBLEM_SIZE });
+            let olm = new Emblem('a', { size: EMBLEM_SIZE, pattern: 'Olympic2020' });
             olm.appendTo(testField);
 
 
@@ -273,7 +282,7 @@ describe('Emblem test', () => {
         });
 
         describe('/の文字を表示', () => {
-            let olm = new Emblem('/');
+            let olm = new Emblem('/', { pattern: 'Olympic2020' });
             testField.appendChild(olm.dom);
 
             it('サイズが指定通りになっているか', done => {
@@ -301,7 +310,7 @@ describe('Emblem test', () => {
         });
 
         describe('aの文字を表示後toでzに変換',() => {
-            let olm = new Emblem('a');
+            let olm = new Emblem('a', { pattern: 'Olympic2020' });
             testField.appendChild(olm.dom);
 
             before('aを表示', done => {
@@ -337,7 +346,7 @@ describe('Emblem test', () => {
         });
 
         describe('文字列に沿って順番に変化させる', () => {
-            let olm = new Emblem('a', { size : 500 });
+            let olm = new Emblem('a', { pattern: 'Olympic2020', size : 500 });
             testField.appendChild(olm.dom);
             olm.dom.addEventListener('click', () => {
                 if (olm.isAnimating) {
@@ -352,7 +361,7 @@ describe('Emblem test', () => {
         });
 
         describe('グローバルにインスタンスを配置', () => {
-            let olm = new Emblem('t');
+            let olm = new Emblem('t', { pattern: 'Olympic2020' });
             testField.appendChild(olm.dom);
             window.emblem = olm;
             olm.size = EMBLEM_SIZE;
