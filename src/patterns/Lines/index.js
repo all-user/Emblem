@@ -1,8 +1,20 @@
 /*
- * DOM in instance of Emblem.
+ * default options
  */
+
 'use strict';
 
+var _DEFAULT_OPTIONS = {
+    displayTime: 1500,
+    duration: 200,
+    loop: false,
+    random: false,
+    pedal: true
+};
+
+/*
+ * DOM in instance of Emblem.
+ */
 var _BASE_DOM = (function () {
     var wrapper = document.createElement('div');
     var part = document.createElement('div');
@@ -169,4 +181,4 @@ var _formationTable = {
  */
 var _TRANSITION_PROPS = ['width', 'height', 'background-color', 'border-radius'];
 
-Emblem.define('Lines', { _BASE_DOM: _BASE_DOM, _TRANSITION_PROPS: _TRANSITION_PROPS, _formationTable: _formationTable });
+Emblem.define('Lines', { _DEFAULT_OPTIONS: _DEFAULT_OPTIONS, _BASE_DOM: _BASE_DOM, _TRANSITION_PROPS: _TRANSITION_PROPS, _formationTable: _formationTable });

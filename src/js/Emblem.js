@@ -1,5 +1,7 @@
 'use strict';
 
+import extend from 'xtend';
+
 const _PATTERN_PROP      = Symbol();
 const _CHAR_PROP         = Symbol();
 const _DOM_PROP          = Symbol();
@@ -13,21 +15,26 @@ const _RANDOM_PROP       = Symbol();
 const _PEDAL_PROP        = Symbol();
 const _CANSELLER_PROP    = Symbol();
 
-let patterns = {};
+let patterns = {}; // initialized in Emblem.define
 
 class Emblem {
-    constructor(c, { pattern='Lines', size, displayTime, duration=200, easing, loop=false, random=false, pedal=true } = {}) {
-        if (patterns[pattern] == null) { console.error(`${ pattern } pattern is undefined.`); return; }
+    constructor(c, options = {}) {
 
-        this[_PATTERN_PROP]       =   patterns[pattern];
+        options.pattern = options.pattern || 'Lines';
+        if (patterns[options.pattern] == null) { console.error(`${ options.pattern } pattern is undefined.`); return; }
+
+        this[_PATTERN_PROP]       =   patterns[options.pattern];
         this[_IS_ANIMATING_PROP]  =   false;
         this[_RESUME_PROP]        =   null;
         this[_CHAR_PROP]          =   null;
         this[_DOM_PROP]           =   _createDom.call(this);
         this[_CANSELLER_PROP]     =   () => {};
 
+        options = extend(this[_PATTERN_PROP]._DEFAULT_OPTIONS, options);
+        let { pattern, size, displayTime, duration, easing, loop, random, pedal } = options;
+
         // --- options ---
-        this.displayTime          =   (displayTime | 0) || 1500;
+        this.displayTime          =   displayTime;
         this.duration             =   duration;
         this.loop                 =   loop;
         this.random               =   random;
@@ -219,7 +226,7 @@ class Emblem {
     get allValidChars() { return Object.keys(this[_PATTERN_PROP]._formationTable); }
 
     static define(name, obj) {
-        if (!('_BASE_DOM' in obj) || !('_TRANSITION_PROPS' in obj) || !('_formationTable' in obj)) {
+        if (!('_DEFAULT_OPTIONS' in obj) || !('_BASE_DOM' in obj) || !('_TRANSITION_PROPS' in obj) || !('_formationTable' in obj)) {
             console.error('Pattern is invalid.')
         }
         patterns[name] = obj;

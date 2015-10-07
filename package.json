@@ -67,5 +67,8 @@
     "uglify-js": "^2.4.24",
     "watch": "^0.16.0",
     "watchify": "^3.3.1"
+  },
+  "dependencies": {
+    "xtend": "^4.0.0"
   }
 }

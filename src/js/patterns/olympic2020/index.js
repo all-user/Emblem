@@ -1,4 +1,16 @@
 /*
+ * default options
+ */
+
+const _DEFAULT_OPTIONS = {
+    displayTime: 1500,
+    duration:    1000,
+    loop:        false,
+    random:      false,
+    pedal:       true
+}
+
+/*
  * Base of DOM, use to clone into instance of Emblem.
  */
 const _BASE_DOM = (() => {
@@ -285,4 +297,4 @@ const _TRANSITION_PROPS = [
     'border-radius',
 ];
 
-Emblem.define('Olympic2020', { _BASE_DOM, _TRANSITION_PROPS, _formationTable });
+Emblem.define('Olympic2020', { _DEFAULT_OPTIONS, _BASE_DOM, _TRANSITION_PROPS, _formationTable });

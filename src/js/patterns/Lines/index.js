@@ -1,4 +1,16 @@
 /*
+ * default options
+ */
+
+const _DEFAULT_OPTIONS = {
+    displayTime: 1500,
+    duration:    200,
+    loop:        false,
+    random:      false,
+    pedal:       true
+}
+
+/*
  * DOM in instance of Emblem.
  */
 const _BASE_DOM = (() => {
@@ -447,4 +459,4 @@ const _TRANSITION_PROPS = [
     'border-radius'
 ];
 
-Emblem.define('Lines', { _BASE_DOM, _TRANSITION_PROPS, _formationTable });
+Emblem.define('Lines', { _DEFAULT_OPTIONS, _BASE_DOM, _TRANSITION_PROPS, _formationTable });

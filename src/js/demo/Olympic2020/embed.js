@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let genButton     = document.querySelector('#generate-button');
     let codeButton    = document.querySelector('#embed-button');
 
+    const PATTERN     = 'Olympic2020';
     const TITLE_COPY  = 'tokyo  2020   olympic';
     const SHORT_COPY  = 'hi!!   ';
     const DATE_COPY   = '8/9:sun'
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     let params = {
-        pattern: 'Olympic2020',
+        pattern: PATTERN,
         vertical: 3,
         horizon: 7,
         display: 1500,
@@ -41,7 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     clickButtonHandler(params);
 
     genButton.addEventListener('click', e => {
-        clickButtonHandler(getInputValues());
+        let options = getInputValues();
+        options.pattern = PATTERN;
+        clickButtonHandler(options);
         scroll(0, 0);
     });
 
