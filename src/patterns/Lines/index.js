@@ -7,23 +7,23 @@ var $ = require('../../modules/$');
 module.exports = function defineProperty(it, key, desc){
   return $.setDesc(it, key, desc);
 };
-},{"../../modules/$":18}],4:[function(require,module,exports){
+},{"../../modules/$":19}],4:[function(require,module,exports){
 require('../../modules/es6.symbol');
 module.exports = require('../../modules/$.core').Symbol;
-},{"../../modules/$.core":7,"../../modules/es6.symbol":29}],5:[function(require,module,exports){
+},{"../../modules/$.core":7,"../../modules/es6.symbol":30}],5:[function(require,module,exports){
 var isObject = require('./$.is-object');
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
 };
-},{"./$.is-object":17}],6:[function(require,module,exports){
+},{"./$.is-object":18}],6:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = function(it){
   return toString.call(it).slice(8, -1);
 };
 },{}],7:[function(require,module,exports){
-var core = module.exports = {};
+var core = module.exports = {version: '1.2.1'};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 },{}],8:[function(require,module,exports){
 var global    = require('./$.global')
@@ -94,7 +94,7 @@ module.exports = function(it){
   }
   return keys;
 };
-},{"./$":18}],11:[function(require,module,exports){
+},{"./$":19}],11:[function(require,module,exports){
 module.exports = function(exec){
   try {
     return !!exec();
@@ -123,7 +123,7 @@ module.exports.get = function getOwnPropertyNames(it){
   if(windowNames && toString.call(it) == '[object Window]')return getWindowNames(it);
   return getNames(toIObject(it));
 };
-},{"./$":18,"./$.to-iobject":26}],13:[function(require,module,exports){
+},{"./$":19,"./$.to-iobject":27}],13:[function(require,module,exports){
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var UNDEFINED = 'undefined';
 var global = module.exports = typeof window != UNDEFINED && window.Math == Math
@@ -143,18 +143,23 @@ module.exports = require('./$.support-desc') ? function(object, key, value){
   object[key] = value;
   return object;
 };
-},{"./$":18,"./$.property-desc":21,"./$.support-desc":24}],16:[function(require,module,exports){
+},{"./$":19,"./$.property-desc":22,"./$.support-desc":25}],16:[function(require,module,exports){
 // indexed object, fallback for non-array-like ES3 strings
 var cof = require('./$.cof');
 module.exports = 0 in Object('z') ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 },{"./$.cof":6}],17:[function(require,module,exports){
-// http://jsperf.com/core-js-isobject
-module.exports = function(it){
-  return it !== null && (typeof it == 'object' || typeof it == 'function');
+// 7.2.2 IsArray(argument)
+var cof = require('./$.cof');
+module.exports = Array.isArray || function(arg){
+  return cof(arg) == 'Array';
 };
-},{}],18:[function(require,module,exports){
+},{"./$.cof":6}],18:[function(require,module,exports){
+module.exports = function(it){
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+},{}],19:[function(require,module,exports){
 var $Object = Object;
 module.exports = {
   create:     $Object.create,
@@ -168,7 +173,7 @@ module.exports = {
   getSymbols: $Object.getOwnPropertySymbols,
   each:       [].forEach
 };
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var $         = require('./$')
   , toIObject = require('./$.to-iobject');
 module.exports = function(object, el){
@@ -179,9 +184,9 @@ module.exports = function(object, el){
     , key;
   while(length > index)if(O[key = keys[index++]] === el)return key;
 };
-},{"./$":18,"./$.to-iobject":26}],20:[function(require,module,exports){
+},{"./$":19,"./$.to-iobject":27}],21:[function(require,module,exports){
 module.exports = true;
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 module.exports = function(bitmap, value){
   return {
     enumerable  : !(bitmap & 1),
@@ -190,21 +195,21 @@ module.exports = function(bitmap, value){
     value       : value
   };
 };
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 module.exports = require('./$.hide');
-},{"./$.hide":15}],23:[function(require,module,exports){
+},{"./$.hide":15}],24:[function(require,module,exports){
 var global = require('./$.global')
   , SHARED = '__core-js_shared__'
   , store  = global[SHARED] || (global[SHARED] = {});
 module.exports = function(key){
   return store[key] || (store[key] = {});
 };
-},{"./$.global":13}],24:[function(require,module,exports){
+},{"./$.global":13}],25:[function(require,module,exports){
 // Thank's IE8 for his funny defineProperty
 module.exports = !require('./$.fails')(function(){
   return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 });
-},{"./$.fails":11}],25:[function(require,module,exports){
+},{"./$.fails":11}],26:[function(require,module,exports){
 var has  = require('./$.has')
   , hide = require('./$.hide')
   , TAG  = require('./$.wks')('toStringTag');
@@ -212,27 +217,27 @@ var has  = require('./$.has')
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))hide(it, TAG, tag);
 };
-},{"./$.has":14,"./$.hide":15,"./$.wks":28}],26:[function(require,module,exports){
+},{"./$.has":14,"./$.hide":15,"./$.wks":29}],27:[function(require,module,exports){
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = require('./$.iobject')
   , defined = require('./$.defined');
 module.exports = function(it){
   return IObject(defined(it));
 };
-},{"./$.defined":9,"./$.iobject":16}],27:[function(require,module,exports){
+},{"./$.defined":9,"./$.iobject":16}],28:[function(require,module,exports){
 var id = 0
   , px = Math.random();
 module.exports = function(key){
   return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
 };
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 var store  = require('./$.shared')('wks')
   , Symbol = require('./$.global').Symbol;
 module.exports = function(name){
   return store[name] || (store[name] =
     Symbol && Symbol[name] || (Symbol || require('./$.uid'))('Symbol.' + name));
 };
-},{"./$.global":13,"./$.shared":23,"./$.uid":27}],29:[function(require,module,exports){
+},{"./$.global":13,"./$.shared":24,"./$.uid":28}],30:[function(require,module,exports){
 'use strict';
 // ECMAScript 6 symbols shim
 var $              = require('./$')
@@ -241,6 +246,7 @@ var $              = require('./$')
   , SUPPORT_DESC   = require('./$.support-desc')
   , $def           = require('./$.def')
   , $redef         = require('./$.redef')
+  , $fails         = require('./$.fails')
   , shared         = require('./$.shared')
   , setTag         = require('./$.tag')
   , uid            = require('./$.uid')
@@ -248,6 +254,7 @@ var $              = require('./$')
   , keyOf          = require('./$.keyof')
   , $names         = require('./$.get-names')
   , enumKeys       = require('./$.enum-keys')
+  , isArray        = require('./$.is-array')
   , isObject       = require('./$.is-object')
   , anObject       = require('./$.an-object')
   , toIObject      = require('./$.to-iobject')
@@ -257,6 +264,8 @@ var $              = require('./$')
   , _create        = $.create
   , getNames       = $names.get
   , $Symbol        = global.Symbol
+  , $JSON          = global.JSON
+  , _stringify     = $JSON && $JSON.stringify
   , setter         = false
   , HIDDEN         = wks('_hidden')
   , isEnum         = $.isEnum
@@ -265,22 +274,17 @@ var $              = require('./$')
   , useNative      = typeof $Symbol == 'function'
   , ObjectProto    = Object.prototype;
 
-var setSymbolDesc = SUPPORT_DESC ? function(){ // fallback for old Android
-  try {
-    return _create(setDesc({}, HIDDEN, {
-      get: function(){
-        return setDesc(this, HIDDEN, {value: false})[HIDDEN];
-      }
-    }))[HIDDEN] || setDesc;
-  } catch(e){
-    return function(it, key, D){
-      var protoDesc = getDesc(ObjectProto, key);
-      if(protoDesc)delete ObjectProto[key];
-      setDesc(it, key, D);
-      if(protoDesc && it !== ObjectProto)setDesc(ObjectProto, key, protoDesc);
-    };
-  }
-}() : setDesc;
+// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+var setSymbolDesc = SUPPORT_DESC && $fails(function(){
+  return _create(setDesc({}, 'a', {
+    get: function(){ return setDesc(this, 'a', {value: 7}).a; }
+  })).a != 7;
+}) ? function(it, key, D){
+  var protoDesc = getDesc(ObjectProto, key);
+  if(protoDesc)delete ObjectProto[key];
+  setDesc(it, key, D);
+  if(protoDesc && it !== ObjectProto)setDesc(ObjectProto, key, protoDesc);
+} : setDesc;
 
 var wrap = function(tag){
   var sym = AllSymbols[tag] = _create($Symbol.prototype);
@@ -293,6 +297,10 @@ var wrap = function(tag){
     }
   });
   return sym;
+};
+
+var isSymbol = function(it){
+  return typeof it == 'symbol';
 };
 
 var $defineProperty = function defineProperty(it, key, D){
@@ -344,16 +352,41 @@ var $getOwnPropertySymbols = function getOwnPropertySymbols(it){
   while(names.length > i)if(has(AllSymbols, key = names[i++]))result.push(AllSymbols[key]);
   return result;
 };
+var $stringify = function stringify(it){
+  var args = [it]
+    , i    = 1
+    , replacer, $replacer;
+  while(arguments.length > i)args.push(arguments[i++]);
+  replacer = args[1];
+  if(typeof replacer == 'function')$replacer = replacer;
+  if($replacer || !isArray(replacer))replacer = function(key, value){
+    if($replacer)value = $replacer.call(this, key, value);
+    if(!isSymbol(value))return value;
+  };
+  args[1] = replacer;
+  return _stringify.apply($JSON, args);
+};
+var buggyJSON = $fails(function(){
+  var S = $Symbol();
+  // MS Edge converts symbol values to JSON as {}
+  // WebKit converts symbol values to JSON as null
+  // V8 throws on boxed symbols
+  return _stringify([S]) != '[null]' || _stringify({a: S}) != '{}' || _stringify(Object(S)) != '{}';
+});
 
 // 19.4.1.1 Symbol([description])
 if(!useNative){
   $Symbol = function Symbol(){
-    if(this instanceof $Symbol)throw TypeError('Symbol is not a constructor');
+    if(isSymbol(this))throw TypeError('Symbol is not a constructor');
     return wrap(uid(arguments[0]));
   };
   $redef($Symbol.prototype, 'toString', function toString(){
     return this._k;
   });
+
+  isSymbol = function(it){
+    return it instanceof $Symbol;
+  };
 
   $.create     = $create;
   $.isEnum     = $propertyIsEnumerable;
@@ -367,14 +400,6 @@ if(!useNative){
     $redef(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 }
-
-// MS Edge converts symbol values to JSON as {}
-// WebKit converts symbol values in objects to JSON as null
-if(!useNative || require('./$.fails')(function(){
-  return JSON.stringify([{a: $Symbol()}, [$Symbol()]]) != '[{},[null]]';
-}))$redef($Symbol.prototype, 'toJSON', function toJSON(){
-  if(useNative && isObject(this))return this;
-});
 
 var symbolStatics = {
   // 19.4.2.1 Symbol.for(key)
@@ -431,13 +456,16 @@ $def($def.S + $def.F * !useNative, 'Object', {
   getOwnPropertySymbols: $getOwnPropertySymbols
 });
 
+// 24.3.2 JSON.stringify(value [, replacer [, space]])
+$JSON && $def($def.S + $def.F * (!useNative || buggyJSON), 'JSON', {stringify: $stringify});
+
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
 setTag(Math, 'Math', true);
 // 24.3.3 JSON[@@toStringTag]
 setTag(global.JSON, 'JSON', true);
-},{"./$":18,"./$.an-object":5,"./$.def":8,"./$.enum-keys":10,"./$.fails":11,"./$.get-names":12,"./$.global":13,"./$.has":14,"./$.is-object":17,"./$.keyof":19,"./$.library":20,"./$.property-desc":21,"./$.redef":22,"./$.shared":23,"./$.support-desc":24,"./$.tag":25,"./$.to-iobject":26,"./$.uid":27,"./$.wks":28}],30:[function(require,module,exports){
+},{"./$":19,"./$.an-object":5,"./$.def":8,"./$.enum-keys":10,"./$.fails":11,"./$.get-names":12,"./$.global":13,"./$.has":14,"./$.is-array":17,"./$.is-object":18,"./$.keyof":20,"./$.library":21,"./$.property-desc":22,"./$.redef":23,"./$.shared":24,"./$.support-desc":25,"./$.tag":26,"./$.to-iobject":27,"./$.uid":28,"./$.wks":29}],31:[function(require,module,exports){
 /*
  * default options
  */
@@ -661,248 +689,4 @@ _Object$defineProperty(Emblem.prototype, WEIGHT_LIMIT_PROP, {
     value: 6
 });
 
-},{"babel-runtime/core-js/object/define-property":1,"babel-runtime/core-js/symbol":2}],31:[function(require,module,exports){
-/*
- * default options
- */
-
-'use strict';
-
-var _DEFAULT_OPTIONS = {
-    displayTime: 1500,
-    duration: 1000,
-    loop: false,
-    random: false,
-    pedal: true
-};
-
-/*
- * Base of DOM, use to clone into instance of Emblem.
- */
-var _BASE_DOM = (function () {
-    var wrapper = document.createElement('div');
-    var part = document.createElement('div');
-    var whiteCircleW = document.createElement('div');
-    var whiteCircle = document.createElement('div');
-    var docFrag = document.createDocumentFragment();
-
-    wrapper.className = 'olympic-emblem';
-    part.className = 'part';
-    whiteCircleW.className = 'white_circle_wrapper';
-    whiteCircle.className = 'white_circle';
-
-    whiteCircleW.appendChild(whiteCircle);
-    part.appendChild(whiteCircleW);
-
-    // in emmet syntax.
-    // div.wrapper > div.part * 9
-    for (var i = 0; i < 9; i++) {
-        var _part = part.cloneNode(true);
-        _part.classList.add('pos_' + i % 3 + '_' + (i / 3 | 0));
-        docFrag.appendChild(_part);
-    }
-    wrapper.appendChild(docFrag);
-
-    return wrapper;
-})();
-
-/*
- * Parts className table.
- */
-var _G_R0 = "part arc gold rotate0 rotate-default";
-var _G_R90 = "part arc gold rotate90 rotate-default";
-var _G_R180 = "part arc gold rotate180 rotate-default";
-var _G_R270 = "part arc gold rotate270 rotate-default";
-var _S_R0 = "part arc silver rotate0 rotate-default";
-var _S_R90 = "part arc silver rotate90 rotate-default";
-var _S_R180 = "part arc silver rotate180 rotate-default";
-var _S_R270 = "part arc silver rotate270 rotate-default";
-var _P1 = "part pole1 gray";
-var _P2_V = "part pole2_v gray";
-var _P2_H = "part pole2_h gray";
-var _P3_V = "part pole3_v gray";
-var _P3_H = "part pole3_h gray";
-var _C_S = "part circle_s red";
-var _C_L = "part circle_l red";
-var _BL = "part blank";
-
-/*
- * Formation settings of all characters.
- */
-var _formationTable = {
-    "a": [_G_R180, _P1, _G_R270, _S_R0, _C_S, _S_R90, _P1, _BL, _P1],
-    "b": [_BL, _P3_V, _G_R90, _BL, _BL, _S_R90, _BL, _BL, _S_R180],
-    "c": [_S_R180, _P1, _G_R90, _P1, _BL, _BL, _G_R90, _P1, _S_R180],
-    "d": [_P3_V, _S_R90, _G_R270, _BL, _BL, _P1, _BL, _G_R180, _S_R0],
-    "e": [_BL, _P3_V, _G_R90, _BL, _BL, _C_S, _BL, _BL, _S_R180],
-    "f": [_BL, _P3_V, _S_R90, _BL, _BL, _C_S, _BL, _BL, _BL],
-    "g": [_P3_V, _G_R0, _BL, _BL, _BL, _S_R90, _BL, _C_S, _G_R180],
-    "h": [_P3_V, _BL, _P3_V, _BL, _C_S, _BL, _BL, _BL, _BL],
-    "i": [_BL, _C_S, _BL, _BL, _P2_V, _BL, _BL, _BL, _BL],
-    "j": [_BL, _BL, _P2_V, _BL, _BL, _BL, _S_R90, _C_S, _G_R180],
-    "k": [_P3_V, _BL, _G_R0, _BL, _C_S, _BL, _BL, _BL, _S_R270],
-    "l": [_P3_V, _BL, _BL, _BL, _BL, _BL, _BL, _C_S, _G_R180],
-    "m": [_G_R270, _BL, _S_R180, _P2_V, _C_S, _P2_V, _BL, _BL, _BL],
-    "n": [_P3_V, _G_R270, _P3_V, _BL, _C_S, _BL, _BL, _S_R90, _BL],
-    "o": [_S_R180, _P1, _G_R270, _P1, _BL, _P1, _G_R90, _P1, _S_R0],
-    "p": [_P3_V, _C_S, _G_R90, _BL, _S_R270, _BL, _BL, _BL, _BL],
-    "q": [_S_R180, _P1, _G_R270, _P1, _BL, _P1, _G_R90, _P1, _C_S],
-    "r": [_P3_V, _C_S, _S_R90, _BL, _P1, _S_R180, _BL, _BL, _G_R270],
-    "s": [_G_R180, _P3_V, _S_R90, _S_R90, _BL, _BL, _G_R270, _BL, _C_S],
-    "t": [_G_R0, _P3_V, _C_S, _BL, _BL, _BL, _BL, _BL, _S_R180],
-    "u": [_P2_V, _BL, _C_S, _P1, _BL, _P1, _G_R90, _P1, _S_R0],
-    "v": [_S_R270, _BL, _S_R180, _G_R90, _BL, _G_R0, _BL, _P1, _BL],
-    "w": [_S_R270, _BL, _G_R180, _S_R270, _P1, _G_R180, _G_R90, _BL, _S_R0],
-    "x": [_G_R90, _BL, _S_R0, _BL, _P1, _BL, _S_R180, _BL, _G_R270],
-    "y": [_G_R270, _BL, _S_R180, _BL, _C_S, _BL, _BL, _P1, _BL],
-    "z": [_G_R0, _P1, _S_R0, _BL, _C_S, _BL, _S_R180, _P1, _S_R180],
-    "1": [_G_R180, _P3_V, _BL, _BL, _BL, _BL, _BL, _BL, _BL],
-    "2": [_S_R0, _P3_V, _G_R270, _BL, _BL, _S_R0, _C_S, _BL, _G_R180],
-    "3": [_G_R0, _P1, _G_R270, _BL, _C_S, _BL, _S_R270, _P1, _S_R0],
-    "4": [_BL, _S_R180, _BL, _G_R180, _C_S, _P1, _BL, _P1, _BL],
-    "5": [_BL, _P1, _S_R0, _BL, _G_R90, _P1, _BL, _C_S, _S_R180],
-    "6": [_BL, _S_R0, _BL, _BL, _P2_V, _G_R90, _BL, _BL, _S_R180],
-    "7": [_G_R0, _C_S, _P3_V, _BL, _BL, _BL, _BL, _BL, _BL],
-    "8": [_S_R0, _C_S, _S_R90, _G_R0, _BL, _G_R90, _S_R270, _BL, _S_R180],
-    "9": [_G_R0, _P2_V, _BL, _S_R270, _BL, _BL, _BL, _G_R180, _BL],
-    "0": [_C_L, _BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL],
-    "!": [_P2_V, _BL, _BL, _BL, _BL, _BL, _C_S, _BL, _BL],
-    ".": [_BL, _BL, _BL, _BL, _BL, _BL, _P1, _BL, _BL],
-    "'": [_P1, _BL, _BL, _G_R0, _BL, _BL, _BL, _BL, _BL],
-    ":": [_P1, _BL, _BL, _BL, _BL, _BL, _P1, _BL, _BL],
-    ";": [_P1, _BL, _BL, _BL, _BL, _BL, _C_S, _BL, _BL],
-    "/": [[_G_R0, 'pos_3_0'], _BL, _S_R180, _BL, _S_R180, _G_R0, _S_R180, _G_R0, _BL],
-    "_": [_BL, _BL, _BL, _BL, _BL, _BL, _P2_H, _BL, _BL],
-    " ": [_BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL]
-};
-
-/*
- * Transition settings.
- */
-var _TRANSITION_PROPS = ['top', 'left', 'background-color', 'border-radius'];
-
-Emblem.define('Olympic2020', { _DEFAULT_OPTIONS: _DEFAULT_OPTIONS, _BASE_DOM: _BASE_DOM, _TRANSITION_PROPS: _TRANSITION_PROPS, _formationTable: _formationTable });
-
-},{}],32:[function(require,module,exports){
-/*
- * default options
- */
-
-'use strict';
-
-var _DEFAULT_OPTIONS = {
-  displayTime: 1500,
-  duration: 1000,
-  loop: false,
-  random: false,
-  pedal: true
-};
-
-/*
- * Base of DOM, use to clone into instance of Emblem.
- */
-var _BASE_DOM = (function () {
-  var wrapper = document.createElement('div');
-  var part = document.createElement('div');
-  var whiteCircleW = document.createElement('div');
-  var whiteCircle = document.createElement('div');
-  var docFrag = document.createDocumentFragment();
-
-  wrapper.className = 'olympic-emblem';
-  part.className = 'part';
-  whiteCircleW.className = 'white_circle_wrapper';
-  whiteCircle.className = 'white_circle';
-
-  whiteCircleW.appendChild(whiteCircle);
-  part.appendChild(whiteCircleW);
-
-  // in emmet syntax.
-  // div.wrapper > div.part * 9
-  for (var i = 0; i < 9; i++) {
-    var _part = part.cloneNode(true);
-    _part.classList.add('pos_' + i % 3 + '_' + (i / 3 | 0));
-    docFrag.appendChild(_part);
-  }
-  wrapper.appendChild(docFrag);
-
-  return wrapper;
-})();
-
-/*
- * Parts className table.
- */
-var _G_R0 = "part arc gold rotate0 rotate-default";
-var _G_R90 = "part arc gold rotate90 rotate-default";
-var _G_R180 = "part arc gold rotate180 rotate-default";
-var _G_R270 = "part arc gold rotate270 rotate-default";
-var _S_R0 = "part arc silver rotate0 rotate-default";
-var _S_R90 = "part arc silver rotate90 rotate-default";
-var _S_R180 = "part arc silver rotate180 rotate-default";
-var _S_R270 = "part arc silver rotate270 rotate-default";
-var _P1 = "part pole1 gray";
-var _P2_V = "part pole2_v gray";
-var _P2_H = "part pole2_h gray";
-var _P3_V = "part pole3_v gray";
-var _P3_H = "part pole3_h gray";
-var _C_S = "part circle_s red";
-var _C_L = "part circle_l red";
-var _BL = "part blank";
-
-/*
- * Formation settings of all characters.
- */
-var _formationTable = {
-  "a": [_G_R180, _P1, _G_R270, _S_R0, _C_S, _S_R90, _P1, _BL, _P1],
-  "b": [_BL, _P3_V, _G_R90, _BL, _BL, _S_R90, _BL, _BL, _S_R180],
-  "c": [_S_R180, _P1, _G_R90, _P1, _BL, _BL, _G_R90, _P1, _S_R180],
-  "d": [_P3_V, _S_R90, _G_R270, _BL, _BL, _P1, _BL, _G_R180, _S_R0],
-  "e": [_BL, _P3_V, _G_R90, _BL, _BL, _C_S, _BL, _BL, _S_R180],
-  "f": [_BL, _P3_V, _S_R90, _BL, _BL, _C_S, _BL, _BL, _BL],
-  "g": [_P3_V, _G_R0, _BL, _BL, _BL, _S_R90, _BL, _C_S, _G_R180],
-  "h": [_P3_V, _BL, _P3_V, _BL, _C_S, _BL, _BL, _BL, _BL],
-  "i": [_BL, _C_S, _BL, _BL, _P2_V, _BL, _BL, _BL, _BL],
-  "j": [_BL, _BL, _P2_V, _BL, _BL, _BL, _S_R90, _C_S, _G_R180],
-  "k": [_P3_V, _BL, _G_R0, _BL, _C_S, _BL, _BL, _BL, _S_R270],
-  "l": [_P3_V, _BL, _BL, _BL, _BL, _BL, _BL, _C_S, _G_R180],
-  "m": [_G_R270, _BL, _S_R180, _P2_V, _C_S, _P2_V, _BL, _BL, _BL],
-  "n": [_P3_V, _G_R270, _P3_V, _BL, _C_S, _BL, _BL, _S_R90, _BL],
-  "o": [_S_R180, _P1, _G_R270, _P1, _BL, _P1, _G_R90, _P1, _S_R0],
-  "p": [_P3_V, _C_S, _G_R90, _BL, _S_R270, _BL, _BL, _BL, _BL],
-  "q": [_S_R180, _P1, _G_R270, _P1, _BL, _P1, _G_R90, _P1, _C_S],
-  "r": [_P3_V, _C_S, _S_R90, _BL, _P1, _S_R180, _BL, _BL, _G_R270],
-  "s": [_G_R180, _P3_V, _S_R90, _S_R90, _BL, _BL, _G_R270, _BL, _C_S],
-  "t": [_G_R0, _P3_V, _C_S, _BL, _BL, _BL, _BL, _BL, _S_R180],
-  "u": [_P2_V, _BL, _C_S, _P1, _BL, _P1, _G_R90, _P1, _S_R0],
-  "v": [_S_R270, _BL, _S_R180, _G_R90, _BL, _G_R0, _BL, _P1, _BL],
-  "w": [_S_R270, _BL, _G_R180, _S_R270, _P1, _G_R180, _G_R90, _BL, _S_R0],
-  "x": [_G_R90, _BL, _S_R0, _BL, _P1, _BL, _S_R180, _BL, _G_R270],
-  "y": [_G_R270, _BL, _S_R180, _BL, _C_S, _BL, _BL, _P1, _BL],
-  "z": [_G_R0, _P1, _S_R0, _BL, _C_S, _BL, _S_R180, _P1, _S_R180],
-  "1": [_G_R180, _P3_V, _BL, _BL, _BL, _BL, _BL, _BL, _BL],
-  "2": [_S_R0, _P3_V, _G_R270, _BL, _BL, _S_R0, _C_S, _BL, _G_R180],
-  "3": [_G_R0, _P1, _G_R270, _BL, _C_S, _BL, _S_R270, _P1, _S_R0],
-  "4": [_BL, _S_R180, _BL, _G_R180, _C_S, _P1, _BL, _P1, _BL],
-  "5": [_BL, _P1, _S_R0, _BL, _G_R90, _P1, _BL, _C_S, _S_R180],
-  "6": [_BL, _S_R0, _BL, _BL, _P2_V, _G_R90, _BL, _BL, _S_R180],
-  "7": [_G_R0, _C_S, _P3_V, _BL, _BL, _BL, _BL, _BL, _BL],
-  "8": [_S_R0, _C_S, _S_R90, _G_R0, _BL, _G_R90, _S_R270, _BL, _S_R180],
-  "9": [_G_R0, _P2_V, _BL, _S_R270, _BL, _BL, _BL, _G_R180, _BL],
-  "0": [_C_L, _BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL],
-  "!": [_P2_V, _BL, _BL, _BL, _BL, _BL, _C_S, _BL, _BL],
-  ".": [_BL, _BL, _BL, _BL, _BL, _BL, _P1, _BL, _BL],
-  "'": [_P1, _BL, _BL, _G_R0, _BL, _BL, _BL, _BL, _BL],
-  ":": [_P1, _BL, _BL, _BL, _BL, _BL, _P1, _BL, _BL],
-  ";": [_P1, _BL, _BL, _BL, _BL, _BL, _C_S, _BL, _BL],
-  "/": [[_G_R0, 'pos_3_0'], _BL, _S_R180, _BL, _S_R180, _G_R0, _S_R180, _G_R0, _BL],
-  "_": [_BL, _BL, _BL, _BL, _BL, _BL, _P2_H, _BL, _BL],
-  " ": [_BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL, _BL]
-};
-
-/*
- * Transition settings.
- */
-var _TRANSITION_PROPS = ['top', 'left', 'background-color', 'border-radius'];
-
-Emblem.define('Olympic2020', { _DEFAULT_OPTIONS: _DEFAULT_OPTIONS, _BASE_DOM: _BASE_DOM, _TRANSITION_PROPS: _TRANSITION_PROPS, _formationTable: _formationTable });
-
-},{}]},{},[30,31,32]);
+},{"babel-runtime/core-js/object/define-property":1,"babel-runtime/core-js/symbol":2}]},{},[31]);
