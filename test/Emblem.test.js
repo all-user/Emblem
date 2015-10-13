@@ -361,7 +361,7 @@ describe('Emblem test', () => {
         });
 
         describe('グローバルにインスタンスを配置', () => {
-            let olm = new Emblem('t', { pattern: 'Olympic2020' });
+            let olm = new Emblem('t', { pattern: 'Lines' });
             testField.appendChild(olm.dom);
             window.emblem = olm;
             olm.size = EMBLEM_SIZE;

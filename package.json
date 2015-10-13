@@ -4,9 +4,9 @@
   "description": "Generate emblem composed of 3x3 elements.",
   "main": "index.js",
   "scripts": {
-    "test": "testem ci -P 4",
+    "test": "testem",
     "esdoc": "esdoc -c esdoc.json",
-    "build:patterns:js": "babel ./src/js/patterns --optional runtime -d ./src/patterns",
+    "build:patterns:js": "browserify -t [ babelify --optional runtime ] ./src/js/patterns/*/index.js -o ./src/patterns/*/index.js",
     "build:patterns:css:Olympic2020": "stylus -c ./src/stylus/patterns/Olympic2020/index.styl -o ./src/patterns/Olympic2020/bundle.css -m",
     "build:patterns:css:Lines": "stylus -u nib -c ./src/stylus/patterns/Lines/index.styl -o ./src/patterns/Lines/bundle.css -m",
     "build:patterns:css": "npm run build:patterns:css:Olympic2020 & npm run build:patterns:css:Lines",

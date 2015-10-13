@@ -20,7 +20,7 @@ const _BASE_DOM = (() => {
     let whiteBoxBase    = document.createElement('div');
     let docFrag         = document.createDocumentFragment();
 
-    wrapper.className         = 'lines-emblem';
+    wrapper.className         = 'lines-emblem weight_3';
     part.className            = 'part';
     whiteBoxWrapper.className = 'whitebox-wrapper';
 
@@ -460,3 +460,35 @@ const _TRANSITION_PROPS = [
 ];
 
 Emblem.define('Lines', { _DEFAULT_OPTIONS, _BASE_DOM, _TRANSITION_PROPS, _formationTable });
+
+/*
+ * advanced properties
+ */
+
+const WEIGHT_PROP       = Symbol();
+const WEIGHT_LIMIT_PROP = Symbol();
+
+Object.defineProperty(Emblem.prototype, 'weight', {
+    get: function() {
+        return this[WEIGHT_PROP];
+    },
+    set: function(n) {
+        if (n > this[WEIGHT_LIMIT_PROP] || n < 0) { return; }
+        this.dom.className = `lines-emblem weight_${ n }`;
+        this[WEIGHT_PROP] = n;
+    }
+});
+
+Emblem.prototype.bolder = function () {
+    this.weight = this[WEIGHT_PROP] + 1;
+};
+
+Emblem.prototype.lighter = function () {
+    this.weight = this[WEIGHT_PROP] - 1;
+};
+
+Emblem.prototype[WEIGHT_PROP] = 3;
+
+Object.defineProperty(Emblem.prototype, WEIGHT_LIMIT_PROP, {
+    value: 6
+});

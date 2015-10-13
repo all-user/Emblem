@@ -1,6 +1,6 @@
 'use strict';
 
-import { computedStyles } from '../helpers/computed_styles.js';
+import { computedStyles } from './helpers/computed_styles.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     let wrapper    = document.querySelector('#wrapper');

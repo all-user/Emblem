@@ -1,6 +1,6 @@
 'use strict';
 
-import { clickButtonHandler } from '../helpers/embed_helper.js';
+import { clickButtonHandler } from './helpers/embed_helper.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     let wrapper    = document.querySelector('#wrapper');

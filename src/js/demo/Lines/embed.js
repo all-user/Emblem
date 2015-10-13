@@ -1,6 +1,6 @@
 'use strict';
 
-import { clickButtonHandler, getInputValues } from '../helpers/embed_helper.js';
+import { clickButtonHandler, getInputValues } from './helpers/embed_helper.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     let wrapper       = document.querySelector('#wrapper');
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let embedCode = genEmbedCode();
         embedOutput.value = embedCode;
     });
+
 });
 
 function genEmbedCode() {
