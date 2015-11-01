@@ -1,1 +1,0 @@
-def initialize(html, id)  @html = html            @id = id              end
