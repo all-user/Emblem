@@ -2,8 +2,8 @@
 
 import { computedStyles } from './computed_styles.js';
 
-const UP_KEY      = 38;
-const DOWN_KEY    = 40;
+const UP_KEY      = 75;
+const DOWN_KEY    = 74;
 
 let forms = {};
 
@@ -59,7 +59,6 @@ function clickButtonHandler(params) {
                 group.emblems.forEach(emb => { emb.lighter(); });
                 break;
         }
-        e.preventDefault();
     });
 
     setTimeout(() => {
