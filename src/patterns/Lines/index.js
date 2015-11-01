@@ -670,7 +670,8 @@ Object.defineProperty(Emblem.prototype, 'weight', {
         if (n > this[WEIGHT_LIMIT_PROP] || n < 0) {
             return;
         }
-        this.dom.className = 'lines-emblem weight_' + n;
+        this.dom.classList.add('weight_' + n);
+        this.dom.classList.remove('weight_' + this[WEIGHT_PROP]);
         this[WEIGHT_PROP] = n;
     }
 });
