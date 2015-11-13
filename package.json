@@ -14,7 +14,7 @@
     "build:js": "browserify -t [ babelify --optional runtime ] ./src/js/index.js -d | exorcist ./src/bundle.js.map > ./src/bundle.js",
     "watch:js": "watchify -v -t [ babelify --optional runtime ] ./src/js/index.js -o \"exorcist ./src/bundle.js.map > ./src/bundle.js\" -d",
     "release:js": "browserify -t [ babelify --optional runtime ] ./src/js/index.js | uglifyjs > ./dist/bundle.js",
-    "release:patterns": "cpx ./src/patterns ./dist/patterns",
+    "release:patterns": "cpx \"./src/patterns/**/*\" ./dist/patterns",
     "release:clean": "rimraf ./dist",
     "release:mkdir": "npm run release:clean && mkdirp ./dist",
     "release": "npm run release:mkdir && npm run release:js && npm run release:patterns",
