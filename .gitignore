@@ -2,3 +2,4 @@
 /src/**/bundle.js
 /src/**/bundle.css
 /src/**/*.map
+/test/**/bundle.js
