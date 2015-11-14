@@ -6,6 +6,6 @@
   "serve_files": [
     "./test/bundle.js"
   ],
-  "before_tests": "browserify -t [ babelify --optional runtime --plugins babel-plugin-espower ] ./test/index.test.js -o ./test/bundle.js",
+  "before_tests": "browserify -t [ babelify --plugins babel-plugin-espower ] ./test/index.test.js -o ./test/bundle.js",
   "launch_in_ci": ["chrome", "firefox", "safari"]
 }
