@@ -1,1 +1,1 @@
-require('./dist/bundle.js');
+require('./lib');

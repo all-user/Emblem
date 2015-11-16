@@ -2,6 +2,7 @@
 
 import extend from 'xtend';
 
+const _PATTERN_NAME_PROP = Symbol();
 const _PATTERN_PROP      = Symbol();
 const _CHAR_PROP         = Symbol();
 const _DOM_PROP          = Symbol();
@@ -20,9 +21,10 @@ let patterns = {}; // initialized in Emblem.define
 class Emblem {
     constructor(c, options = {}) {
 
-        options.pattern = options.pattern || 'Lines';
+        if (options.pattern == null) { console.error('options.pattern is not set.'); };
         if (patterns[options.pattern] == null) { console.error(`${ options.pattern } pattern is undefined.`); return; }
 
+        this[_PATTERN_NAME_PROP]  =   options.pattern;
         this[_PATTERN_PROP]       =   patterns[options.pattern];
         this[_IS_ANIMATING_PROP]  =   false;
         this[_RESUME_PROP]        =   null;
@@ -208,6 +210,10 @@ class Emblem {
         this[_PEDAL_PROP] = bool;
     }
     get pedal() { return this[_PEDAL_PROP]; }
+
+
+    // --- pattern ---
+    get pattern() { return this[_PATTERN_NAME_PROP]; }
 
 
     // --- dom ---

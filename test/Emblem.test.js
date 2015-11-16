@@ -7,7 +7,7 @@ describe('Emblem test', () => {
     const BASE_CHAR_INVALID = 'あ';
     const ALL_VALID_CHARS   = "abcdefghijklmnopqrstuvwxyz1234567890!.':;/_";
     const CSS_PATHS         = [
-        'src/patterns/Lines/bundle.css',
+        'node_modules/@all-user/ok-patterns-lines/dist/bundle.css',
         'src/patterns/Olympic2020/bundle.css'
     ];
     const DISPLAY_TIME      = 1000;
@@ -21,8 +21,8 @@ describe('Emblem test', () => {
     describe('インスタンスの生成', () => {
 
         it('大文字小文字を区別しない', done => {
-            let lowerO = new Emblem(BASE_CHAR_LOWER);
-            let upperO = new Emblem(BASE_CHAR_UPPER);
+            let lowerO = new Emblem(BASE_CHAR_LOWER, { pattern: 'Lines' });
+            let upperO = new Emblem(BASE_CHAR_UPPER, { pattern: 'Lines' });
             assert.equal(lowerO.char, BASE_CHAR_LOWER);
             assert.equal(upperO.char, BASE_CHAR_LOWER);
             done();
@@ -32,7 +32,7 @@ describe('Emblem test', () => {
             let o;
 
             beforeEach('インスタンス生成', done => {
-                o = new Emblem;
+                o = new Emblem(null, { pattern: 'Lines' });
                 done();
             })
 
@@ -118,7 +118,7 @@ describe('Emblem test', () => {
             let o;
 
             beforeEach('インスタンス生成', done => {
-                o = new Emblem(BASE_CHAR_LOWER);
+                o = new Emblem(BASE_CHAR_LOWER, { pattern: 'Lines' });
                 done();
             })
 

@@ -1,11 +1,14 @@
 {
   "framework": "mocha",
   "src_files": [
-    "./test/**/*.test.js"
+    "./src/bundle.js",
+    "./test/*.test.js"
   ],
   "serve_files": [
+    "./src/bundle.js",
+    "./src/patterns/Olympic2020/index.js",
     "./test/bundle.js"
   ],
-  "before_tests": "browserify -t [ babelify --plugins babel-plugin-espower ] ./test/index.test.js -o ./test/bundle.js",
+  "before_tests": "browserify -t [ babelify --plugins babel-plugin-espower ] ./test/index.test.js -d | exorcist ./test/bundle.js.map > ./test/bundle.js",
   "launch_in_ci": ["chrome", "firefox", "safari"]
 }

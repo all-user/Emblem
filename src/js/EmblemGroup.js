@@ -137,7 +137,7 @@ class EmblemGroup {
         let lenOld  = emblems.length;
 
         if (lenNew > lenOld) {
-            let blankArr = Array.from({ length: lenNew - lenOld }, () => new Emblem(' '));
+            let blankArr = Array.from({ length: lenNew - lenOld }, () => new Emblem(' ', { pattern: emblems.slice(-1)[0].pattern }));
             this[_EMBLEMS_PROP] = emblems.concat(blankArr);
         } else if (lenNew < lenOld) {
             this[_EMBLEMS_PROP] = emblems.slice(0, lenNew);
@@ -193,7 +193,7 @@ class EmblemGroup {
     get isAnimating() { return this[_IS_ANIMATING_PROP]; }
 }
 
-function _transformToEmblemArray(arg, opt) { // (string | [Emblem]) => [Emblem] | false
+function _transformToEmblemArray(arg, opt) { // (string | [Emblem], object) => [Emblem] | false
 
     let res;
     switch (typeof arg) {

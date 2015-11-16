@@ -1,5 +1,6 @@
 import assert from 'power-assert'
 
+
 describe('Lines Patterns Test', () => {
     const BASE_CHAR_LOWER   = 'a';
     const BASE_CHAR_UPPER   = 'A';
@@ -17,7 +18,7 @@ describe('Lines Patterns Test', () => {
     let emb;
 
     beforeEach('インスタンス生成', done => {
-        emb = new Emblem(BASE_CHAR_LOWER, { patttern: 'Lines', displayTime: DISPLAY_TIME, size: EMBLEM_SIZE });
+        emb = new Emblem(BASE_CHAR_LOWER, { pattern: 'Lines', displayTime: DISPLAY_TIME, size: EMBLEM_SIZE });
         done();
     });
 
