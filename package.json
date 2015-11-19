@@ -20,6 +20,7 @@
   "devDependencies": {
     "@all-user/ok-patterns-lines": "file:../ok-patterns-lines",
     "append-css": "^0.1.6",
+    "babel-cli": "^6.2.0",
     "babel-core": "^6.1.21",
     "babel-plugin-espower": "^2.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.1.20",
