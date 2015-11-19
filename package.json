@@ -18,8 +18,8 @@
   "author": "Keita Okamoto <ok@aaa.email.ne.jp>",
   "license": "MIT",
   "devDependencies": {
-    "@all-user/ok-patterns-lines": "file:../ok-patterns-lines",
     "append-css": "^0.1.6",
+    "babel-cli": "^6.1.18",
     "babel-core": "^6.1.21",
     "babel-plugin-espower": "^2.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.1.20",
@@ -41,6 +41,7 @@
     "watchify": "^3.3.1"
   },
   "dependencies": {
-    "xtend": "^4.0.0"
+    "xtend": "^4.0.0",
+    "@all-user/ok-patterns-lines": "file:../ok-patterns-lines"
   }
 }
