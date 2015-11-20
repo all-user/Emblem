@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "xtend": "^4.0.0",
-    "@all-user/ok-patterns-lines": "file:../ok-patterns-lines"
+    "@all-user/ok-patterns-lines": "file:../ok-patterns-lines",
+    "@all-user/ok-patterns-lines": "file:../ok-patterns-olympic2020"
   }
 }

@@ -6,7 +6,6 @@
   ],
   "serve_files": [
     "./src/bundle.js",
-    "./src/patterns/Olympic2020/index.js",
     "./test/bundle.js"
   ],
   "before_tests": "browserify -t [ babelify --plugins babel-plugin-espower ] ./test/index.test.js -d | exorcist ./test/bundle.js.map > ./test/bundle.js",

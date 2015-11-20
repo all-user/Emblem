@@ -8,7 +8,7 @@ describe('Emblem test', () => {
     const ALL_VALID_CHARS   = "abcdefghijklmnopqrstuvwxyz1234567890!.':;/_";
     const CSS_PATHS         = [
         'node_modules/@all-user/ok-patterns-lines/dist/bundle.css',
-        'src/patterns/Olympic2020/bundle.css'
+        'node_modules/@all-user/ok-patterns-olympic2020/dist/bundle.css'
     ];
     const DISPLAY_TIME      = 1000;
     const EMBLEM_SIZE       = 90;

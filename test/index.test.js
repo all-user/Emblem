@@ -1,5 +1,6 @@
 // patterns
 import '@all-user/ok-patterns-lines'
+import '@all-user/ok-patterns-olympic2020'
 
 // test
 import './Emblem.test.js'
