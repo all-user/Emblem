@@ -1,6 +1,6 @@
 'use strict';
 
-import Emblem from './Emblem.js';
+import OKBlock from './OKBlock.js';
 
 const _EMBLEMS_PROP      = Symbol();
 const _DISPLAY_TIME_PROP = Symbol();
@@ -10,7 +10,7 @@ const _LOOP_PROP         = Symbol();
 const _RANDOM_PROP       = Symbol();
 const _CANSELLER_PROP    = Symbol();
 
-class EmblemGroup {
+class OKBlocksGroup {
     constructor(chars, options = {}) {
         let { pattern, length, displayTime, loop = false, random = false, size, duration, easing, pedal = true } = options;
         this[_IS_ANIMATING_PROP]  =   false;
@@ -31,19 +31,19 @@ class EmblemGroup {
                 chars = chars.slice(0, length);
             }
         } else {
-            console.error('EmblemGroup constructor first argument should be string.');
+            console.error('OKBlocksGroup constructor first argument should be string.');
         }
 
         delete options.loop;
         delete options.displayTime;
         delete options.random;
 
-        let emblems = _transformToEmblemArray(chars, options);
+        let emblems = _transformToOKBlockArray(chars, options);
 
         if (emblems) {
             this[_EMBLEMS_PROP] = emblems;
         } else {
-            throw new Error('EmblemGroup arguments expect string or array of Emblem.')
+            throw new Error('OKBlocksGroup arguments expect string or array of OKBlock.')
         }
     }
 
@@ -88,7 +88,7 @@ class EmblemGroup {
         } else if (Array.isArray(str) && str.every(s => typeof s === 'string')) {
             strArr = str;
         } else {
-            console.error('EmblemGroup#animateFromString first argument should be string or array of string.');
+            console.error('OKBlocksGroup#animateFromString first argument should be string or array of string.');
         }
 
         _animateFromStringArray.call(this, strArr, opt);
@@ -137,7 +137,7 @@ class EmblemGroup {
         let lenOld  = emblems.length;
 
         if (lenNew > lenOld) {
-            let blankArr = Array.from({ length: lenNew - lenOld }, () => new Emblem(' ', { pattern: emblems.slice(-1)[0].pattern }));
+            let blankArr = Array.from({ length: lenNew - lenOld }, () => new OKBlock(' ', { pattern: emblems.slice(-1)[0].pattern }));
             this[_EMBLEMS_PROP] = emblems.concat(blankArr);
         } else if (lenNew < lenOld) {
             this[_EMBLEMS_PROP] = emblems.slice(0, lenNew);
@@ -151,7 +151,7 @@ class EmblemGroup {
         if (typeof time === 'number' && time > 0) {
             this[_DISPLAY_TIME_PROP] = time;
         } else {
-            console.error('EmblemGroup.displayTime should be type of positive number.');
+            console.error('OKBlocksGroup.displayTime should be type of positive number.');
         }
     }
     get displayTime() { return this[_DISPLAY_TIME_PROP]; }
@@ -193,15 +193,15 @@ class EmblemGroup {
     get isAnimating() { return this[_IS_ANIMATING_PROP]; }
 }
 
-function _transformToEmblemArray(arg, opt) { // (string | [Emblem], object) => [Emblem] | false
+function _transformToOKBlockArray(arg, opt) { // (string | [OKBlock], object) => [OKBlock] | false
 
     let res;
     switch (typeof arg) {
         case 'string':
-            res = [].map.call(arg, c => new Emblem(c, opt));
+            res = [].map.call(arg, c => new OKBlock(c, opt));
             break;
         case 'object':
-            if (Array.isArray(arg) && arg.every(o => o instanceof Emblem)) {
+            if (Array.isArray(arg) && arg.every(o => o instanceof OKBlock)) {
                 res = arg;
             } else {
                 res = false;
@@ -255,4 +255,4 @@ function _animateFromStringArray(strArr,opt) {
 }
 
 
-export default EmblemGroup;
+export default OKBlocksGroup;

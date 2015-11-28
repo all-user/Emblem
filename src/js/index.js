@@ -1,7 +1,7 @@
 'use strict';
 
-import Emblem from './Emblem.js'
-import EmblemGroup from './EmblemGroup.js'
+import OKBlock from './OKBlock.js'
+import OKBlocksGroup from './OKBlocksGroup.js'
 
-window.Emblem = Emblem;
-window.EmblemGroup = EmblemGroup;
+window.OKBlock = OKBlock;
+window.OKBlocksGroup = OKBlocksGroup;

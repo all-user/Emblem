@@ -1,7 +1,7 @@
 import assert from 'power-assert'
 import appendCSS from 'append-css'
 
-describe('Emblem test', () => {
+describe('OKBlock test', () => {
     const BASE_CHAR_LOWER   = 'a';
     const BASE_CHAR_UPPER   = 'A';
     const BASE_CHAR_INVALID = 'あ';
@@ -21,8 +21,8 @@ describe('Emblem test', () => {
     describe('インスタンスの生成', () => {
 
         it('大文字小文字を区別しない', done => {
-            let lowerO = new Emblem(BASE_CHAR_LOWER, { pattern: 'Lines' });
-            let upperO = new Emblem(BASE_CHAR_UPPER, { pattern: 'Lines' });
+            let lowerO = new OKBlock(BASE_CHAR_LOWER, { pattern: 'Lines' });
+            let upperO = new OKBlock(BASE_CHAR_UPPER, { pattern: 'Lines' });
             assert.equal(lowerO.char, BASE_CHAR_LOWER);
             assert.equal(upperO.char, BASE_CHAR_LOWER);
             done();
@@ -32,13 +32,13 @@ describe('Emblem test', () => {
             let o;
 
             beforeEach('インスタンス生成', done => {
-                o = new Emblem(null, { pattern: 'Lines' });
+                o = new OKBlock(null, { pattern: 'Lines' });
                 done();
             })
 
             it('正しく生成されているか', done => {
                 assert.equal(o.char, null);
-                assert.ok(o instanceof Emblem);
+                assert.ok(o instanceof OKBlock);
                 done();
             });
 
@@ -118,13 +118,13 @@ describe('Emblem test', () => {
             let o;
 
             beforeEach('インスタンス生成', done => {
-                o = new Emblem(BASE_CHAR_LOWER, { pattern: 'Lines' });
+                o = new OKBlock(BASE_CHAR_LOWER, { pattern: 'Lines' });
                 done();
             })
 
             it('正しく生成されているか', done => {
                 assert.equal(o.char, BASE_CHAR_LOWER);
-                assert.ok(o instanceof Emblem);
+                assert.ok(o instanceof OKBlock);
                 done();
             });
 
@@ -249,7 +249,7 @@ describe('Emblem test', () => {
 
 
         describe('aの文字を表示', () => {
-            let olm = new Emblem('a', { size: EMBLEM_SIZE, pattern: 'Olympic2020' });
+            let olm = new OKBlock('a', { size: EMBLEM_SIZE, pattern: 'Olympic2020' });
             olm.appendTo(testField);
 
 
@@ -282,7 +282,7 @@ describe('Emblem test', () => {
         });
 
         describe('/の文字を表示', () => {
-            let olm = new Emblem('/', { pattern: 'Olympic2020' });
+            let olm = new OKBlock('/', { pattern: 'Olympic2020' });
             testField.appendChild(olm.dom);
 
             it('サイズが指定通りになっているか', done => {
@@ -310,7 +310,7 @@ describe('Emblem test', () => {
         });
 
         describe('aの文字を表示後toでzに変換',() => {
-            let olm = new Emblem('a', { pattern: 'Olympic2020' });
+            let olm = new OKBlock('a', { pattern: 'Olympic2020' });
             testField.appendChild(olm.dom);
 
             before('aを表示', done => {
@@ -346,7 +346,7 @@ describe('Emblem test', () => {
         });
 
         describe('文字列に沿って順番に変化させる', () => {
-            let olm = new Emblem('a', { pattern: 'Olympic2020', size : 500 });
+            let olm = new OKBlock('a', { pattern: 'Olympic2020', size : 500 });
             testField.appendChild(olm.dom);
             olm.dom.addEventListener('click', () => {
                 if (olm.isAnimating) {
@@ -361,7 +361,7 @@ describe('Emblem test', () => {
         });
 
         describe('グローバルにインスタンスを配置', () => {
-            let olm = new Emblem('t', { pattern: 'Lines' });
+            let olm = new OKBlock('t', { pattern: 'Lines' });
             testField.appendChild(olm.dom);
             window.emblem = olm;
             olm.size = EMBLEM_SIZE;

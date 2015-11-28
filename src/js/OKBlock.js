@@ -16,9 +16,9 @@ const _RANDOM_PROP       = Symbol();
 const _PEDAL_PROP        = Symbol();
 const _CANSELLER_PROP    = Symbol();
 
-let patterns = {}; // initialized in Emblem.define
+let patterns = {}; // initialized in OKBlock.define
 
-class Emblem {
+class OKBlock {
     constructor(c, options = {}) {
 
         if (options.pattern == null) { console.error('options.pattern is not set.'); };
@@ -148,7 +148,7 @@ class Emblem {
             domStyle.width  = `${ size }px`;
             domStyle.height = `${ size }px`;
         } else {
-            console.error('Emblem.size should be type of zero or positive number.');
+            console.error('OKBlock.size should be type of zero or positive number.');
         }
     }
     get size() { return +this[_DOM_PROP].style.width.replace('px', ''); }
@@ -160,7 +160,7 @@ class Emblem {
         if (typeof time === 'number' && time > 0) {
             this[_DISPLAY_TIME_PROP] = time;
         } else {
-            console.error('Emblem.displayTime should be type of positive number.');
+            console.error('OKBlock.displayTime should be type of positive number.');
         }
     }
     get displayTime() { return this[_DISPLAY_TIME_PROP]; }
@@ -173,7 +173,7 @@ class Emblem {
             this[_DURATION_PROP] = time;
             _updateTransitionConfig.call(this);
         } else {
-            console.error('Emblem.duration should be type of zero or positive number.');
+            console.error('OKBlock.duration should be type of zero or positive number.');
         }
     }
     get duration() { return this[_DURATION_PROP]; }
@@ -301,4 +301,4 @@ function _updateTransitionConfig() { // @bind this
 
 const _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
 
-export default Emblem;
+export default OKBlock;

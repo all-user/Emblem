@@ -1,11 +1,11 @@
-# `Emblem` class
+# `OKBlock` class
 
 エンブレム１文字を表現するクラス。
 
 ## Usage
 
 ```javascript
-var olm = Emblem('t', { size: 300 }); // initial charactor and size in px.
+var olm = OKBlock('t', { size: 300 }); // initial charactor and size in px.
 
 document.addEventListener('DOMContentLoaded', e => {
 
@@ -21,41 +21,41 @@ document.addEventListener('DOMContentLoaded', e => {
 ```
 
 ------------------------------
-#### `Emblem Constructor`
-- [constructor](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020-constructor-1)
+#### `OKBlock Constructor`
+- [constructor](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#olympic2020-constructor-1)
 
-#### `Emblem Instance Methods`
-- [to](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototypetoc)
-- [appendTo](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototypeappendtoparent)
-- [animateFromString](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototypeanimatefromstringstr-opt)
-- [stopAnimate](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototypestopanimate)
-- [resumeAnimate](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020prototyperesumeanimate)
+#### `OKBlock Instance Methods`
+- [to](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#olympic2020prototypetoc)
+- [appendTo](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#olympic2020prototypeappendtoparent)
+- [animateFromString](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#olympic2020prototypeanimatefromstringstr-opt)
+- [stopAnimate](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#olympic2020prototypestopanimate)
+- [resumeAnimate](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#olympic2020prototyperesumeanimate)
 
-#### `Emblem Instance Properties`
-- [options](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#options)
-- [size](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#size)
-- [displayTime](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#displaytime)
-- [duration](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#duration)
-- [easing](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#easing)
-- [loop](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#loop)
-- [random](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#random)
-- [pedal](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#pedal)
+#### `OKBlock Instance Properties`
+- [options](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#options)
+- [size](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#size)
+- [displayTime](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#displaytime)
+- [duration](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#duration)
+- [easing](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#easing)
+- [loop](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#loop)
+- [random](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#random)
+- [pedal](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#pedal)
 
-#### `Emblem Class Getter Properties`
-- [allValidChars](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#allvalidchars)
+#### `OKBlock Class Getter Properties`
+- [allValidChars](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#allvalidchars)
 
-#### `Emblem Instance Getter Properties`
-- [dom](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#dom)
-- [char](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#char)
-- [isAnimating](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#isanimating)
+#### `OKBlock Instance Getter Properties`
+- [dom](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#dom)
+- [char](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#char)
+- [isAnimating](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#isanimating)
 
 ------------------------------
 
-## _Emblem Constructor_
+## _OKBlock Constructor_
 
-### `Emblem(c, opt)`
+### `OKBlock(c, opt)`
 
-`Emblem`のインスタンスを生成する。
+`OKBlock`のインスタンスを生成する。
 
 #### Arguments
 
@@ -71,9 +71,9 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ------------------------------
 
-## _Emblem Instance Methods_
+## _OKBlock Instance Methods_
 
-### `Emblem.prototype.to(c)`
+### `OKBlock.prototype.to(c)`
 
 エンブレムを別の文字に変化させる。
 
@@ -87,7 +87,7 @@ _(boolean)_ : 受け取った文字に変化した場合はtrue、文字が不�
 
 ------------------------------
 
-### `Emblem.prototype.appendTo(parent)`
+### `OKBlock.prototype.appendTo(parent)`
 
 引数として受け取った要素にエンブレムを追加する。
 
@@ -97,7 +97,7 @@ _(boolean)_ : 受け取った文字に変化した場合はtrue、文字が不�
 
 ------------------------------
 
-### `Emblem.prototype.animateFromString(str, opt)`
+### `OKBlock.prototype.animateFromString(str, opt)`
 
 受け取った文字列に沿って順に文字を変化せていく。
 
@@ -115,19 +115,19 @@ _(boolean)_ : 受け取った文字に変化した場合はtrue、文字が不�
 
 ------------------------------
 
-### `Emblem.prototype.stopAnimate()`
+### `OKBlock.prototype.stopAnimate()`
 
-`Emblem.prototype.animateFromString()`の実行を中断する。
-
-------------------------------
-
-### `Emblem.prototype.resumeAnimate()`
-
-`Emblem.prototype.stopAnimate()`で中断したアニメーションを再開する。
+`OKBlock.prototype.animateFromString()`の実行を中断する。
 
 ------------------------------
 
-## _Emblem Instance Properties_
+### `OKBlock.prototype.resumeAnimate()`
+
+`OKBlock.prototype.stopAnimate()`で中断したアニメーションを再開する。
+
+------------------------------
+
+## _OKBlock Instance Properties_
 
 
 ### `options`
@@ -141,7 +141,7 @@ _(Object)_
 
 #### Example
 ```javascript
-let olm = new Emblem('a' , { size: 5000, displayTime: 12000 });
+let olm = new OKBlock('a' , { size: 5000, displayTime: 12000 });
 console.log(olm.options);
 // {
 //     size       : 5000,
@@ -214,7 +214,7 @@ _(string)_
 
 ### `loop`
 
-`Emblem.prototype.animateFromString`実行時、アニメーションをループさせるかどうか。
+`OKBlock.prototype.animateFromString`実行時、アニメーションをループさせるかどうか。
 
 #### Type
 
@@ -224,7 +224,7 @@ _(boolean)_
 
 ### `random`
 
-このオプションが有効の時`Emblem.prototype.animateFromString`を実行すると、受け取った文字列から次に変化する文字をランダムで選ぶようになる。
+このオプションが有効の時`OKBlock.prototype.animateFromString`を実行すると、受け取った文字列から次に変化する文字をランダムで選ぶようになる。
 
 #### Type
 
@@ -242,7 +242,7 @@ _(boolean)_
 
 ------------------------------
 
-## _Emblem Class Getter Properties_
+## _OKBlock Class Getter Properties_
 
 ### `allValidChars`
 
@@ -255,7 +255,7 @@ _(`Array`)_
 
 ------------------------------
 
-## _Emblem Instance Getter Properties_
+## _OKBlock Instance Getter Properties_
 
 ### `dom`
 
@@ -279,7 +279,7 @@ _(string|null)_
 
 ### `isAnimating`
 
-現在`Emblem.prototype.animateFromString`が実行中かどうか。
+現在`OKBlock.prototype.animateFromString`が実行中かどうか。
 
 #### Type
 

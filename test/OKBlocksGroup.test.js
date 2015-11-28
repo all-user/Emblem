@@ -1,7 +1,7 @@
 import assert from 'power-assert'
 import appendCSS from 'append-css'
 
-describe('EmblemGroup test', () => {
+describe('OKBlocksGroup test', () => {
     const TITLE_COPY   = 'tokyo 2020';
     const LONG_COPY    = 'emblem paralympic games';
     const SHORT_COPY   = 'a to z';
@@ -29,7 +29,7 @@ describe('EmblemGroup test', () => {
     ];
 
     describe('インスタンスの生成', () => {
-        let group = new EmblemGroup(TITLE_COPY, { pattern: 'Lines' });
+        let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines' });
 
         it('文字列から生成', done => {
             assert.equal(group.toString(), TITLE_COPY);
@@ -94,7 +94,7 @@ describe('EmblemGroup test', () => {
     describe('長さを指定してインスタンスの生成', () => {
 
         describe('与える文字列より長い長さを指定', () => {
-            let group = new EmblemGroup(TITLE_COPY, { pattern: 'Lines', length: LONG_COPY.length });
+            let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines', length: LONG_COPY.length });
 
             it('文字列から生成', done => {
                 assert.equal(group.toString(), (TITLE_COPY + BLANK_COPY).slice(0, LONG_COPY.length));
@@ -115,7 +115,7 @@ describe('EmblemGroup test', () => {
         })
 
         describe('与える文字列より短い長さを指定', () => {
-            let group = new EmblemGroup(TITLE_COPY, { pattern: 'Lines', length: SHORT_COPY.length });
+            let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines', length: SHORT_COPY.length });
 
             it('文字列から生成', done => {
                 assert.equal(group.toString(), TITLE_COPY.slice(0, SHORT_COPY.length));
@@ -136,7 +136,7 @@ describe('EmblemGroup test', () => {
         })
 
         describe('サイズを指定', () => {
-            let group = new EmblemGroup(TITLE_COPY, { pattern: 'Lines', length: SHORT_COPY.length });
+            let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines', length: SHORT_COPY.length });
 
             it('文字列から生成', done => {
                 assert.equal(group.toString(), TITLE_COPY.slice(0, SHORT_COPY.length));
@@ -158,7 +158,7 @@ describe('EmblemGroup test', () => {
         })
 
         describe('emblemGroup.optionsにオブジェクトを渡して設定', () => {
-            let group = new EmblemGroup(TITLE_COPY, { pattern: 'Lines', length: SHORT_COPY.length });
+            let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines', length: SHORT_COPY.length });
             let opt = {
                 length:      40,
                 size:        800,
@@ -241,7 +241,7 @@ describe('EmblemGroup test', () => {
 
         describe('サイズを指定', () => {
             let size  = 90;
-            let group = new EmblemGroup(TITLE_COPY, { pattern: 'Lines', length: TITLE_COPY.length, size: size });
+            let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines', length: TITLE_COPY.length, size: size });
 
             it('指定したサイズになっているか', done => {
                 group.emblems.forEach(e => {
@@ -253,11 +253,11 @@ describe('EmblemGroup test', () => {
 
         describe('インスタンスをDOMに追加', () => {
 
-            let group = new EmblemGroup(TITLE_COPY, { pattern: 'Lines', length: TITLE_COPY.length, size: EMBLEM_SIZE });
+            let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines', length: TITLE_COPY.length, size: EMBLEM_SIZE });
 
             group.appendTo(testField);
 
-            it('全てのEmblemインスタンスがDOMに存在するか', done => {
+            it('全てのOKBlockインスタンスがDOMに存在するか', done => {
                 group.emblems.forEach(e => {
                     assert.equal(e.dom.parentNode, testField);
                 });

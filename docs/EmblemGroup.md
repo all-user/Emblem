@@ -1,15 +1,15 @@
-# `EmblemGroup` Class
+# `OKBlocksGroup` Class
 
-`Emblem`のインスタンスをまとめて扱うためのクラス。<br>
-`Emblem`が１文字を表現するのに対し、`EmblemGroup`は文字列を表現することが出来る。<br>
-内部に[`Emblem`](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#olympic2020-class)のインスタンスの配列を持ち、それらに対して様々な操作を行うことが出来る。
+`OKBlock`のインスタンスをまとめて扱うためのクラス。<br>
+`OKBlock`が１文字を表現するのに対し、`OKBlocksGroup`は文字列を表現することが出来る。<br>
+内部に[`OKBlock`](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#olympic2020-class)のインスタンスの配列を持ち、それらに対して様々な操作を行うことが出来る。
 
 ## Usage
 
 ```javascript
-var group = new EmblemGroup('tokyo 2020');
+var group = new OKBlocksGroup('tokyo 2020');
 console.log(group.toString()); // 'tokyo 2020'
-console.log(group.emblems);    // Array of Emblem instances.
+console.log(group.emblems);    // Array of OKBlock instances.
 
 document.addEventListener('DOMContentLoaded', e => {
 
@@ -24,60 +24,60 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ------------------------------
 
-#### `EmblemGroup Constructor`
+#### `OKBlocksGroup Constructor`
 
-- [constructor](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupchars-opt)
+- [constructor](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#emblemgroupchars-opt)
 
-#### `EmblemGroup Instance Methods`
+#### `OKBlocksGroup Instance Methods`
 
-- [map](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypemapstr)
-- [appendTo](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypeappendtoparent)
-- [animateFromString](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypeanimatefromstringstr-opt)
-- [animateFromStringArray](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypeanimatefromstringarraystrarr-opt)
-- [stopAnimate](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypestopanimate)
-- [resumeAnimate](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototyperesumeanimate)
-- [toString](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypetostring)
+- [map](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#emblemgroupprototypemapstr)
+- [appendTo](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#emblemgroupprototypeappendtoparent)
+- [animateFromString](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#emblemgroupprototypeanimatefromstringstr-opt)
+- [animateFromStringArray](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#emblemgroupprototypeanimatefromstringarraystrarr-opt)
+- [stopAnimate](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#emblemgroupprototypestopanimate)
+- [resumeAnimate](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#emblemgroupprototyperesumeanimate)
+- [toString](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#emblemgroupprototypetostring)
 
-#### `EmblemGroup Instance Properties`
+#### `OKBlocksGroup Instance Properties`
 
-- [options](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#options)
-- [length](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#length)
-- [displayTime](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#displaytime)
-- [loop](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#loop)
-- [random](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#random)
+- [options](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#options)
+- [length](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#length)
+- [displayTime](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#displaytime)
+- [loop](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#loop)
+- [random](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#random)
 
-#### `EmblemGroup Instance Getter Properties`
+#### `OKBlocksGroup Instance Getter Properties`
 
-- [emblems](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblems)
-- [isAnimating](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#isanimating)
+- [emblems](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#emblems)
+- [isAnimating](https://github.com/all-user/olympic2020/blob/master/docs/OKBlocksGroup.md#isanimating)
 
 ------------------------------
 
-## _EmblemGroup Constructor_
+## _OKBlocksGroup Constructor_
 
-### `EmblemGroup(chars, opt)`
+### `OKBlocksGroup(chars, opt)`
 
-`EmblemGroup`のインスタンスを生成する。
+`OKBlocksGroup`のインスタンスを生成する。
 
 
 #### Arguments
 
-1. __`chars`__ _(string)_ : この文字列の各文字から`Emblem`のインスタンスを生成する。
+1. __`chars`__ _(string)_ : この文字列の各文字から`OKBlock`のインスタンスを生成する。
 2. __`[opt]`__ _(Object)_ : その他のオプション。
-  - __`[opt.length]`__ _(number)_ : 内部的に保持する`Emblem`インスタンスの数を指定する。
-  - __`[opt.size]`__ _(number)_ : 内部に保持する`Emblem`のインスタンスに対してまとめてサイズを指定する、[`Emblem`のオプション](https://github.com/all-user/olympic2020/blob/master/docs/Emblem.md#arguments)を参照。
-  - __`[opt.displayTime]`__ _(number=1500)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、次のパターンへ切り替わるまでの`opt.duration`を含めた表示時間。
-  - __`[opt.duration]`__ _(number)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、次のパターンへ切り替わるアニメーションに掛かる時間。
-  - __`[opt.loop]`__ _(boolean)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、アニメーションをループさせるかどうか。
+  - __`[opt.length]`__ _(number)_ : 内部的に保持する`OKBlock`インスタンスの数を指定する。
+  - __`[opt.size]`__ _(number)_ : 内部に保持する`OKBlock`のインスタンスに対してまとめてサイズを指定する、[`OKBlock`のオプション](https://github.com/all-user/olympic2020/blob/master/docs/OKBlock.md#arguments)を参照。
+  - __`[opt.displayTime]`__ _(number=1500)_ : `OKBlocksGroup.prototype.animateFromString`、`OKBlocksGroup.prototype.animateFromStringArray`実行時、次のパターンへ切り替わるまでの`opt.duration`を含めた表示時間。
+  - __`[opt.duration]`__ _(number)_ : `OKBlocksGroup.prototype.animateFromString`、`OKBlocksGroup.prototype.animateFromStringArray`実行時、次のパターンへ切り替わるアニメーションに掛かる時間。
+  - __`[opt.loop]`__ _(boolean)_ : `OKBlocksGroup.prototype.animateFromString`、`OKBlocksGroup.prototype.animateFromStringArray`実行時、アニメーションをループさせるかどうか。
 
 ------------------------------
 
-## _EmblemGroup Instance Methods_
+## _OKBlocksGroup Instance Methods_
 
-### `EmblemGroup.prototype.map(str)`
+### `OKBlocksGroup.prototype.map(str)`
 
 グループが表現する文字列を引数で受け取った文字列で置き換える。<br>
-受け取った文字列に添って、内部に持つ`Emblem`インスタンスの文字を変更していく。<br>
+受け取った文字列に添って、内部に持つ`OKBlock`インスタンスの文字を変更していく。<br>
 元の文字列の長さを超える部分はカットされ、元の長さに満たない部分は` `半角スペースで埋められる。
 
 #### Arguments
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ------------------------------
 
-### `EmblemGroup.prototype.appendTo(parent)`
+### `OKBlocksGroup.prototype.appendTo(parent)`
 
 受け取った要素にエンブレムの文字列を追加する。
 
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ------------------------------
 
-### `EmblemGroup.prototype.animateFromString(str, opt)`
+### `OKBlocksGroup.prototype.animateFromString(str, opt)`
 
 受け取った文字列に沿って、グループの表現する文字列を順に変化せていく。
 
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ------------------------------
 
-### `EmblemGroup.prototype.animateFromStringArray(strArr, opt)`
+### `OKBlocksGroup.prototype.animateFromStringArray(strArr, opt)`
 
 グループの表現する文字列を、配列の頭から順にその中の文字列に変化させていく。<br>
 配列内の文字列が元の文字列より長い場合は超える部分がカットされ、元の文字列より短い場合は` `半角スペースで埋められる。
@@ -128,25 +128,25 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ------------------------------
 
-### `EmblemGroup.prototype.stopAnimate()`
+### `OKBlocksGroup.prototype.stopAnimate()`
 
-`EmblemGroup.prototype.animateFromString()`、`EmblemGroup.prototype.animateFromStringArray()`の実行を中断する。
-
-------------------------------
-
-### `EmblemGroup.prototype.resumeAnimate()`
-
-`EmblemGroup.prototype.stopAnimate()`で中断したアニメーションを再開する。
+`OKBlocksGroup.prototype.animateFromString()`、`OKBlocksGroup.prototype.animateFromStringArray()`の実行を中断する。
 
 ------------------------------
 
-### `EmblemGroup.prototype.toString()`
+### `OKBlocksGroup.prototype.resumeAnimate()`
+
+`OKBlocksGroup.prototype.stopAnimate()`で中断したアニメーションを再開する。
+
+------------------------------
+
+### `OKBlocksGroup.prototype.toString()`
 
 グループの表現する文字列を取得する。
 
 ------------------------------
 
-## _EmblemGroup Instance Properties_
+## _OKBlocksGroup Instance Properties_
 
 ### `options`
 
@@ -159,7 +159,7 @@ _(Object)_
 
 #### Example
 ```javascript
-let group = new EmblemGroup('some message', { length: 30, displayTime: 12000 });
+let group = new OKBlocksGroup('some message', { length: 30, displayTime: 12000 });
 console.log(olm.options);
 // {
 //     length     : 30,
@@ -182,7 +182,7 @@ console.log(olm.options);
 
 ### `length`
 
-グループが表現する文字列の長さ、`Emblem`インスタンスの数。
+グループが表現する文字列の長さ、`OKBlock`インスタンスの数。
 
 #### Type
 
@@ -203,7 +203,7 @@ _(number)_
 
 ### `loop`
 
-`EmblemGroup.prototype.animateFromString`、あるいは`EmblemGroup.prototype.animateFromStringArray`実行時、アニメーションをループさせるかどうか。
+`OKBlocksGroup.prototype.animateFromString`、あるいは`OKBlocksGroup.prototype.animateFromStringArray`実行時、アニメーションをループさせるかどうか。
 
 #### Type
 
@@ -213,7 +213,7 @@ _(boolean)_
 
 ### `random`
 
-このオプションが有効の時`EmblemGroup.prototype.animateFromString`、あるいは`EmblemGroup.prototype.animateFromStringArray`を実行すると、受け取った文字列、配列から次に変化する文字列をランダムで選ぶようになる。
+このオプションが有効の時`OKBlocksGroup.prototype.animateFromString`、あるいは`OKBlocksGroup.prototype.animateFromStringArray`を実行すると、受け取った文字列、配列から次に変化する文字列をランダムで選ぶようになる。
 
 #### Type
 
@@ -221,11 +221,11 @@ _(boolean)_
 
 ------------------------------
 
-## _EmblemGroup Instance Getter Properties_
+## _OKBlocksGroup Instance Getter Properties_
 
 ### `emblems`
 
-`Emblem`のインスタンスの配列。
+`OKBlock`のインスタンスの配列。
 
 #### Type
 
@@ -235,7 +235,7 @@ _(Array)_
 
 ### `isAnimating`
 
-現在`EmblemGroup.prototype.animateFromString`が実行中かどうか。
+現在`OKBlocksGroup.prototype.animateFromString`が実行中かどうか。
 
 #### Type
 
