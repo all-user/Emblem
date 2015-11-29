@@ -1,7 +1,7 @@
 import assert from 'power-assert'
 import appendCSS from 'append-css'
 
-describe('OKBlock test', () => {
+describe('OKBlock', () => {
     const BASE_CHAR_LOWER   = 'a';
     const BASE_CHAR_UPPER   = 'A';
     const BASE_CHAR_INVALID = 'あ';
@@ -18,189 +18,126 @@ describe('OKBlock test', () => {
     const SUN_RED   = 'rgb(230, 3, 20)';
     const BLANK     = 'rgba(0, 0, 0, 0)';
 
-    describe('インスタンスの生成', () => {
+    describe('大文字小文字を区別しない', () => {
+        let runCases = [
+            {desc: '大文字で初期化', args: [BASE_CHAR_UPPER], result: BASE_CHAR_LOWER},
+            {desc: '小文字で初期化', args: [BASE_CHAR_LOWER], result: BASE_CHAR_LOWER}
+        ];
 
-        it('大文字小文字を区別しない', done => {
-            let lowerO = new OKBlock(BASE_CHAR_LOWER, { pattern: 'Lines' });
-            let upperO = new OKBlock(BASE_CHAR_UPPER, { pattern: 'Lines' });
-            assert.equal(lowerO.char, BASE_CHAR_LOWER);
-            assert.equal(upperO.char, BASE_CHAR_LOWER);
-            done();
-        });
-
-        describe('引数なしでnew', () => {
-            let o;
-
-            beforeEach('インスタンス生成', done => {
-                o = new OKBlock(null, { pattern: 'Lines' });
+        runCases.forEach((runCase, i) => {
+            it(runCase.desc, done => {
+                let okblock = new OKBlock(...runCase.args, { pattern: 'Lines' });
+                assert.equal(okblock.char, runCase.result);
                 done();
-            })
-
-            it('正しく生成されているか', done => {
-                assert.equal(o.char, null);
-                assert.ok(o instanceof OKBlock);
-                done();
-            });
-
-            describe('toを使って文字を変更', () => {
-
-                it('小文字を与えると小文字になる', done => {
-                    let res = o.to(BASE_CHAR_LOWER);
-                    assert.equal(o.char, BASE_CHAR_LOWER);
-                    assert.ok(res);
-                    done();
-                });
-
-                it('大文字を与えても小文字になる', done => {
-                    let res = o.to(BASE_CHAR_UPPER);
-                    assert.equal(o.char, BASE_CHAR_LOWER);
-                    assert.ok(res);
-                    done();
-                });
-
-                it('this.pedal有効時、現在の文字と同じ文字を与えるとfalseを返し、this.charは変化しない', done => {
-                    o.to(BASE_CHAR_LOWER);
-                    let res = o.to(BASE_CHAR_LOWER);
-                    assert.equal(o.char, BASE_CHAR_LOWER);
-                    assert.ok(o.pedal);
-                    assert.equal(res, false);
-                    done();
-                });
-
-                it('無効な文字を与えるとfalseを返し、this.charは変化しない', done => {
-                    let res = o.to(BASE_CHAR_INVALID);
-                    assert.equal(o.char, null);
-                    assert.equal(res, false);
-                    done();
-                });
-
-                it('"abc...xyz...:/_"全ての文字を順に変換', done => {
-                    [].reduce.call(ALL_VALID_CHARS, (o, char) => {
-                        let res = o.to(char);
-                        assert.equal(o.char, char);
-                        return o;
-                    }, o);
-                    done();
-                });
-
-                describe('emblem.optionsにオブジェクトを渡して設定', () => {
-                    let opt = {
-                        size:        800,
-                        displayTime: 3000,
-                        duration:    1200,
-                        easing:      'cubic-bezier(.1,.8,.5,.9)',
-                        loop:        false,
-                        random:      true,
-                        pedal:       false,
-                    };
-
-                    it('オプションの各パラメータが正しく設定されているか', done => {
-                        o.options = opt;
-                        assert.equal(o.displayTime, opt.displayTime);
-                        assert.equal(o.duration,    opt.duration);
-                        assert.equal(o.easing,      opt.easing);
-                        assert.equal(o.loop,        opt.loop);
-                        assert.equal(o.random,      opt.random);
-                        assert.equal(o.pedal,       opt.pedal);
-                        done();
-                    });
-
-                    it('o.optionsが返すオブジェクトが正しいか', done => {
-                        o.options = opt;
-                        assert.deepEqual(o.options, opt);
-                        done();
-                    });
-                });
             });
         });
-
-        describe('引数ありでnew', () => {
-            let o;
-
-            beforeEach('インスタンス生成', done => {
-                o = new OKBlock(BASE_CHAR_LOWER, { pattern: 'Lines' });
-                done();
-            })
-
-            it('正しく生成されているか', done => {
-                assert.equal(o.char, BASE_CHAR_LOWER);
-                assert.ok(o instanceof OKBlock);
-                done();
-            });
-
-            describe('toを使って文字を変更', () => {
-
-                it('小文字を与えると小文字になる', done => {
-                    let res = o.to(BASE_CHAR_LOWER);
-                    assert.equal(o.char, BASE_CHAR_LOWER);
-                    assert.equal(res, false);
-                    done();
-                });
-
-                it('大文字を与えても小文字になる', done => {
-                    let res = o.to(BASE_CHAR_UPPER);
-                    assert.equal(o.char, BASE_CHAR_LOWER);
-                    done();
-                });
-
-                it('this.pedal有効時、現在の文字と同じ文字を与えるとfalseを返し、this.charは変化しない', done => {
-                    o.to(BASE_CHAR_LOWER);
-                    let res = o.to(BASE_CHAR_LOWER);
-                    assert.equal(o.char, BASE_CHAR_LOWER);
-                    assert.ok(o.pedal);
-                    assert.equal(res, false);
-                    done();
-                });
-
-
-                it('無効な文字を与えるとfalseを返し、this.charは変化しない', done => {
-                    let res = o.to(BASE_CHAR_INVALID);
-                    assert.equal(o.char, BASE_CHAR_LOWER);
-                    assert.equal(res, false);
-                    done();
-                });
-
-                it('"abc...xyz...:/_"全ての文字を順に変換', done => {
-                    [].reduce.call(ALL_VALID_CHARS, (o, char) => {
-                      let res = o.to(char);
-                      assert.equal(o.char, char);
-                      return o;
-                    }, o);
-                    done();
-                });
-
-                describe('emblem.optionsにオブジェクトを渡して設定', () => {
-                    let opt = {
-                        size:        800,
-                        displayTime: 3000,
-                        duration:    1200,
-                        easing:      'cubic-bezier(.1,.8,.5,.9)',
-                        loop:        false,
-                        random:      true,
-                        pedal:       false,
-                    };
-
-                    it('オプションの各パラメータが正しく設定されているか', done => {
-                        o.options = opt;
-                        assert.equal(o.displayTime, opt.displayTime);
-                        assert.equal(o.duration,    opt.duration);
-                        assert.equal(o.easing,      opt.easing);
-                        assert.equal(o.loop,        opt.loop);
-                        assert.equal(o.random,      opt.random);
-                        assert.equal(o.pedal,       opt.pedal);
-                        done();
-                    });
-
-                    it('o.optionsが返すオブジェクトが正しいか', done => {
-                        o.options = opt;
-                        assert.deepEqual(o.options, opt);
-                        done();
-                    });
-                });
-            });
-        });
-
     });
+
+    describe('instanceof OKBlock', () => {
+        let runCases = [
+            {desc: 'lower', args: [BASE_CHAR_LOWER], result: OKBlock},
+            {desc: 'null',  args: [null],            result: OKBlock}
+        ];
+
+        runCases.forEach((runCase, i) => {
+            it(runCase.desc, done => {
+                let okblock = new OKBlock(...runCase.args, { pattern: 'Lines' });
+                assert.ok(okblock instanceof runCase.result);
+                done();
+            });
+        });
+    });
+
+    describe('OKBlock#char', () => {
+        let runCases = [
+            {desc: '小文字で初期化', args: [BASE_CHAR_LOWER], result: BASE_CHAR_LOWER},
+            {desc: 'nullで初期化',  args: [null],            result: null}
+        ];
+
+        runCases.forEach((runCase, i) => {
+            it(runCase.desc, done => {
+                let okblock = new OKBlock(...runCase.args, { pattern: 'Lines' });
+                assert.equal(okblock.char, runCase.result);
+                done();
+            });
+        });
+    });
+
+    describe('OKBlock#to', () => {
+        describe('OKBlock#charは常に小文字', () => {
+            let runCases = [
+                { desc: '小文字で初期化、引数に小文字', args: [BASE_CHAR_LOWER, BASE_CHAR_LOWER], result: BASE_CHAR_LOWER },
+                { desc: '小文字で初期化、引数に大文字', args: [BASE_CHAR_LOWER, BASE_CHAR_UPPER], result: BASE_CHAR_LOWER },
+                { desc: 'nullで初期化、引数に小文字',  args: [null,            BASE_CHAR_LOWER], result: BASE_CHAR_LOWER },
+                { desc: 'nullで初期化、引数に大文字',  args: [null,            BASE_CHAR_UPPER], result: BASE_CHAR_LOWER }
+            ];
+
+            runCases.forEach((runCase, i) => {
+                it(runCase.desc, done => {
+                    let okblock = new OKBlock(runCase.args[0], { pattern: 'Lines' });
+                    let res = okblock.to(runCase.args[1]);
+                    assert.equal(okblock.char, runCase.result[0]);
+                    done();
+                });
+            });
+        });
+
+        describe('OKBlock#pedal有効時、現在の文字と同じ文字を与えるとfalseを返す', () => {
+            let runCases = [
+                {desc: '小文字で初期化', args: [BASE_CHAR_LOWER], result: false},
+                {desc: 'nullで初期化',  args: [null],            result: false}
+            ];
+
+            runCases.forEach((runCase, i) => {
+                it(runCase.desc, done => {
+                    let okblock = new OKBlock(...runCase.args, { pattern: 'Lines' });
+                    okblock.to(BASE_CHAR_LOWER);
+                    let res = okblock.to(BASE_CHAR_LOWER);
+                    assert.equal(res, runCase.result);
+                    done();
+                });
+            });
+        });
+
+        describe('OKBlock#optionsにオブジェクトを渡して設定', () => {
+            let opt = {
+                size:        800,
+                displayTime: 3000,
+                duration:    1200,
+                easing:      'cubic-bezier(.1,.8,.5,.9)',
+                loop:        false,
+                random:      true,
+                pedal:       false,
+            };
+            
+            let runCases = [
+                {desc: '小文字で初期化', args: [BASE_CHAR_LOWER], result: opt},
+                {desc: 'nullで初期化',  args: [null],            result: opt}
+            ];
+            
+            runCases.forEach((runCase, i) => {
+                it(`${ runCase.desc }: 個別のパラメータ`, done => {
+                    let okblock = new OKBlock(...runCase.args, { pattern: 'Lines' })
+                    okblock.options = opt;
+                    assert.equal(okblock.displayTime, opt.displayTime);
+                    assert.equal(okblock.duration,    opt.duration);
+                    assert.equal(okblock.easing,      opt.easing);
+                    assert.equal(okblock.loop,        opt.loop);
+                    assert.equal(okblock.random,      opt.random);
+                    assert.equal(okblock.pedal,       opt.pedal);
+                    done();
+                });
+
+                it(`${ runCase.desc }: OKBlock#optionsが返すオブジェクト`, done => {
+                    let okblock = new OKBlock(...runCase.args, { pattern: 'Lines' })
+                    okblock.options = opt;
+                    assert.deepEqual(okblock.options, opt);
+                    done();
+                });
+            });
+        });
+    });
+
 
     describe('DOM', () => {
         let testField = document.createElement('div');
