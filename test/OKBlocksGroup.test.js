@@ -2,31 +2,10 @@ import assert from 'power-assert'
 import appendCSS from 'append-css'
 
 describe('OKBlocksGroup test', () => {
-    const TITLE_COPY   = 'tokyo 2020';
-    const LONG_COPY    = 'emblem paralympic games';
-    const SHORT_COPY   = 'a to z';
+    const TITLE_COPY   = 'title copy';
+    const LONG_COPY    = 'long copy ................';
+    const SHORT_COPY   = 'short';
     const BLANK_COPY   = '                                                        ';
-    const EMBLEM_SIZE  = 90;
-    const DISPLAY_TIME = 1000;
-    const COPYS        = [
-        TITLE_COPY,
-        BLANK_COPY,
-        LONG_COPY,
-        BLANK_COPY,
-        SHORT_COPY,
-        '1234567890',
-        BLANK_COPY,
-        'happy day!',
-        BLANK_COPY,
-        'hello world',
-        BLANK_COPY,
-        TITLE_COPY,
-        LONG_COPY,
-        SHORT_COPY,
-        '1234567890',
-        'happy day!',
-        'hello world',
-    ];
 
     describe('インスタンスの生成', () => {
         let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines' });
@@ -199,77 +178,6 @@ describe('OKBlocksGroup test', () => {
                 done();
             });
         });
-
-    });
-
-    describe('DOM', () => {
-        let testField = document.createElement('div');
-        testField.id = 'emblemgroup-test-field';
-        appendCSS(`
-            #emblemgroup-test-field {
-                width:    100%;
-                display:  block;
-                position: relative;
-                margin:   0;
-                padding:  0;
-                clear:    both;
-            }
-        `);
-        appendCSS(`
-            #emblemgroup-test-field > div {
-              margin: ${ EMBLEM_SIZE / 3 }px;
-              float: left;
-            }
-        `);
-
-        before('DOMContentLoaded待ち', done => {
-
-            new Promise((resolve, reject) => {
-                let readyState = document.readyState;
-
-                if (readyState === 'interactive' || readyState === 'complete') {
-                    resolve();
-                } else {
-                    window.onload = resolve;
-                }
-            }).then(() => {
-                document.body.appendChild(testField);
-                done();
-            });
-
-        });
-
-        describe('サイズを指定', () => {
-            let size  = 90;
-            let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines', length: TITLE_COPY.length, size: size });
-
-            it('指定したサイズになっているか', done => {
-                group.emblems.forEach(e => {
-                    assert.equal(e.size, size);
-                });
-                done();
-            });
-        })
-
-        describe('インスタンスをDOMに追加', () => {
-
-            let group = new OKBlocksGroup(TITLE_COPY, { pattern: 'Lines', length: TITLE_COPY.length, size: EMBLEM_SIZE });
-
-            group.appendTo(testField);
-
-            it('全てのOKBlockインスタンスがDOMに存在するか', done => {
-                group.emblems.forEach(e => {
-                    assert.equal(e.dom.parentNode, testField);
-                });
-                setTimeout(done, DISPLAY_TIME);
-            });
-
-            describe('与えた配列中の文字列のに変化', () => {
-                group.animateFromString(COPYS);
-            });
-
-        });
-
 
     });
 });
