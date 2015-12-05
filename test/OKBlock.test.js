@@ -4,12 +4,6 @@ describe('OKBlock', () => {
     const BASE_CHAR_LOWER   = 'a';
     const BASE_CHAR_UPPER   = 'A';
     const BASE_CHAR_INVALID = 'あ';
-    const ALL_VALID_CHARS   = new OKBlock(BASE_CHAR_LOWER, { pattern: 'Lines' }).allValidChars;
-    const CSS_PATHS         = [
-        'node_modules/@all-user/ok-patterns-lines/dist/bundle.css'
-    ];
-    const DISPLAY_TIME      = 1000;
-    const EMBLEM_SIZE       = 90;
 
     describe('大文字小文字を区別しない', () => {
         let testCasess = [
@@ -17,7 +11,7 @@ describe('OKBlock', () => {
             { desc: '小文字で初期化', args: BASE_CHAR_LOWER, result: BASE_CHAR_LOWER }
         ];
 
-        testCasess.forEach((testCases, i) => {
+        testCasess.forEach(testCases => {
             it(testCases.desc, done => {
                 let okblock = new OKBlock(testCases.args, { pattern: 'Lines' });
                 assert.equal(okblock.char, testCases.result);
@@ -32,7 +26,7 @@ describe('OKBlock', () => {
             { desc: 'nullで初期化',  args: null,            result: OKBlock }
         ];
 
-        testCasess.forEach((testCases, i) => {
+        testCasess.forEach(testCases => {
             it(testCases.desc, done => {
                 let okblock = new OKBlock(testCases.args, { pattern: 'Lines' });
                 assert.ok(okblock instanceof testCases.result);
@@ -47,7 +41,7 @@ describe('OKBlock', () => {
             { desc: 'nullで初期化',  args: null,            result: null }
         ];
 
-        testCasess.forEach((testCases, i) => {
+        testCasess.forEach(testCases => {
             it(testCases.desc, done => {
                 let okblock = new OKBlock(testCases.args, { pattern: 'Lines' });
                 assert.equal(okblock.char, testCases.result);
@@ -93,10 +87,10 @@ describe('OKBlock', () => {
                 }
             ];
 
-            testCasess.forEach((testCases, i) => {
+            testCasess.forEach(testCases => {
                 it(testCases.desc, done => {
                     let okblock = new OKBlock(testCases.args.from, { pattern: 'Lines' });
-                    let res = okblock.to(testCases.args.to);
+                    okblock.to(testCases.args.to);
                     assert.equal(okblock.char, testCases.result);
                     done();
                 });
@@ -109,7 +103,7 @@ describe('OKBlock', () => {
                 { desc: 'nullで初期化',  args: null,            result: false }
             ];
 
-            testCasess.forEach((testCases, i) => {
+            testCasess.forEach(testCases => {
                 it(testCases.desc, done => {
                     let okblock = new OKBlock(testCases.args, { pattern: 'Lines' });
                     okblock.to(BASE_CHAR_LOWER);
@@ -126,7 +120,7 @@ describe('OKBlock', () => {
                 { desc: 'nullで初期化',  args: null,            result: false }
             ];
 
-            testCasess.forEach((testCases, i) => {
+            testCasess.forEach(testCases => {
                 it(testCases.desc, done => {
                     let okblock = new OKBlock(testCases.args, { pattern: 'Lines' });
                     let res = okblock.to(BASE_CHAR_INVALID);
@@ -142,7 +136,7 @@ describe('OKBlock', () => {
                 { desc: 'nullで初期化',  args: null,            result: null }
             ];
 
-            testCasess.forEach((testCases, i) => {
+            testCasess.forEach(testCases => {
                 it(testCases.desc, done => {
                     let okblock = new OKBlock(testCases.args, { pattern: 'Lines' });
                     okblock.to(BASE_CHAR_INVALID);
@@ -161,7 +155,7 @@ describe('OKBlock', () => {
             easing:      'cubic-bezier(.1,.8,.5,.9)',
             loop:        false,
             random:      true,
-            pedal:       false,
+            pedal:       false
         };
 
         let testCasess = [
@@ -169,9 +163,9 @@ describe('OKBlock', () => {
             { desc: 'nullで初期化',  args: null,            result: opt }
         ];
 
-        testCasess.forEach((testCases, i) => {
+        testCasess.forEach(testCases => {
             Object.keys(opt).forEach(paramName => {
-                let okblock = new OKBlock(testCases.args, { pattern: 'Lines' })
+                let okblock = new OKBlock(testCases.args, { pattern: 'Lines' });
                 okblock.options = opt;
                 it(`${ testCases.desc }: ${ paramName }が正しく設定されている`, done => {
                     assert.equal(okblock[paramName], opt[paramName]);
@@ -180,7 +174,7 @@ describe('OKBlock', () => {
             });
 
             it(`${ testCases.desc }: OKBlock#optionsが正しいオブジェクトを返す`, done => {
-                let okblock = new OKBlock(testCases.args, { pattern: 'Lines' })
+                let okblock = new OKBlock(testCases.args, { pattern: 'Lines' });
                 okblock.options = opt;
                 assert.deepEqual(okblock.options, opt);
                 done();

@@ -33,7 +33,7 @@ class OKBlock {
         this[_CANSELLER_PROP]     =   () => {};
 
         options = extend(this[_PATTERN_PROP]._DEFAULT_OPTIONS, options);
-        let { pattern, size, displayTime, duration, easing, loop, random, pedal } = options;
+        let { size, displayTime, duration, easing, loop, random, pedal } = options;
 
         // --- options ---
         this.displayTime          =   displayTime;

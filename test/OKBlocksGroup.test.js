@@ -1,5 +1,4 @@
-import assert from 'power-assert'
-import appendCSS from 'append-css'
+import assert from 'power-assert';
 
 describe('OKBlocksGroup test', () => {
     const TITLE_COPY   = 'title copy';
@@ -11,7 +10,7 @@ describe('OKBlocksGroup test', () => {
         onlyPattern:        [TITLE_COPY, { pattern: 'Lines' }],
         containLongLength:  [TITLE_COPY, { pattern: 'Lines', length: LONG_COPY.length }],
         containShortLength: [TITLE_COPY, { pattern: 'Lines', length: SHORT_COPY.length }]
-    }
+    };
 
     describe('インスタンスの生成', () => {
         let testCasess = [
@@ -29,7 +28,7 @@ describe('OKBlocksGroup test', () => {
                 desc: 'pattern、lengthを指定、与える文字列より短いlengthで初期化',
                 args: argsVariation.containShortLength,
                 result: TITLE_COPY.slice(0, SHORT_COPY.length)
-            },
+            }
         ];
         
         testCasess.forEach(testCases => {
@@ -127,7 +126,7 @@ describe('OKBlocksGroup test', () => {
             easing:      'cubic-bezier(.1,.8,.5,.9)',
             loop:        false,
             random:      true,
-            pedal:       false,
+            pedal:       false
         };
         
         let singleValueParamNames = ['length', 'displayTime', 'loop', 'random'];
@@ -163,7 +162,7 @@ describe('OKBlocksGroup test', () => {
                     size:        Array.from({ length: opt.length }, () => opt.size),
                     duration:    Array.from({ length: opt.length }, () => opt.duration),
                     easing:      Array.from({ length: opt.length }, () => opt.easing),
-                    pedal:       Array.from({ length: opt.length }, () => opt.pedal),
+                    pedal:       Array.from({ length: opt.length }, () => opt.pedal)
                 };
                 assert.deepEqual(group.options, obj);
                 done();
