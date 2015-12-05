@@ -1,4 +1,4 @@
-import assert from 'power-assert'
+import assert from 'power-assert';
 
 describe('OKBlock', () => {
     const BASE_CHAR_LOWER   = 'a';

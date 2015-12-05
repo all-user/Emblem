@@ -21,7 +21,7 @@ let patterns = {}; // initialized in OKBlock.define
 class OKBlock {
     constructor(c, options = {}) {
 
-        if (options.pattern == null) { console.error('options.pattern is not set.'); };
+        if (options.pattern == null) { console.error('options.pattern is not set.'); }
         if (patterns[options.pattern] == null) { console.error(`${ options.pattern } pattern is undefined.`); return; }
 
         this[_PATTERN_NAME_PROP]  =   options.pattern;
