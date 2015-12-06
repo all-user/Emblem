@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "testem",
+    "lint:src": "eslint src/js/**/*.js",
+    "lint:test": "eslint test/**/*.test.js",
+    "lint": "npm-run-all -p lint:*",
     "build:js": "browserify -t babelify ./src/js/index.js -d | exorcist ./src/bundle.js.map > ./src/bundle.js",
     "watch:js": "watchify -v -t babelify ./src/js/index.js -o \"exorcist ./src/bundle.js.map > ./src/bundle.js\" -d",
     "release:js": "browserify -t babelify ./src/js/index.js | uglifyjs > ./dist/bundle.js",
