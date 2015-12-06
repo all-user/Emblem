@@ -12,7 +12,7 @@ const _CANSELLER_PROP    = Symbol();
 
 class OKBlocksGroup {
     constructor(chars, options = {}) {
-        let { pattern, length, displayTime, loop = false, random = false, size, duration, easing, pedal = true } = options;
+        let { length, displayTime, loop = false, random = false } = options;
         this[_IS_ANIMATING_PROP]  =   false;
         this[_RESUME_PROP]        =   null;
         this[_CANSELLER_PROP]     =   () => {};
@@ -43,7 +43,7 @@ class OKBlocksGroup {
         if (emblems) {
             this[_EMBLEMS_PROP] = emblems;
         } else {
-            throw new Error('OKBlocksGroup arguments expect string or array of OKBlock.')
+            throw new Error('OKBlocksGroup arguments expect string or array of OKBlock.');
         }
     }
 
@@ -104,7 +104,7 @@ class OKBlocksGroup {
 
     // --- options ---
     set options({ length, displayTime, loop, random, size, duration, easing, pedal } = {}) {
-        this.length      = length
+        this.length      = length;
         this.displayTime = displayTime;
         this.loop        = loop;
         this.random      = random;
@@ -126,8 +126,8 @@ class OKBlocksGroup {
             size:        this.size,
             duration:    this.duration,
             easing:      this.easing,
-            pedal:       this.pedal,
-        }
+            pedal:       this.pedal
+        };
     }
 
     // --- length ---
@@ -187,7 +187,7 @@ class OKBlocksGroup {
     get pedal()        { return this[_EMBLEMS_PROP].map(emb => emb.pedal); }
 
     // --- emblems ---
-    get emblems() { return this[_EMBLEMS_PROP] }
+    get emblems() { return this[_EMBLEMS_PROP]; }
 
     // --- isAnimating ---
     get isAnimating() { return this[_IS_ANIMATING_PROP]; }
@@ -197,18 +197,18 @@ function _transformToOKBlockArray(arg, opt) { // (string | [OKBlock], object) =>
 
     let res;
     switch (typeof arg) {
-        case 'string':
-            res = [].map.call(arg, c => new OKBlock(c, opt));
-            break;
-        case 'object':
-            if (Array.isArray(arg) && arg.every(o => o instanceof OKBlock)) {
-                res = arg;
-            } else {
-                res = false;
-            };
-            break;
-        default:
+    case 'string':
+        res = [].map.call(arg, c => new OKBlock(c, opt));
+        break;
+    case 'object':
+        if (Array.isArray(arg) && arg.every(o => o instanceof OKBlock)) {
+            res = arg;
+        } else {
             res = false;
+        }
+        break;
+    default:
+        res = false;
     }
 
     return res;
@@ -227,7 +227,7 @@ function _animateFromStringArray(strArr,opt) {
             return new Promise((resolve, reject) => {
                 this[_CANSELLER_PROP] = reject;
                 if (this[_RANDOM_PROP]) {
-                    let _s = strArr[Math.random() * strArr.length | 0]
+                    let _s = strArr[Math.random() * strArr.length | 0];
                     this.map(_s);
                 } else {
                     this.map(s);
@@ -251,7 +251,7 @@ function _animateFromStringArray(strArr,opt) {
                 }
             });
         });
-    }, Promise.resolve()).catch(() => { console.log('cansel before animation.') });
+    }, Promise.resolve()).catch(() => { console.log('cansel before animation.'); });
 }
 
 

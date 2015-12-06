@@ -136,8 +136,8 @@ class OKBlock {
             easing:      this.easing,
             loop:        this.loop,
             random:      this.random,
-            pedal:       this.pedal,
-        }
+            pedal:       this.pedal
+        };
     }
 
     // --- size ---
@@ -233,7 +233,7 @@ class OKBlock {
 
     static define(name, obj) {
         if (!('_DEFAULT_OPTIONS' in obj) || !('_BASE_DOM' in obj) || !('_TRANSITION_PROPS' in obj) || !('_formationTable' in obj)) {
-            console.error('Pattern is invalid.')
+            console.error('Pattern is invalid.');
         }
         patterns[name] = obj;
     }
