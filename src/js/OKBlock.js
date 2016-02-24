@@ -82,32 +82,34 @@ class OKBlock {
 
         [].reduce.call(str, (p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
             let isLast = idx === str.length - 1;
-            return p.then(new Promise((resolve, reject) => {
-                this[_CANSELLER_PROP] = reject;
-                if (this[_RANDOM_PROP]) {
-                    let _c = str[Math.random() * str.length | 0];
-                    this.to(_c);
-                } else {
-                    this.to(c);
-                }
-                if (isLast) {
-                    if (this[_LOOP_PROP]) {
-                        setTimeout(() => {
-                            this.animateFromString.call(this, str);
-                            resolve();
-                        }, this[_DISPLAY_TIME_PROP]);
-                        return;
+            return p.then(
+                new Promise((resolve, reject) => {
+                    this[_CANSELLER_PROP] = reject;
+                    if (this[_RANDOM_PROP]) {
+                        let _c = str[Math.random() * str.length | 0];
+                        this.to(_c);
                     } else {
-                        setTimeout(reject, this[_DISPLAY_TIME_PROP]);
-                        return;
+                        this.to(c);
                     }
-                }
-                if (!this[_IS_ANIMATING_PROP]) {
-                    this[_RESUME_PROP] = resolve;
-                } else {
-                    setTimeout(resolve, this[_DISPLAY_TIME_PROP]);
-                }
-            });
+                    if (isLast) {
+                        if (this[_LOOP_PROP]) {
+                            setTimeout(() => {
+                                this.animateFromString.call(this, str);
+                                resolve();
+                            }, this[_DISPLAY_TIME_PROP]);
+                            return;
+                        } else {
+                            setTimeout(reject, this[_DISPLAY_TIME_PROP]);
+                            return;
+                        }
+                    }
+                    if (!this[_IS_ANIMATING_PROP]) {
+                        this[_RESUME_PROP] = resolve;
+                    } else {
+                        setTimeout(resolve, this[_DISPLAY_TIME_PROP]);
+                    }
+                })
+            );
         }, Promise.resolve()).catch(() => { this[_IS_ANIMATING_PROP] = false; });
     }
 

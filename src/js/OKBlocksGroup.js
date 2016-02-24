@@ -223,32 +223,34 @@ function _animateFromStringArray(strArr,opt) {
 
     strArr.reduce((p, s, idx) => {
         let isLast = idx === strArr.length - 1;
-        return p.then(new Promise((resolve, reject) => {
-            this[_CANSELLER_PROP] = reject;
-            if (this[_RANDOM_PROP]) {
-                let _s = strArr[Math.random() * strArr.length | 0];
-                this.map(_s);
-            } else {
-                this.map(s);
-            }
-            if (isLast) {
-                if (this.loop) {
-                    setTimeout(() => {
-                        _animateFromStringArray.call(this, strArr);
-                        resolve();
-                    }, this.displayTime);
-                    return;
+        return p.then(
+            new Promise((resolve, reject) => {
+                this[_CANSELLER_PROP] = reject;
+                if (this[_RANDOM_PROP]) {
+                    let _s = strArr[Math.random() * strArr.length | 0];
+                    this.map(_s);
                 } else {
-                    this[_IS_ANIMATING_PROP] = false;
-                    return;
+                    this.map(s);
                 }
-            }
-            if (!this[_IS_ANIMATING_PROP]) {
-                this[_RESUME_PROP] = resolve;
-            } else {
-                setTimeout(resolve, this.displayTime);
-            }
-        });
+                if (isLast) {
+                    if (this.loop) {
+                        setTimeout(() => {
+                            _animateFromStringArray.call(this, strArr);
+                            resolve();
+                        }, this.displayTime);
+                        return;
+                    } else {
+                        this[_IS_ANIMATING_PROP] = false;
+                        return;
+                    }
+                }
+                if (!this[_IS_ANIMATING_PROP]) {
+                    this[_RESUME_PROP] = resolve;
+                } else {
+                    setTimeout(resolve, this.displayTime);
+                }
+            })
+        );
     }, Promise.resolve()).catch(() => { console.log('cansel before animation.'); });
 }
 
