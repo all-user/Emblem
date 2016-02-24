@@ -82,8 +82,8 @@ class OKBlock {
 
         [].reduce.call(str, (p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
             let isLast = idx === str.length - 1;
-            return p.then(
-                new Promise((resolve, reject) => {
+            return p.then(() => {
+                return new Promise((resolve, reject) => {
                     this[_CANSELLER_PROP] = reject;
                     if (this[_RANDOM_PROP]) {
                         let _c = str[Math.random() * str.length | 0];
@@ -108,8 +108,8 @@ class OKBlock {
                     } else {
                         setTimeout(resolve, this[_DISPLAY_TIME_PROP]);
                     }
-                })
-            );
+                });
+            });
         }, Promise.resolve()).catch(() => { this[_IS_ANIMATING_PROP] = false; });
     }
 

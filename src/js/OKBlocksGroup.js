@@ -223,8 +223,8 @@ function _animateFromStringArray(strArr,opt) {
 
     strArr.reduce((p, s, idx) => {
         let isLast = idx === strArr.length - 1;
-        return p.then(
-            new Promise((resolve, reject) => {
+        return p.then(() => {
+            return new Promise((resolve, reject) => {
                 this[_CANSELLER_PROP] = reject;
                 if (this[_RANDOM_PROP]) {
                     let _s = strArr[Math.random() * strArr.length | 0];
@@ -249,8 +249,8 @@ function _animateFromStringArray(strArr,opt) {
                 } else {
                     setTimeout(resolve, this.displayTime);
                 }
-            })
-        );
+            });
+        });
     }, Promise.resolve()).catch(() => { console.log('cansel before animation.'); });
 }
 
