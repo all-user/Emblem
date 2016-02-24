@@ -38,6 +38,7 @@
     "mocha": "^2.2.5",
     "nib": "^1.1.0",
     "npm-run-all": "^1.2.12",
+    "npm-run-help": "^1.1.0",
     "power-assert": "^1.2.0",
     "rimraf": "^2.4.3",
     "stylus": "^0.52.0",
@@ -47,8 +48,8 @@
     "watchify": "^3.3.1"
   },
   "dependencies": {
-    "xtend": "^4.0.0",
-    "@all-user/ok-patterns-lines": "file:../ok-patterns-lines",
-    "@all-user/ok-patterns-olympic2020": "file:../ok-patterns-olympic2020"
+    "@all-user/ok-patterns-lines": "0.0.2",
+    "@all-user/ok-patterns-olympic2020": "0.0.1",
+    "xtend": "^4.0.0"
   }
 }
