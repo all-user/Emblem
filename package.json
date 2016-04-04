@@ -4,6 +4,7 @@
   "description": "Generate blocks consists of 3x3 elements.",
   "main": "index.js",
   "scripts": {
+    "help": "npm-run-help",
     "test": "testem",
     "lint:src": "eslint src/js/**/*.js",
     "lint:test": "eslint test/**/*.test.js",

@@ -80,7 +80,7 @@ class OKBlock {
     this[_RESUME_PROP]       = null;
     this.options             = opt;
 
-    [].reduce.call(str, (p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
+    [...str].reduce((p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
       let isLast = idx === str.length - 1;
       return p.then(() => {
         return new Promise((resolve, reject) => {
@@ -119,25 +119,12 @@ class OKBlock {
    */
 
   // --- options ---
-  set options({ size, displayTime, duration, loop, random, pedal, easing } = {}) {
-    this.size        = size;
-    this.displayTime = displayTime;
-    this.duration    = duration;
-    this.easing      = easing;
-    this.loop        = loop;
-    this.random      = random;
-    this.pedal       = pedal;
+  set options(options = {}) {
+    Object.assign(this, options);
   }
   get options() {
-    return {
-      size:        this.size,
-      displayTime: this.displayTime,
-      duration:    this.duration,
-      easing:      this.easing,
-      loop:        this.loop,
-      random:      this.random,
-      pedal:       this.pedal
-    };
+    let { size, displayTime, duration, easing, loop, random, pedal } = this;
+    return { size, displayTime, duration, easing, loop, random, pedal };
   }
 
   // --- size ---
@@ -148,7 +135,7 @@ class OKBlock {
       domStyle.width  = `${ size }px`;
       domStyle.height = `${ size }px`;
     } else {
-      console.error('OKBlock.size should be type of zero or positive number.');
+      console.error('OKBlock.size should zero or positive number.');
     }
   }
   get size() { return +this[_DOM_PROP].style.width.replace('px', ''); }
@@ -160,7 +147,7 @@ class OKBlock {
     if (typeof time === 'number' && time > 0) {
       this[_DISPLAY_TIME_PROP] = time;
     } else {
-      console.error('OKBlock.displayTime should be type of positive number.');
+      console.error('OKBlock.displayTime should be positive number.');
     }
   }
   get displayTime() { return this[_DISPLAY_TIME_PROP]; }
@@ -173,7 +160,7 @@ class OKBlock {
       this[_DURATION_PROP] = time;
       _updateTransitionConfig.call(this);
     } else {
-      console.error('OKBlock.duration should be type of zero or positive number.');
+      console.error('OKBlock.duration should be zero or positive number.');
     }
   }
   get duration() { return this[_DURATION_PROP]; }
@@ -268,7 +255,7 @@ function _changeStyle(c) { // @bind this
   } else {
     diffFormation = newFormation;
   }
-  [].forEach.call(this[_DOM_PROP].childNodes, (node, idx) => {
+  [...this[_DOM_PROP].childNodes].forEach((node, idx) => {
     let formation  = diffFormation[idx];
     let specifyPos = Array.isArray(formation);
     if (!formation) { return; }
@@ -292,7 +279,7 @@ function _updateTransitionConfig() { // @bind this
   _updateStyle(this[_DOM_PROP].childNodes);
 
   function _updateStyle(list) {
-    [].forEach.call(list, node => {
+    [...list].forEach(node => {
       node.style.transition = val;
       if (node.firstChild) { _updateStyle(node.childNodes); }
     });

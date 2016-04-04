@@ -80,7 +80,7 @@ class OKBlocksGroup {
     let strArr;
     if (typeof str === 'string') {
       let len = this.emblems.length;
-      strArr = [].reduce.call(str, (arr, s, idx) => {
+      strArr = [...str].reduce((arr, s, idx) => {
         if (idx % len === 0) { arr.push(''); }
         arr[idx / len | 0] += s;
         return arr;
@@ -103,31 +103,12 @@ class OKBlocksGroup {
    */
 
   // --- options ---
-  set options({ length, displayTime, loop, random, size, duration, easing, pedal } = {}) {
-    this.length      = length;
-    this.displayTime = displayTime;
-    this.loop        = loop;
-    this.random      = random;
-
-    // change emblems options
-    this.size        = size;
-    this.duration    = duration;
-    this.easing      = easing;
-    this.pedal       = pedal;
+  set options(options = {}) {
+    Object.assign(this, options);
   }
   get options() {
-    return {
-      length:      this.length,
-      displayTime: this.displayTime,
-      loop:        this.loop,
-      random:      this.random,
-
-      // emblems options
-      size:        this.size,
-      duration:    this.duration,
-      easing:      this.easing,
-      pedal:       this.pedal
-    };
+    let { length, displayTime, loop, random, size, duration, easing, pedal } = this;
+    return { length, displayTime, loop, random, size, duration, easing, pedal };
   }
 
   // --- length ---
@@ -151,7 +132,7 @@ class OKBlocksGroup {
     if (typeof time === 'number' && time > 0) {
       this[_DISPLAY_TIME_PROP] = time;
     } else {
-      console.error('OKBlocksGroup.displayTime should be type of positive number.');
+      console.error('OKBlocksGroup.displayTime should be positive number.');
     }
   }
   get displayTime() { return this[_DISPLAY_TIME_PROP]; }
@@ -198,7 +179,7 @@ function _transformToOKBlockArray(arg, opt) { // (string | [OKBlock], object) =>
   let res;
   switch (typeof arg) {
   case 'string':
-    res = [].map.call(arg, c => new OKBlock(c, opt));
+    res = [...arg].map(c => new OKBlock(c, opt));
     break;
   case 'object':
     if (Array.isArray(arg) && arg.every(o => o instanceof OKBlock)) {
@@ -214,7 +195,7 @@ function _transformToOKBlockArray(arg, opt) { // (string | [OKBlock], object) =>
   return res;
 }
 
-function _animateFromStringArray(strArr,opt) {
+function _animateFromStringArray(strArr, opt) {
   this[_CANSELLER_PROP](); // cansel before animation.
 
   this[_IS_ANIMATING_PROP] = true;
