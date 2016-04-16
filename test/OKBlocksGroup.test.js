@@ -1,4 +1,5 @@
-import assert from 'power-assert';
+const assert = require('power-assert');
+let OKBlocksGroup = require('../src/js/OKBlocksGroup.js');
 
 describe('OKBlocksGroup test', () => {
   const TITLE_COPY   = 'title copy';

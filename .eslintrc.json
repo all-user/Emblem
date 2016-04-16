@@ -24,10 +24,6 @@
     "browser": true,
     "mocha": true
   },
-  "globals": {
-    "OKBlock": true,
-    "OKBlocksGroup": true
-  },
   "extends": "eslint:recommended",
   "ecmaFeatures": {
     "experimentalObjectRestSpread": true,

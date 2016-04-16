@@ -1,4 +1,5 @@
-import assert from 'power-assert';
+const assert = require('power-assert');
+let OKBlock = require('../src/js/OKBlock.js');
 
 describe('OKBlock', () => {
   const BASE_CHAR_LOWER   = 'a';

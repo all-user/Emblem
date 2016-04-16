@@ -1,7 +1,2 @@
-'use strict';
-
-import OKBlock from './OKBlock.js';
-import OKBlocksGroup from './OKBlocksGroup.js';
-
-window.OKBlock = OKBlock;
-window.OKBlocksGroup = OKBlocksGroup;
+module.exports.OKBlock = require('./OKBlock.js');
+module.exports.OKBlocksGroup = require('./OKBlocksGroup.js');

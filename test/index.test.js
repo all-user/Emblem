@@ -1,7 +1,8 @@
 // patterns
-import '@all-user/ok-patterns-lines';
-import '@all-user/ok-patterns-olympic2020';
+let OKBlock = require('../src/js/OKBlock.js');
+require('@all-user/ok-patterns-lines')(OKBlock);
+require('@all-user/ok-patterns-olympic2020')(OKBlock);
 
 // test
-import './OKBlock.test.js';
-import './OKBlocksGroup.test.js';
+require('./OKBlock.test.js');
+require('./OKBlocksGroup.test.js');

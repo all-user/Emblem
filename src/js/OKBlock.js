@@ -1,6 +1,4 @@
-'use strict';
-
-import extend from 'xtend';
+const extend = require('xtend');
 
 const _PATTERN_NAME_PROP = Symbol();
 const _PATTERN_PROP      = Symbol();
@@ -36,8 +34,8 @@ class OKBlock {
     let { size, displayTime, duration, easing, loop, random, pedal } = options;
 
     // --- options ---
-    this.displayTime          =   displayTime;
-    this.duration             =   duration;
+    this.displayTime          =   +displayTime;
+    this.duration             =   +duration;
     this.loop                 =   loop;
     this.random               =   random;
     this.easing               =   easing            || 'cubic-bezier(.26,.92,.41,.98)';
@@ -160,7 +158,7 @@ class OKBlock {
       this[_DURATION_PROP] = time;
       _updateTransitionConfig.call(this);
     } else {
-      console.error('OKBlock.duration should be zero or positive number.');
+      console.error('OKBlock.duration should be zero or positive number.', time);
     }
   }
   get duration() { return this[_DURATION_PROP]; }
@@ -288,4 +286,4 @@ function _updateTransitionConfig() { // @bind this
 
 const _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
 
-export default OKBlock;
+module.exports = OKBlock;

@@ -1,6 +1,4 @@
-'use strict';
-
-import OKBlock from './OKBlock.js';
+let OKBlock = require('./OKBlock.js');
 
 const _EMBLEMS_PROP      = Symbol();
 const _DISPLAY_TIME_PROP = Symbol();
@@ -236,4 +234,4 @@ function _animateFromStringArray(strArr, opt) {
 }
 
 
-export default OKBlocksGroup;
+module.exports = OKBlocksGroup;
