@@ -1,6 +1,6 @@
 {
   "name": "@all-user/ok-blocks",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Generate blocks consists of 3x3 elements.",
   "main": "index.js",
   "scripts": {
