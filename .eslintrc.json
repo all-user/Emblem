@@ -30,7 +30,6 @@
   },
   "extends": "eslint:recommended",
   "ecmaFeatures": {
-    "jsx": true,
     "experimentalObjectRestSpread": true,
     "arrowFunctions": true,
     "binaryLiterals": true,
@@ -54,8 +53,5 @@
     "unicodeCodePointEscapes": true,
     "globalReturn": true
   },
-  "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ]
+  "parser": "babel-eslint"
 }
