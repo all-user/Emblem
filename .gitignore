@@ -4,3 +4,4 @@
 /src/**/*.map
 /test/**/bundle.js
 /test/**/*.map
+*.log

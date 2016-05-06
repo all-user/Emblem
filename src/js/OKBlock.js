@@ -92,14 +92,13 @@ class OKBlock {
           if (isLast) {
             if (this[_LOOP_PROP]) {
               setTimeout(() => {
-                this.animateFromString.call(this, str);
                 resolve();
+                this.animateFromString.call(this, str);
               }, this[_DISPLAY_TIME_PROP]);
-              return;
             } else {
               setTimeout(reject, this[_DISPLAY_TIME_PROP]);
-              return;
             }
+            return;
           }
           if (!this[_IS_ANIMATING_PROP]) {
             this[_RESUME_PROP] = resolve;
@@ -108,7 +107,11 @@ class OKBlock {
           }
         });
       });
-    }, Promise.resolve()).catch(() => { this[_IS_ANIMATING_PROP] = false; });
+    }, Promise.resolve()).catch(err => {
+      this[_IS_ANIMATING_PROP] = false;
+      console.log('OKBlock: cansel before animation.');
+      console.log(err);
+    });
   }
 
 

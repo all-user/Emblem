@@ -214,14 +214,13 @@ function _animateFromStringArray(strArr, opt) {
         if (isLast) {
           if (this.loop) {
             setTimeout(() => {
-              _animateFromStringArray.call(this, strArr);
               resolve();
+              _animateFromStringArray.call(this, strArr);
             }, this.displayTime);
-            return;
           } else {
             this[_IS_ANIMATING_PROP] = false;
-            return;
           }
+          return;
         }
         if (!this[_IS_ANIMATING_PROP]) {
           this[_RESUME_PROP] = resolve;
@@ -230,7 +229,11 @@ function _animateFromStringArray(strArr, opt) {
         }
       });
     });
-  }, Promise.resolve()).catch(() => { console.log('cansel before animation.'); });
+  }, Promise.resolve()).catch(err => {
+    this[_IS_ANIMATING_PROP] = false;
+    console.log('OKBlocksGroup: cansel before animation.');
+    console.log(err);
+  });
 }
 
 
