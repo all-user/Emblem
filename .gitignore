@@ -5,3 +5,4 @@
 /test/**/bundle.js
 /test/**/*.map
 *.log
+yarn.lock
