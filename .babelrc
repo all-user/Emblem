@@ -1,3 +1,13 @@
 {
-  "presets": ["es2015"]
+  "presets": [
+    "latest"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "latest",
+        "power-assert"
+      ]
+    }
+  }
 }
