@@ -44,7 +44,7 @@
     "nib": "^1.1.0",
     "npm-run-all": "^1.7.0",
     "npm-run-help": "^1.1.0",
-    "power-assert": "^1.3.1",
+    "power-assert": "^1.4.2",
     "rimraf": "^2.5.2",
     "stylus": "^0.54.2",
     "testem": "*",

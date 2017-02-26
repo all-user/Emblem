@@ -1,11 +1,13 @@
 {
   "presets": [
-    "latest"
+    "latest",
+    "flow"
   ],
   "env": {
     "test": {
       "presets": [
         "latest",
+        "flow",
         "power-assert"
       ]
     }
