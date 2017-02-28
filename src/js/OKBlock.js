@@ -1,9 +1,10 @@
 /* @flow */
-let patterns = {}; // initialized in OKBlock.define
-
 class OKBlock {
+  static patterns: {
+    [patternName: string]: OKPatternsDefinition
+  };
   _PATTERN_NAME_PROP: string;
-  _PATTERN_PROP: OKPattern;
+  _PATTERN_PROP: OKPatternsDefinition;
   _IS_ANIMATING_PROP: boolean;
   _RESUME_PROP: ?Function;
   _CHAR_PROP: ?string;
@@ -19,10 +20,10 @@ class OKBlock {
   constructor(c: string, options: OKBlockConstructorOptions = { pattern: null }) {
 
     if (options.pattern == null) { console.error('options.pattern is not set.'); return; }
-    if (patterns[options.pattern] == null) { console.error(`${ options.pattern } pattern is undefined.`); return; }
+    if (this.constructor.patterns[options.pattern] == null) { console.error(`${ options.pattern } pattern is undefined.`); return; }
 
     this._PATTERN_NAME_PROP  =   options.pattern;
-    this._PATTERN_PROP       =   patterns[options.pattern];
+    this._PATTERN_PROP       =   this.constructor.patterns[options.pattern];
     this._IS_ANIMATING_PROP  =   false;
     this._RESUME_PROP        =   null;
     this._CHAR_PROP          =   null;
@@ -35,10 +36,10 @@ class OKBlock {
     // --- options ---
     this.displayTime          =   +displayTime;
     this.duration             =   +duration;
-    this.loop                 =   loop;
-    this.random               =   random;
-    this.easing               =   easing            || 'cubic-bezier(.26,.92,.41,.98)';
-    this.pedal                =   pedal;
+    this.loop                 =   !!loop;
+    this.random               =   !!random;
+    this.easing               =   easing || 'cubic-bezier(.26,.92,.41,.98)';
+    this.pedal                =   !!pedal;
 
     if (typeof size === 'number' && size >= 0) {
       this.size = size;
@@ -223,9 +224,8 @@ class OKBlock {
     if (!('_DEFAULT_OPTIONS' in obj) || !('_BASE_DOM' in obj) || !('_TRANSITION_PROPS' in obj) || !('_formationTable' in obj)) {
       console.error('Pattern is invalid.');
     }
-    patterns[name] = obj;
+    this.patterns[name] = obj;
   }
-
 }
 
 
@@ -235,11 +235,11 @@ function _createDom() {
 
 function _changeStyle(c) { // @bind this
   let oldC         = this._CHAR_PROP;
-  let oldFormation = this._PATTERN_PROP._formationTable[oldC];
   let newFormation = this._PATTERN_PROP._formationTable[c];
   if (!newFormation) { return; }
   let diffFormation;
   if (oldC) {
+    const oldFormation = this._PATTERN_PROP._formationTable[oldC];
     diffFormation = newFormation.map((newStr, idx) => {
       let oldStr = oldFormation[idx];
       let newStrIsArr = Array.isArray(newStr);
@@ -257,23 +257,20 @@ function _changeStyle(c) { // @bind this
     diffFormation = newFormation;
   }
   [...this._DOM_PROP.childNodes].forEach((node: Node, idx) => {
+    if (!(node instanceof HTMLElement)) { return; }
     let formation  = diffFormation[idx];
-    let specifyPos = Array.isArray(formation);
     if (!formation) { return; }
-    let pos;
-    if (specifyPos) {
+    let pos: OKPatternsFormationPos;
+    if (Array.isArray(formation)) {
       pos = formation[1];
+      const _formation = formation[0];
+      node.className = `${ _formation } ${ pos }`;
     } else {
-      pos = `pos_${ idx % 3 }_${ idx / 3 | 0 }`;
+      pos = _FORMATION_POS_TABLE[idx % 3 + (idx / 3 | 0)];
+      node.className = `${ formation } ${ pos }`;
     }
-    if (node instanceof HTMLElement) {
-      node.className = `${ specifyPos ? formation[0] : formation } ${ pos }`;
-      if (node.classList.contains('rotate-default')) { return; }
-      node.classList.add(_ROTATE_TABLE[Math.random() * 4 | 0]);
-    } else {
-      // $FlowFixMe
-      console.error(`node must be HTMLElement. ${ node }`);
-    }
+    if (node.classList.contains('rotate-default')) { return; }
+    node.classList.add(_ROTATE_TABLE[Math.random() * 4 | 0]);
   });
 }
 
@@ -281,7 +278,7 @@ function _updateTransitionConfig() { // @bind this
   // let val = this._PATTERN_PROP._TRANSITION_PROPS.reduce((str, prop, idx) => {
   //   return `${ str }${ idx ? ',' : '' } ${ prop } ${ this._DURATION_PROP }ms ${ this._EASING_PROP }`;
   // }, '');
-  const val = this._PATTERN_PROP
+  const val = this._PATTERN_PROP._TRANSITION_PROPS
   .map(prop => `${prop} ${this._DURATION_PROP}ms ${this._EASING_PROP}`)
   .join(',');
 
@@ -300,16 +297,31 @@ function _updateTransitionConfig() { // @bind this
   }
 }
 
+OKBlock.patterns = {}; // initialized in OKBlock.define
+
+
 const _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
+const _FORMATION_POS_TABLE: OKPatternsFormationPos[] = [
+  'pos_0_0',
+  'pos_1_0',
+  'pos_2_0',
+  'pos_3_0',
+  'pos_0_1',
+  'pos_1_1',
+  'pos_2_1',
+  'pos_3_1',
+  'pos_0_2',
+  'pos_1_2',
+  'pos_2_2',
+  'pos_3_2'
+];
 
 module.exports = OKBlock;
 
 export type OKPatternsDefinition = {
   _DEFAULT_OPTIONS: OKBlockOptions,
   _BASE_DOM: HTMLElement,
-  _formationTable: {
-    [char: string]: OKPatternsFormation
-  },
+  _formationTable: OKPatternsFormationTable,
   _TRANSITION_PROPS: OKPatternsTransitionProps
 };
 
@@ -422,6 +434,10 @@ export type CssAnimatableProperty =
 'word-spacing'|
 'z-index';
 
+export type OKPatternsFormationTable = {
+  [char: string]: OKPatternsFormation
+};
+
 export type OKPatternsFormation = [
   OKPatternsFormationItem,
   OKPatternsFormationItem,
@@ -435,20 +451,19 @@ export type OKPatternsFormation = [
 ];
 
 export type OKPatternsFormationItem = string | [string, OKPatternsFormationPos];
-export type OKPatternsFormationPos = [
-  'pos_0_0',
-  'pos_1_0',
-  'pos_2_0',
-  'pos_3_0',
-  'pos_0_1',
-  'pos_1_1',
-  'pos_2_1',
-  'pos_3_1',
-  'pos_0_2',
-  'pos_1_2',
-  'pos_2_2',
-  'pos_3_2',
-];
+export type OKPatternsFormationPos =
+'pos_0_0'|
+'pos_1_0'|
+'pos_2_0'|
+'pos_3_0'|
+'pos_0_1'|
+'pos_1_1'|
+'pos_2_1'|
+'pos_3_1'|
+'pos_0_2'|
+'pos_1_2'|
+'pos_2_2'|
+'pos_3_2';
 
 export type OKBlockOptions = {
   size?       : number,
