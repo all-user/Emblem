@@ -292,9 +292,6 @@ function _changeStyle(c) { // @bind this
 }
 
 function _updateTransitionConfig() { // @bind this
-  // let val = this._PATTERN_PROP._TRANSITION_PROPS.reduce((str, prop, idx) => {
-  //   return `${ str }${ idx ? ',' : '' } ${ prop } ${ this._DURATION_PROP }ms ${ this._EASING_PROP }`;
-  // }, '');
   const val = this._PATTERN_PROP._TRANSITION_PROPS
   .map(prop => `${prop} ${this._DURATION_PROP}ms ${this._EASING_PROP}`)
   .join(',');
