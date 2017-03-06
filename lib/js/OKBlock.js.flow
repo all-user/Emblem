@@ -1,0 +1,43 @@
+// @flow
+
+import type {OKPatternsDefinition, OKBlockConstructorOptions, OKBlockOptions} from "@internal/types";
+declare class OKBlock {
+  static patterns: {[patternName: string]: any};
+  static define(name: string, obj: any): void;
+
+  _CANSELLER_PROP: Function;
+  _CHAR_PROP: ?string;
+  _DISPLAY_TIME_PROP: number;
+  _DOM_PROP: HTMLElement;
+  _DURATION_PROP: number;
+  _EASING_PROP: string;
+  _IS_ANIMATING_PROP: boolean;
+  _LOOP_PROP: boolean;
+  _PATTERN_NAME_PROP: string;
+  _PATTERN_PROP: OKPatternsDefinition;
+  _PEDAL_PROP: boolean;
+  _RANDOM_PROP: boolean;
+  _RESUME_PROP: ?Function;
+
+  allValidChars: Array<string>;
+  char: ?string;
+  displayTime: number;
+  dom: any;
+  duration: number;
+  easing: string;
+  isAnimating: boolean;
+  loop: boolean;
+  options: OKBlockOptions;
+  pattern: string;
+  pedal: boolean;
+  random: boolean;
+  size: number;
+  animateFromString(str: string, opt?: any): void;
+  appendTo(parent: any): void;
+  constructor(c: string, options?: OKBlockConstructorOptions): void;
+  resumeAnimate(): void;
+  stopAnimate(): void;
+  to(c: string): boolean;
+}
+
+declare module.exports: typeof OKBlock;

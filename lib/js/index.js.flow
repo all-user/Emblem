@@ -1,0 +1,13 @@
+// @flow
+
+import type {
+  OKBlockOptions as _OKBlockOptions,
+  OKBlocksGroupOptions as _OKBlocksGroupOptions
+} from '@internal/types';
+
+export type OKBlockOptions = _OKBlockOptions;
+export type OKBlocksGroupOptions = _OKBlocksGroupOptions;
+
+import OKBlocksGroup from './OKBlocksGroup.js';
+import OKBlock from './OKBlock.js';
+declare module.exports: {OKBlock: typeof OKBlock, OKBlocksGroup: typeof OKBlocksGroup};
