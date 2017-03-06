@@ -1,5 +1,5 @@
 // patterns
-let OKBlock = require('../src/js/OKBlock.js');
+import OKBlock from '../src/js/OKBlock.js';
 require('@all-user/ok-patterns-lines')(OKBlock);
 require('@all-user/ok-patterns-olympic2020')(OKBlock);
 
