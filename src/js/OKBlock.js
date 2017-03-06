@@ -1,4 +1,13 @@
-/* @flow */
+// @flow
+
+import type {
+  OKPatternsDefinition,
+  OKBlockConstructorOptions,
+  OKBlockReturnOptions,
+  OKBlockOptions,
+  OKPatternsFormationPos
+} from '@internal/types';
+
 class OKBlock {
   static patterns: {
     [patternName: string]: OKPatternsDefinition
@@ -17,21 +26,21 @@ class OKBlock {
   _RANDOM_PROP: boolean;
   _PEDAL_PROP: boolean;
 
-  constructor(c: string, options: OKBlockConstructorOptions = { pattern: null }) {
+  constructor(c: string, options: OKBlockConstructorOptions = { pattern: (null: ?string) }) {
 
     if (options.pattern == null) { console.error('options.pattern is not set.'); return; }
     if (this.constructor.patterns[options.pattern] == null) { console.error(`${ options.pattern } pattern is undefined.`); return; }
 
     this._PATTERN_NAME_PROP  =   options.pattern;
-    this._PATTERN_PROP       =   this.constructor.patterns[options.pattern];
+    this._PATTERN_PROP       =   this.constructor.patterns[this._PATTERN_NAME_PROP];
     this._IS_ANIMATING_PROP  =   false;
     this._RESUME_PROP        =   null;
     this._CHAR_PROP          =   null;
     this._DOM_PROP           =   _createDom.call(this);
     this._CANSELLER_PROP     =   () => {};
 
-    options = Object.assign({}, this._PATTERN_PROP._DEFAULT_OPTIONS, options);
-    let { size, displayTime, duration, easing, loop, random, pedal } = options;
+    const _options = Object.assign({}, this._PATTERN_PROP._DEFAULT_OPTIONS, options);
+    let { size, displayTime, duration, easing, loop, random, pedal } = _options;
 
     // --- options ---
     this.displayTime          =   +displayTime;
@@ -68,9 +77,10 @@ class OKBlock {
   }
 
   resumeAnimate() {
-    if (this._RESUME_PROP == null) { return; }
-    this._IS_ANIMATING_PROP = true;
-    this._RESUME_PROP();
+    if (typeof this._RESUME_PROP === 'function') {
+      this._IS_ANIMATING_PROP = true;
+      this._RESUME_PROP();
+    }
   }
 
   animateFromString(str: string, opt: OKBlockOptions = {}) {
@@ -108,7 +118,7 @@ class OKBlock {
           }
         });
       });
-    }, Promise.resolve()).catch(err => {
+    }, Promise.resolve()).catch((err: void | Error | string) => {
       this._IS_ANIMATING_PROP = false;
       console.log('OKBlock: cansel before animation.');
       console.log(err);
@@ -122,7 +132,14 @@ class OKBlock {
 
   // --- options ---
   set options(options: OKBlockOptions = {}) {
-    Object.assign(this, options);
+    const { size, displayTime, duration, easing, loop, random, pedal } = options;
+    if (size != null) { this.size = size; }
+    if (displayTime != null) { this.displayTime = displayTime; }
+    if (duration != null) { this.duration = duration; }
+    if (easing != null) { this.easing = easing; }
+    if (loop != null) { this.loop = loop; }
+    if (random != null) { this.random = random; }
+    if (pedal != null) { this.pedal = pedal; }
   }
   get options(): OKBlockReturnOptions {
     let { size, displayTime, duration, easing, loop, random, pedal } = this;
@@ -220,7 +237,7 @@ class OKBlock {
   // --- allValidChars ---
   get allValidChars(): string[] { return Object.keys(this._PATTERN_PROP._formationTable); }
 
-  static define(name, obj) {
+  static define(name: string, obj: OKPatternsDefinition) {
     if (!('_DEFAULT_OPTIONS' in obj) || !('_BASE_DOM' in obj) || !('_TRANSITION_PROPS' in obj) || !('_formationTable' in obj)) {
       console.error('Pattern is invalid.');
     }
@@ -316,177 +333,4 @@ const _FORMATION_POS_TABLE: OKPatternsFormationPos[] = [
   'pos_3_2'
 ];
 
-module.exports = OKBlock;
-
-export type OKPatternsDefinition = {
-  _DEFAULT_OPTIONS: OKBlockOptions,
-  _BASE_DOM: HTMLElement,
-  _formationTable: OKPatternsFormationTable,
-  _TRANSITION_PROPS: OKPatternsTransitionProps
-};
-
-export type OKPatternsTransitionProps = CssAnimatableProperty[];
-export type CssAnimatableProperty =
-'all'|
-'backdrop-filter'|
-'background'|
-'background-color'|
-'background-position'|
-'background-size'|
-'border'|
-'border-bottom'|
-'border-bottom-color'|
-'border-bottom-left-radius'|
-'border-bottom-right-radius'|
-'border-bottom-width'|
-'border-color'|
-'border-left'|
-'border-left-color'|
-'border-left-width'|
-'border-radius'|
-'border-right'|
-'border-right-color'|
-'border-right-width'|
-'border-top'|
-'border-top-color'|
-'border-top-left-radius'|
-'border-top-right-radius'|
-'border-top-width'|
-'border-width'|
-'bottom'|
-'box-shadow'|
-'caret-color'|
-'clip'|
-'clip-path'|
-'color'|
-'column-count'|
-'column-gap'|
-'column-rule'|
-'column-rule-color'|
-'column-rule-width'|
-'column-width'|
-'columns'|
-'filter'|
-'flex'|
-'flex-basis'|
-'flex-grow'|
-'flex-shrink'|
-'font'|
-'font-size'|
-'font-size-adjust'|
-'font-stretch'|
-'font-variation-settings'|
-'font-weight'|
-'grid-column-gap'|
-'grid-gap'|
-'grid-row-gap'|
-'height'|
-'left'|
-'letter-spacing'|
-'line-height'|
-'margin'|
-'margin-bottom'|
-'margin-left'|
-'margin-right'|
-'margin-top'|
-'mask'|
-'mask-position'|
-'mask-size'|
-'max-height'|
-'max-width'|
-'min-height'|
-'min-width'|
-'motion-offset'|
-'motion-rotation'|
-'object-position'|
-'opacity'|
-'order'|
-'outline'|
-'outline-color'|
-'outline-offset'|
-'outline-width'|
-'padding'|
-'padding-bottom'|
-'padding-left'|
-'padding-right'|
-'padding-top'|
-'perspective'|
-'perspective-origin'|
-'right'|
-'scroll-snap-coordinate'|
-'scroll-snap-destination'|
-'shape-image-threshold'|
-'shape-margin'|
-'shape-outside'|
-'tab-size'|
-'text-decoration'|
-'text-decoration-color'|
-'text-emphasis'|
-'text-emphasis-color'|
-'text-indent'|
-'text-shadow'|
-'top'|
-'transform'|
-'transform-origin'|
-'vertical-align'|
-'visibility'|
-'width'|
-'word-spacing'|
-'z-index';
-
-export type OKPatternsFormationTable = {
-  [char: string]: OKPatternsFormation
-};
-
-export type OKPatternsFormation = [
-  OKPatternsFormationItem,
-  OKPatternsFormationItem,
-  OKPatternsFormationItem,
-  OKPatternsFormationItem,
-  OKPatternsFormationItem,
-  OKPatternsFormationItem,
-  OKPatternsFormationItem,
-  OKPatternsFormationItem,
-  OKPatternsFormationItem
-];
-
-export type OKPatternsFormationItem = string | [string, OKPatternsFormationPos];
-export type OKPatternsFormationPos =
-'pos_0_0'|
-'pos_1_0'|
-'pos_2_0'|
-'pos_3_0'|
-'pos_0_1'|
-'pos_1_1'|
-'pos_2_1'|
-'pos_3_1'|
-'pos_0_2'|
-'pos_1_2'|
-'pos_2_2'|
-'pos_3_2';
-
-export type OKBlockOptions = {
-  size?       : number,
-  displayTime?: number,
-  duration?   : number,
-  loop?       : boolean,
-  random?     : boolean,
-  pedal?      : boolean,
-  easing?     : string
-};
-
-export type OKBlockConstructorOptions = {
-  pattern: ?string
-} & OKBlockOptions;
-
-export type OKBlockReturnOptions = {
-  size       : number,
-  displayTime: number,
-  duration   : number,
-  loop       : boolean,
-  random     : boolean,
-  pedal      : boolean,
-  easing     : string
-};
-
-export type OKPattern = any;
+export default OKBlock;

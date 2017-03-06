@@ -1,3 +1,8 @@
-/* @flow */
-module.exports.OKBlock = require('./OKBlock.js');
-module.exports.OKBlocksGroup = require('./OKBlocksGroup.js');
+// @flow
+import OKBlock from './OKBlock.js';
+import OKBlocksGroup from './OKBlocksGroup.js';
+
+export default {
+  OKBlock,
+  OKBlocksGroup
+};

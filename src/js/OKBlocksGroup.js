@@ -1,29 +1,11 @@
-/* @flow */
+// @flow
 import type {
-  OKBlockOptions
-} from './OKBlock.js';
+  OKBlocksGroupOptions,
+  OKBlocksGroupConstructorOptions,
+  OKBlocksGroupReturnOptions
+} from '@internal/types';
 
-export type OKBlocksGroupOptions = {
-  length?: number
-} & OKBlockOptions;
-
-export type OKBlocksGroupConstructorOptions = {
-  pattern: ?string
-} & OKBlocksGroupOptions;
-
-export type OKBlocksGroupReturnOptions = {
-  length     : number,
-  displayTime: number,
-  loop       : boolean,
-  random     : boolean,
-  size       : number[],
-  easing     : string[],
-  duration   : number[],
-  pedal      : boolean[]
-};
-
-
-let OKBlock = require('./OKBlock.js');
+import OKBlock from './OKBlock.js';
 
 class OKBlocksGroup {
   _IS_ANIMATING_PROP: boolean;
@@ -35,7 +17,7 @@ class OKBlocksGroup {
   _RANDOM_PROP: boolean;
 
 
-  constructor(chars: string, options: OKBlocksGroupConstructorOptions = { pattern: null }) {
+  constructor(chars: string, options: OKBlocksGroupConstructorOptions = { pattern: (null: ?string) }) {
     let { length, displayTime, loop = false, random = false } = options;
     this._IS_ANIMATING_PROP  =   false;
     this._RESUME_PROP        =   null;
@@ -102,13 +84,13 @@ class OKBlocksGroup {
   }
 
   resumeAnimate() {
-    if (this._RESUME_PROP) {
+    if (typeof this._RESUME_PROP === 'function') {
       this._IS_ANIMATING_PROP = true;
       this._RESUME_PROP();
     }
   }
 
-  animateFromString(str: string, opt: OKBlockOptions) {
+  animateFromString(str: string | string[], opt: OKBlocksGroupOptions) {
     let strArr;
     if (typeof str === 'string') {
       let len = this.emblems.length;
@@ -127,7 +109,7 @@ class OKBlocksGroup {
     _animateFromStringArray.call(this, strArr, opt);
   }
 
-  animateFromStringArray(strArr: string[], opt: OKBlockOptions) {
+  animateFromStringArray(strArr: string[], opt: OKBlocksGroupOptions) {
     _animateFromStringArray.call(this, strArr, opt);
   }
 
@@ -136,8 +118,16 @@ class OKBlocksGroup {
    */
 
   // --- options ---
-  set options(options: OKBlockOptions = {}) {
-    Object.assign(this, options);
+  set options(options: OKBlocksGroupOptions = {}) {
+    const { length, size, displayTime, duration, easing, loop, random, pedal } = options;
+    if (length != null) { this.length = length; }
+    if (size != null) { this.size = size; }
+    if (displayTime != null) { this.displayTime = displayTime; }
+    if (duration != null) { this.duration = duration; }
+    if (easing != null) { this.easing = easing; }
+    if (loop != null) { this.loop = loop; }
+    if (random != null) { this.random = random; }
+    if (pedal != null) { this.pedal = pedal; }
   }
   get options(): OKBlocksGroupReturnOptions {
     let { length, displayTime, loop, random, size, duration, easing, pedal } = this;
@@ -171,14 +161,14 @@ class OKBlocksGroup {
   get displayTime(): number { return this._DISPLAY_TIME_PROP; }
 
   // --- loop ---
-  set loop(bool: boolean) {
+  set loop(bool: ?boolean) {
     if (bool == null) { return; }
     this._LOOP_PROP = bool;
   }
   get loop(): boolean { return this._LOOP_PROP; }
 
   // --- random ---
-  set random(bool: boolean) {
+  set random(bool: ?boolean) {
     if (bool == null) { return; }
     this._RANDOM_PROP = bool;
   }
@@ -207,7 +197,7 @@ class OKBlocksGroup {
   get isAnimating(): boolean { return this._IS_ANIMATING_PROP; }
 }
 
-function _transformToOKBlockArray(arg, opt: OKBlocksGroupConstructorOptions) { // (string | [OKBlock], object) => [OKBlock] | false
+function _transformToOKBlockArray(arg: string | OKBlock[], opt: OKBlocksGroupConstructorOptions) { // (string | [OKBlock], object) => [OKBlock] | false
 
   let res;
   switch (typeof arg) {
@@ -228,7 +218,7 @@ function _transformToOKBlockArray(arg, opt: OKBlocksGroupConstructorOptions) { /
   return res;
 }
 
-function _animateFromStringArray(strArr: string[], opt: OKBlockOptions = {}) {
+function _animateFromStringArray(strArr: string[], opt: OKBlocksGroupOptions = {}) {
   this._CANSELLER_PROP(); // cansel before animation.
 
   this._IS_ANIMATING_PROP = true;
@@ -264,7 +254,7 @@ function _animateFromStringArray(strArr: string[], opt: OKBlockOptions = {}) {
         }
       });
     });
-  }, Promise.resolve()).catch(err => {
+  }, Promise.resolve()).catch((err: void | Error | string) => {
     this._IS_ANIMATING_PROP = false;
     console.log('OKBlocksGroup: cansel before animation.');
     console.log(err);
@@ -272,4 +262,4 @@ function _animateFromStringArray(strArr: string[], opt: OKBlockOptions = {}) {
 }
 
 
-module.exports = OKBlocksGroup;
+export default OKBlocksGroup;
