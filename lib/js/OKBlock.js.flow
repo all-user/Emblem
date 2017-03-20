@@ -1,39 +1,34 @@
 // @flow
 
-import type {OKPatternsDefinition, OKBlockConstructorOptions, OKBlockOptions} from "@internal/types";
+import type {OKPatternsDefinition, OKBlockConstructorOptions, OKBlockReturnOptions, OKBlockOptions, OKPatternsFormationPos} from "@internal/types";
 declare class OKBlock {
-  static patterns: {[patternName: string]: any};
-  static define(name: string, obj: any): void;
+  static patterns: {[patternName: string]: OKPatternsDefinition};
+  static define(name: string, patternDefinition: OKPatternsDefinition): void;
 
-  _CANSELLER_PROP: Function;
-  _CHAR_PROP: ?string;
-  _DISPLAY_TIME_PROP: number;
-  _DOM_PROP: HTMLElement;
-  _DURATION_PROP: number;
-  _EASING_PROP: string;
-  _IS_ANIMATING_PROP: boolean;
-  _LOOP_PROP: boolean;
-  _PATTERN_NAME_PROP: string;
-  _PATTERN_PROP: OKPatternsDefinition;
-  _PEDAL_PROP: boolean;
-  _RANDOM_PROP: boolean;
-  _RESUME_PROP: ?Function;
-
+  _displayTime: number;
+  _distinct: boolean;
+  _duration: number;
+  _eaasing: string;
+  _loop: boolean;
+  _random: boolean;
   allValidChars: Array<string>;
+  cancelAnimation: Function;
   char: ?string;
   displayTime: number;
-  dom: any;
+  distinct: boolean;
+  dom: HTMLElement;
   duration: number;
   easing: string;
   isAnimating: boolean;
   loop: boolean;
-  options: OKBlockOptions;
-  pattern: string;
-  pedal: boolean;
+  options: OKBlockReturnOptions;
+  patternDefinition: OKPatternsDefinition;
+  patternName: string;
   random: boolean;
+  resumeAnimate: ?Function;
   size: number;
-  animateFromString(str: string, opt?: any): void;
-  appendTo(parent: any): void;
+  animateFromString(str: string, opt?: OKBlockOptions): void;
+  appendTo(parent: HTMLElement): void;
   constructor(c: string, options?: OKBlockConstructorOptions): void;
   resumeAnimate(): void;
   stopAnimate(): void;

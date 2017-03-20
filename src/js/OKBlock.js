@@ -12,43 +12,43 @@ class OKBlock {
   static patterns: {
     [patternName: string]: OKPatternsDefinition
   };
-  _PATTERN_NAME_PROP: string;
-  _PATTERN_PROP: OKPatternsDefinition;
-  _IS_ANIMATING_PROP: boolean;
-  _RESUME_PROP: ?Function;
-  _CHAR_PROP: ?string;
-  _DOM_PROP: HTMLElement;
-  _CANSELLER_PROP: Function;
-  _DISPLAY_TIME_PROP: number;
-  _DURATION_PROP: number;
-  _EASING_PROP: string;
-  _LOOP_PROP: boolean;
-  _RANDOM_PROP: boolean;
-  _PEDAL_PROP: boolean;
+  patternName: string;
+  patternDefinition: OKPatternsDefinition;
+  isAnimating: boolean;
+  resumeAnimate: ?Function;
+  char: ?string;
+  dom: HTMLElement;
+  cancelAnimation: Function;
+  _displayTime: number;
+  _duration: number;
+  _eaasing: string;
+  _loop: boolean;
+  _random: boolean;
+  _distinct: boolean;
 
-  constructor(c: string, options: OKBlockConstructorOptions = { pattern: (null: ?string) }) {
+  constructor(c: string, options: OKBlockConstructorOptions = { patternName: (null: ?string) }) {
 
-    if (options.pattern == null) { console.error('options.pattern is not set.'); return; }
-    if (this.constructor.patterns[options.pattern] == null) { console.error(`${ options.pattern } pattern is undefined.`); return; }
+    if (options.patternName == null) { console.error('options.patternName is not set.'); return; }
+    if (this.constructor.patterns[options.patternName] == null) { console.error(`${ options.patternName } patternName is undefined.`); return; }
 
-    this._PATTERN_NAME_PROP  =   options.pattern;
-    this._PATTERN_PROP       =   this.constructor.patterns[this._PATTERN_NAME_PROP];
-    this._IS_ANIMATING_PROP  =   false;
-    this._RESUME_PROP        =   null;
-    this._CHAR_PROP          =   null;
-    this._DOM_PROP           =   _createDom.call(this);
-    this._CANSELLER_PROP     =   () => {};
+    this.patternName       = options.patternName;
+    this.patternDefinition = this.constructor.patterns[this.patternName];
+    this.isAnimating       = false;
+    this.resumeAnimate     = null;
+    this.char              = null;
+    this.dom               = _createDom.call(this);
+    this.cancelAnimation   = () => {};
 
-    const _options = Object.assign({}, this._PATTERN_PROP._DEFAULT_OPTIONS, options);
-    let { size, displayTime, duration, easing, loop, random, pedal } = _options;
+    const _options = Object.assign({}, this.patternDefinition._DEFAULT_OPTIONS, options);
+    let { size, displayTime, duration, easing, loop, random, distinct } = _options;
 
     // --- options ---
-    this.displayTime          =   +displayTime;
-    this.duration             =   +duration;
-    this.loop                 =   !!loop;
-    this.random               =   !!random;
-    this.easing               =   easing || 'cubic-bezier(.26,.92,.41,.98)';
-    this.pedal                =   !!pedal;
+    this.displayTime = +displayTime;
+    this.duration    = +duration;
+    this.loop        = !!loop;
+    this.random      = !!random;
+    this.easing      = easing || 'cubic-bezier(.26,.92,.41,.98)';
+    this.distinct    = !!distinct;
 
     if (typeof size === 'number' && size >= 0) {
       this.size = size;
@@ -61,65 +61,65 @@ class OKBlock {
 
   to(c: string) {
     let _c = c && c.toLowerCase && c.toLowerCase();
-    if (!this._PATTERN_PROP._formationTable[_c]) { return false; }
-    if (this._CHAR_PROP === _c) { return false; }
+    if (!this.patternDefinition._formationTable[_c]) { return false; }
+    if (this.char === _c) { return false; }
     _changeStyle.call(this, _c);
-    this._CHAR_PROP = _c;
+    this.char = _c;
     return true;
   }
 
   appendTo(parent: HTMLElement) {
-    parent.appendChild(this._DOM_PROP);
+    parent.appendChild(this.dom);
   }
 
   stopAnimate() {
-    this._IS_ANIMATING_PROP = false;
+    this.isAnimating = false;
   }
 
   resumeAnimate() {
-    if (typeof this._RESUME_PROP === 'function') {
-      this._IS_ANIMATING_PROP = true;
-      this._RESUME_PROP();
+    if (typeof this.resumeAnimate === 'function') {
+      this.isAnimating = true;
+      this.resumeAnimate();
     }
   }
 
   animateFromString(str: string, opt: OKBlockOptions = {}) {
 
-    this._IS_ANIMATING_PROP = true;
-    this._RESUME_PROP       = null;
+    this.isAnimating = true;
+    this.resumeAnimate       = null;
     this.options            = opt;
 
     [...str].reduce((p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
       let isLast = idx === str.length - 1;
       return p.then(() => {
         return new Promise((resolve, reject) => {
-          this._CANSELLER_PROP = reject;
-          if (this._RANDOM_PROP) {
+          this.cancelAnimation = reject;
+          if (this._random) {
             let _c = str[Math.random() * str.length | 0];
             this.to(_c);
           } else {
             this.to(c);
           }
           if (isLast) {
-            if (this._LOOP_PROP) {
+            if (this._loop) {
               setTimeout(() => {
                 resolve();
                 this.animateFromString.call(this, str);
-              }, this._DISPLAY_TIME_PROP);
+              }, this._displayTime);
             } else {
-              setTimeout(reject, this._DISPLAY_TIME_PROP);
+              setTimeout(reject, this._displayTime);
             }
             return;
           }
-          if (!this._IS_ANIMATING_PROP) {
-            this._RESUME_PROP = resolve;
+          if (!this.isAnimating) {
+            this.resumeAnimate = resolve;
           } else {
-            setTimeout(resolve, this._DISPLAY_TIME_PROP);
+            setTimeout(resolve, this._displayTime);
           }
         });
       });
     }, Promise.resolve()).catch((err: void | Error | string) => {
-      this._IS_ANIMATING_PROP = false;
+      this.isAnimating = false;
       console.log('OKBlock: cansel before animation.');
       console.log(err);
     });
@@ -132,131 +132,114 @@ class OKBlock {
 
   // --- options ---
   set options(options: OKBlockOptions = {}) {
-    const { size, displayTime, duration, easing, loop, random, pedal } = options;
+    const { size, displayTime, duration, easing, loop, random, distinct } = options;
     if (size != null) { this.size = size; }
     if (displayTime != null) { this.displayTime = displayTime; }
     if (duration != null) { this.duration = duration; }
     if (easing != null) { this.easing = easing; }
     if (loop != null) { this.loop = loop; }
     if (random != null) { this.random = random; }
-    if (pedal != null) { this.pedal = pedal; }
+    if (distinct != null) { this.distinct = distinct; }
   }
   get options(): OKBlockReturnOptions {
-    let { size, displayTime, duration, easing, loop, random, pedal } = this;
-    return { size, displayTime, duration, easing, loop, random, pedal };
+    let { size, displayTime, duration, easing, loop, random, distinct } = this;
+    return { size, displayTime, duration, easing, loop, random, distinct };
   }
 
   // --- size ---
   set size(size: number) {
     if (size == null) { return; }
     if (typeof size === 'number' && size >= 0) {
-      let domStyle = this._DOM_PROP.style;
+      let domStyle = this.dom.style;
       domStyle.width  = `${ size }px`;
       domStyle.height = `${ size }px`;
     } else {
       console.error('OKBlock.size should zero or positive number.');
     }
   }
-  get size(): number { return +this._DOM_PROP.style.width.replace('px', ''); }
+  get size(): number { return +this.dom.style.width.replace('px', ''); }
 
 
   // --- displayTime ---
   set displayTime(time: number) {
     if (time == null) { return; }
     if (typeof time === 'number' && time > 0) {
-      this._DISPLAY_TIME_PROP = time;
+      this._displayTime = time;
     } else {
       console.error('OKBlock.displayTime should be positive number.');
     }
   }
-  get displayTime(): number { return this._DISPLAY_TIME_PROP; }
+  get displayTime(): number { return this._displayTime; }
 
 
   // --- duration ---
   set duration(time: number) {
     if (time == null) { return; }
     if (typeof time === 'number' && time >= 0) {
-      this._DURATION_PROP = time;
+      this._duration = time;
       _updateTransitionConfig.call(this);
     } else {
       console.error('OKBlock.duration should be zero or positive number.', time);
     }
   }
-  get duration(): number { return this._DURATION_PROP; }
+  get duration(): number { return this._duration; }
 
 
   // --- easing ---
   set easing(val: string) {
     if (val == null) { return; }
-    this._EASING_PROP = val;
+    this._eaasing = val;
     _updateTransitionConfig.call(this);
   }
-  get easing(): string { return this._EASING_PROP; }
+  get easing(): string { return this._eaasing; }
 
 
   // --- loop ---
   set loop(bool: boolean) {
     if (bool == null) { return; }
-    this._LOOP_PROP = bool;
+    this._loop = bool;
   }
-  get loop(): boolean { return this._LOOP_PROP; }
+  get loop(): boolean { return this._loop; }
 
 
   // --- random ---
   set random(bool: boolean) {
     if (bool == null) { return; }
-    this._RANDOM_PROP = bool;
+    this._random = bool;
   }
-  get random(): boolean { return this._RANDOM_PROP; }
+  get random(): boolean { return this._random; }
 
 
-  // --- pedal ---
-  set pedal(bool: boolean) {
+  // --- distinct ---
+  set distinct(bool: boolean) {
     if (bool == null) { return; }
-    this._PEDAL_PROP = bool;
+    this._distinct = bool;
   }
-  get pedal(): boolean { return this._PEDAL_PROP; }
-
-
-  // --- pattern ---
-  get pattern(): string { return this._PATTERN_NAME_PROP; }
-
-
-  // --- dom ---
-  get dom(): HTMLElement { return this._DOM_PROP; }
-
-
-  // --- char ---
-  get char(): ?string { return this._CHAR_PROP; }
-
-
-  // --- isAnimating ---
-  get isAnimating(): boolean { return this._IS_ANIMATING_PROP; }
-
+  get distinct(): boolean { return this._distinct; }
 
   // --- allValidChars ---
-  get allValidChars(): string[] { return Object.keys(this._PATTERN_PROP._formationTable); }
+  get allValidChars(): string[] { return Object.keys(this.patternDefinition._formationTable); }
 
-  static define(name: string, obj: OKPatternsDefinition) {
-    if (!('_DEFAULT_OPTIONS' in obj) || !('_BASE_DOM' in obj) || !('_TRANSITION_PROPS' in obj) || !('_formationTable' in obj)) {
+  static define(name: string, patternDefinition: OKPatternsDefinition) {
+    if (!('_DEFAULT_OPTIONS' in patternDefinition) || !('_BASE_DOM' in patternDefinition) || !('_TRANSITION_PROPS' in patternDefinition) || !('_formationTable' in patternDefinition)) {
       console.error('Pattern is invalid.');
     }
-    this.patterns[name] = obj;
+    this.patterns[name] = patternDefinition;
   }
 }
 
 
 function _createDom() {
-  return this._PATTERN_PROP._BASE_DOM.cloneNode(true);
+  return this.patternDefinition._BASE_DOM.cloneNode(true);
 }
 
 function _changeStyle(c) { // @bind this
-  let oldC         = this._CHAR_PROP;
-  let newFormation = this._PATTERN_PROP._formationTable[c];
+  let oldC         = this.char;
+  let newFormation = this.patternDefinition._formationTable[c];
   if (!newFormation) { return; }
   let diffFormation;
   if (oldC) {
-    const oldFormation = this._PATTERN_PROP._formationTable[oldC];
+    const oldFormation = this.patternDefinition._formationTable[oldC];
     diffFormation = newFormation.map((newStr, idx) => {
       let oldStr = oldFormation[idx];
       let newStrIsArr = Array.isArray(newStr);
@@ -273,7 +256,7 @@ function _changeStyle(c) { // @bind this
   } else {
     diffFormation = newFormation;
   }
-  [...this._DOM_PROP.childNodes].forEach((node: Node, idx) => {
+  [...this.dom.childNodes].forEach((node: Node, idx) => {
     if (!(node instanceof HTMLElement)) { return; }
     let formation  = diffFormation[idx];
     if (!formation) { return; }
@@ -292,11 +275,11 @@ function _changeStyle(c) { // @bind this
 }
 
 function _updateTransitionConfig() { // @bind this
-  const val = this._PATTERN_PROP._TRANSITION_PROPS
-  .map(prop => `${prop} ${this._DURATION_PROP}ms ${this._EASING_PROP}`)
+  const val = this.patternDefinition._TRANSITION_PROPS
+  .map(prop => `${prop} ${this._duration}ms ${this._eaasing}`)
   .join(',');
 
-  _updateStyle(this._DOM_PROP.childNodes);
+  _updateStyle(this.dom.childNodes);
 
   function _updateStyle(list) {
     [...list].forEach(node => {

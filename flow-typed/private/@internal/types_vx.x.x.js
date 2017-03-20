@@ -27,7 +27,7 @@ declare module '@internal/types' {
     duration?   : number;
     loop?       : boolean;
     random?     : boolean;
-    pedal?      : boolean;
+    distinct?   : boolean;
     easing?     : string;
   }
 
@@ -36,11 +36,11 @@ declare module '@internal/types' {
   }
 
   declare interface OKBlockConstructorOptions extends OKBlockOptions {
-    pattern: ?string;
+    patternName: ?string;
   }
 
   declare interface OKBlocksGroupConstructorOptions extends OKBlocksGroupOptions {
-    pattern: ?string;
+    patternName: ?string;
   }
 
   declare type OKBlockReturnOptions = {
@@ -49,7 +49,7 @@ declare module '@internal/types' {
     duration   : number,
     loop       : boolean,
     random     : boolean,
-    pedal      : boolean,
+    distinct   : boolean,
     easing     : string
   };
 
@@ -93,6 +93,12 @@ declare module '@internal/types' {
     size       : number[],
     easing     : string[],
     duration   : number[],
-    pedal      : boolean[]
+    distinct      : boolean[]
   };
+
+  declare interface TestCase {
+    desc: string;
+    args: any;
+    result: any;
+  }
 }
