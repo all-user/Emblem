@@ -1,0 +1,28 @@
+#!/bin/sh -e
+
+root=`pwd`
+types_dir=$root/packages/@all-user/ok-blocks.types
+bumpup=''
+
+case "$1" in
+  patch)
+    bumpup=patch
+    ;;
+  minor)
+    bumpup=minor
+    ;;
+  major)
+    bumpup=major
+    ;;
+esac
+
+if [ -z "$bumpup" ]; then
+  echo 'usage: bumpup -- [patch|minor|major]'
+else
+  cd $types_dir
+  npm version $bumpup
+  cd $root
+  git add $types_dir
+  git commit -m 'Update internal flow types.'
+  npm version $bumpup
+fi
