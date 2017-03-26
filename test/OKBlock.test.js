@@ -1,6 +1,6 @@
 // @flow
 
-import type { TestCase } from '@internal/types';
+import type { TestCase } from '@all-user/ok-blocks.types';
 
 const assert = require('power-assert');
 import OKBlock from '../src/js/OKBlock.js';

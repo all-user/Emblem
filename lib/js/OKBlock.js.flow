@@ -1,6 +1,6 @@
 // @flow
 
-import type {OKPatternsDefinition, OKBlockConstructorOptions, OKBlockReturnOptions, OKBlockOptions, OKPatternsFormationPos} from "@internal/types";
+import type {OKPatternsDefinition, OKBlockConstructorOptions, OKBlockReturnOptions, OKBlockOptions, OKPatternsFormationPos} from "@all-user/ok-blocks.types";
 declare export default class OKBlock {
   static patterns: {[patternName: string]: OKPatternsDefinition};
   static define(name: string, patternDefinition: OKPatternsDefinition): void;

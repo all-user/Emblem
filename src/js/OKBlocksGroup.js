@@ -3,7 +3,7 @@ import type {
   OKBlocksGroupOptions,
   OKBlocksGroupConstructorOptions,
   OKBlocksGroupReturnOptions
-} from '@internal/types';
+} from '@all-user/ok-blocks.types';
 
 import OKBlock from './OKBlock.js';
 

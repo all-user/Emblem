@@ -6,7 +6,7 @@ import type {
   OKBlockReturnOptions,
   OKBlockOptions,
   OKPatternsFormationPos
-} from '@internal/types';
+} from '@all-user/ok-blocks.types';
 
 class OKBlock {
   static patterns: {

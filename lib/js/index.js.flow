@@ -6,7 +6,7 @@ import type {
   OKPatternsDefinition as _OKPatternsDefinition,
   OKPatternsFormationTable as _OKPatternsFormationTable,
   OKPatternsTransitionProps as _OKPatternsTransitionProps
-} from '@internal/types';
+} from '@all-user/ok-blocks.types';
 
 export type OKBlockOptions = _OKBlockOptions;
 export type OKBlocksGroupOptions = _OKBlocksGroupOptions;
