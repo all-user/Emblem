@@ -1,7 +1,7 @@
 // @flow
 
 import type {OKPatternsDefinition, OKBlockConstructorOptions, OKBlockReturnOptions, OKBlockOptions, OKPatternsFormationPos} from "@internal/types";
-declare class OKBlock {
+declare export default class OKBlock {
   static patterns: {[patternName: string]: OKPatternsDefinition};
   static define(name: string, patternDefinition: OKPatternsDefinition): void;
 
@@ -34,5 +34,3 @@ declare class OKBlock {
   stopAnimate(): void;
   to(c: string): boolean;
 }
-
-declare module.exports: typeof OKBlock;

@@ -2,7 +2,7 @@
 
 import OKBlock from "./OKBlock.js";
 import type {OKBlocksGroupOptions, OKBlocksGroupConstructorOptions, OKBlocksGroupReturnOptions} from "@internal/types";
-declare class OKBlocksGroup {
+declare export default class OKBlocksGroup {
 
   _displayTime: number;
   _loop: boolean;
@@ -29,5 +29,3 @@ declare class OKBlocksGroup {
   stopAnimate(): void;
   toString(): string;
 }
-
-declare module.exports: typeof OKBlocksGroup;
