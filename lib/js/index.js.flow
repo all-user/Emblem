@@ -2,11 +2,17 @@
 
 import type {
   OKBlockOptions as _OKBlockOptions,
-  OKBlocksGroupOptions as _OKBlocksGroupOptions
+  OKBlocksGroupOptions as _OKBlocksGroupOptions,
+  OKPatternsDefinition as _OKPatternsDefinition,
+  OKPatternsFormationTable as _OKPatternsFormationTable,
+  OKPatternsTransitionProps as _OKPatternsTransitionProps
 } from '@internal/types';
 
 export type OKBlockOptions = _OKBlockOptions;
 export type OKBlocksGroupOptions = _OKBlocksGroupOptions;
+export type OKPatternsDefinition = _OKPatternsDefinition;
+export type OKPatternsFormationTable = _OKPatternsFormationTable;
+export type OKPatternsTransitionProps = _OKPatternsTransitionProps;
 
 import OKBlocksGroup from './OKBlocksGroup.js';
 import OKBlock from './OKBlock.js';
