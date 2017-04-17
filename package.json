@@ -22,7 +22,7 @@
     "release": "run-s release:clean release:js",
     "build": "run-s build:*",
     "watch": "run-p watch:*",
-    "bumpup": "bin/bumpup",
+    "bumpup": "bin/bumpup @all-user/ok-blocks.types",
     "start": "npm run watch"
   },
   "author": "Keita Okamoto <ok@aaa.email.ne.jp>",
