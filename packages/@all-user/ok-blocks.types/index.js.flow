@@ -86,10 +86,9 @@ export type OKPatternsFormationPos = (
   'pos_0_2'|'pos_1_2'|'pos_2_2'|'pos_3_2'
 );
 
-declare interface _OKPatternsFormationTable {
-  [char: string]: OKPatternsFormation;
-}
-export type OKPatternsFormationTable = _OKPatternsFormationTable;
+export type OKPatternsFormationTable = {
+  [string]: OKPatternsFormation
+};
 
 export type OKPatternsTransitionProps = CssAnimatableProperty[];
 
