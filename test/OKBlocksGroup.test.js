@@ -1,4 +1,6 @@
 // @flow
+declare var describe: (description: string, body: any) => void;
+declare var it: (description: string, body: any) => void;
 
 import type { TestCase } from '@all-user/ok-blocks.types';
 

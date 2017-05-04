@@ -2,6 +2,7 @@
 
 import type {
   OKBlockOptions as _OKBlockOptions,
+  OKBlockConstructorOptions as _OKBlockConstructorOptions,
   OKBlocksGroupOptions as _OKBlocksGroupOptions,
   OKPatternsDefinition as _OKPatternsDefinition,
   OKPatternsFormationTable as _OKPatternsFormationTable,
@@ -9,6 +10,7 @@ import type {
 } from '@all-user/ok-blocks.types';
 
 export type OKBlockOptions = _OKBlockOptions;
+export type OKBlockConstructorOptions = _OKBlockConstructorOptions;
 export type OKBlocksGroupOptions = _OKBlocksGroupOptions;
 export type OKPatternsDefinition = _OKPatternsDefinition;
 export type OKPatternsFormationTable = _OKPatternsFormationTable;
