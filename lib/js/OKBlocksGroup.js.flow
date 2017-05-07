@@ -16,7 +16,7 @@ declare export default class OKBlocksGroup {
   isAnimating: boolean;
   length: number;
   loop: boolean;
-  options: OKBlocksGroupReturnOptions;
+  options: OKBlocksGroupOptions;
   random: boolean;
   resumeAnimation: ?Function;
   size: Array<number>;

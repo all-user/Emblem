@@ -22,7 +22,7 @@ export type CssAnimatableProperty = (
   'transform-origin'|'vertical-align'|'visibility'|'width'|'word-spacing'|'z-index'
 );
 
-declare interface _OKBlockOptions {
+export interface OKBlockOptions {
   size?       : number;
   displayTime?: number;
   duration?   : number;
@@ -31,22 +31,18 @@ declare interface _OKBlockOptions {
   distinct?   : boolean;
   easing?     : string;
 }
-export type OKBlockOptions = _OKBlockOptions;
 
-declare interface _OKBlocksGroupOptions extends _OKBlockOptions {
+export interface OKBlocksGroupOptions extends OKBlockOptions {
   length?: number;
 }
-export type OKBlocksGroupOptions = _OKBlocksGroupOptions;
 
-declare interface _OKBlockConstructorOptions extends _OKBlockOptions {
-  patternName: ?string;
+export interface OKBlockConstructorOptions extends OKBlockOptions {
+  pattern: ?string;
 }
-export type OKBlockConstructorOptions = _OKBlockConstructorOptions;
 
-declare interface _OKBlocksGroupConstructorOptions extends _OKBlocksGroupOptions {
-  patternName: ?string;
+export interface OKBlocksGroupConstructorOptions extends OKBlocksGroupOptions {
+  pattern: ?string;
 }
-export type OKBlocksGroupConstructorOptions = _OKBlocksGroupConstructorOptions;
 
 export type OKBlockReturnOptions = {
   size       : number,
@@ -58,14 +54,13 @@ export type OKBlockReturnOptions = {
   easing     : string
 };
 
-declare interface _OKPatternsDefinition {
+export interface OKPatternsDefinition {
   _DEFAULT_OPTIONS: OKBlockOptions;
   _BASE_DOM: HTMLElement;
   _formationTable: OKPatternsFormationTable;
   _TRANSITION_PROPS: OKPatternsTransitionProps;
+  _Class: Class<any>;
 }
-export type OKPatternsDefinition = _OKPatternsDefinition;
-
 
 export type OKPatternsFormation = [
   OKPatternsFormationItem,
@@ -103,9 +98,8 @@ export type OKBlocksGroupReturnOptions = {
   distinct      : boolean[]
 };
 
-declare interface _TestCase {
+export interface TestCase {
   desc: string;
   args: any;
   result: any;
 }
-export type TestCase = _TestCase;

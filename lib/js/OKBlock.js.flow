@@ -2,7 +2,8 @@
 
 import type {OKPatternsDefinition, OKBlockConstructorOptions, OKBlockReturnOptions, OKBlockOptions, OKPatternsFormationPos} from "@all-user/ok-blocks.types";
 declare export default class OKBlock {
-  static patterns: {[patternName: string]: OKPatternsDefinition};
+  static patterns: {[pattern: string]: OKPatternsDefinition};
+  static factory(c: string, options?: OKBlockConstructorOptions): OKBlock;
   static define(name: string, patternDefinition: OKPatternsDefinition): void;
 
   _displayTime: number;
@@ -21,13 +22,13 @@ declare export default class OKBlock {
   easing: string;
   isAnimating: boolean;
   loop: boolean;
-  options: OKBlockReturnOptions;
+  options: OKBlockOptions;
   patternDefinition: OKPatternsDefinition;
-  patternName: string;
+  pattern: string;
   random: boolean;
   resumeAnimate: ?Function;
   size: number;
-  animateFromString(str: string, opt?: OKBlockOptions): void;
+  animateFromString(str: string | string[], opt?: OKBlockOptions): void;
   appendTo(parent: HTMLElement): void;
   constructor(c: string, options?: OKBlockConstructorOptions): void;
   resumeAnimate(): void;

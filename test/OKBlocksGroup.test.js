@@ -14,25 +14,25 @@ describe('OKBlocksGroup test', () => {
   const BLANK_COPY   = '                                                        ';
 
   const argsVariation = {
-    onlyPattern:        [TITLE_COPY, { patternName: ('Lines': ?string) }],
-    containLongLength:  [TITLE_COPY, { patternName: ('Lines': ?string), length: LONG_COPY.length }],
-    containShortLength: [TITLE_COPY, { patternName: ('Lines': ?string), length: SHORT_COPY.length }]
+    onlyPattern:        [TITLE_COPY, { pattern: ('Lines': ?string) }],
+    containLongLength:  [TITLE_COPY, { pattern: ('Lines': ?string), length: LONG_COPY.length }],
+    containShortLength: [TITLE_COPY, { pattern: ('Lines': ?string), length: SHORT_COPY.length }]
   };
 
   describe('インスタンスの生成', () => {
     let testCaseSet: TestCase[] = [
       {
-        desc: 'patternNameを指定して初期化',
+        desc: 'patternを指定して初期化',
         args: argsVariation.onlyPattern,
         result: TITLE_COPY
       },
       {
-        desc: 'patternName、lengthを指定、与える文字列より長いlengthで初期化',
+        desc: 'pattern、lengthを指定、与える文字列より長いlengthで初期化',
         args: argsVariation.containLongLength,
         result: (TITLE_COPY + BLANK_COPY).slice(0, LONG_COPY.length)
       },
       {
-        desc: 'patternName、lengthを指定、与える文字列より短いlengthで初期化',
+        desc: 'pattern、lengthを指定、与える文字列より短いlengthで初期化',
         args: argsVariation.containShortLength,
         result: TITLE_COPY.slice(0, SHORT_COPY.length)
       }
@@ -50,7 +50,7 @@ describe('OKBlocksGroup test', () => {
   describe('OKBlocksGroup#map', () => {
     let testCaseSet: TestCase[] = [
       {
-        desc: 'patternNameを指定して初期化: より長い文字列を引数にする',
+        desc: 'patternを指定して初期化: より長い文字列を引数にする',
         args: {
           params: argsVariation.onlyPattern,
           copy: LONG_COPY
@@ -58,7 +58,7 @@ describe('OKBlocksGroup test', () => {
         result: LONG_COPY.slice(0, argsVariation.onlyPattern[0].length)
       },
       {
-        desc: 'patternNameを指定して初期化: より短い文字列を引数にする',
+        desc: 'patternを指定して初期化: より短い文字列を引数にする',
         args: {
           params: argsVariation.onlyPattern,
           copy: SHORT_COPY
@@ -66,7 +66,7 @@ describe('OKBlocksGroup test', () => {
         result: (SHORT_COPY + BLANK_COPY).slice(0, argsVariation.onlyPattern[0].length)
       },
       {
-        desc: 'patternName、lengthを指定、与える文字列より長いlengthで初期化: より長い文字列を引数にする',
+        desc: 'pattern、lengthを指定、与える文字列より長いlengthで初期化: より長い文字列を引数にする',
         args: {
           params: argsVariation.containLongLength,
           copy: SHORT_COPY + LONG_COPY
@@ -74,7 +74,7 @@ describe('OKBlocksGroup test', () => {
         result: (SHORT_COPY + LONG_COPY).slice(0, argsVariation.containLongLength[1].length)
       },
       {
-        desc: 'patternName、lengthを指定、与える文字列より長いlengthで初期化: より短い文字列を引数にする',
+        desc: 'pattern、lengthを指定、与える文字列より長いlengthで初期化: より短い文字列を引数にする',
         args: {
           params: argsVariation.containLongLength,
           copy: SHORT_COPY
@@ -82,7 +82,7 @@ describe('OKBlocksGroup test', () => {
         result: (SHORT_COPY + BLANK_COPY).slice(0, argsVariation.containLongLength[1].length)
       },
       {
-        desc: 'patternName、lengthを指定、与える文字列より短いlengthで初期化: より長い文字列を引数にする',
+        desc: 'pattern、lengthを指定、与える文字列より短いlengthで初期化: より長い文字列を引数にする',
         args: {
           params: argsVariation.containShortLength,
           copy: LONG_COPY
@@ -90,7 +90,7 @@ describe('OKBlocksGroup test', () => {
         result: LONG_COPY.slice(0, argsVariation.containShortLength[1].length)
       },
       {
-        desc: 'patternName、lengthを指定、与える文字列より短いlengthで初期化: より短い文字列を引数にする',
+        desc: 'pattern、lengthを指定、与える文字列より短いlengthで初期化: より短い文字列を引数にする',
         args: {
           params: argsVariation.containShortLength,
           copy: SHORT_COPY.slice(0, SHORT_COPY.length / 2 | 0)
@@ -112,15 +112,15 @@ describe('OKBlocksGroup test', () => {
   describe('OKBlocksGroup.optionsにパラメータオブジェクトを渡して設定', () => {
     let testCase = [
       {
-        desc: 'patternNameを指定して初期化',
+        desc: 'patternを指定して初期化',
         args: argsVariation.onlyPattern
       },
       {
-        desc: 'patternName、lengthを指定、与える文字列より長いlengthで初期化',
+        desc: 'pattern、lengthを指定、与える文字列より長いlengthで初期化',
         args: argsVariation.containLongLength
       },
       {
-        desc: 'patternName、lengthを指定、与える文字列より短いlengthで初期化',
+        desc: 'pattern、lengthを指定、与える文字列より短いlengthで初期化',
         args: argsVariation.containShortLength
       }
     ];

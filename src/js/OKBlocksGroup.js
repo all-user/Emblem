@@ -17,7 +17,7 @@ class OKBlocksGroup {
   _random: boolean;
 
 
-  constructor(chars: string, options: OKBlocksGroupConstructorOptions = { patternName: (null: ?string) }) {
+  constructor(chars: string, options: OKBlocksGroupConstructorOptions = { pattern: (null: ?string) }) {
     let { length, displayTime, loop = false, random = false } = options;
     this.isAnimating     = false;
     this.resumeAnimation = null;
@@ -43,7 +43,7 @@ class OKBlocksGroup {
         }
       }
     } else {
-      console.error('OKBlocksGroup constructor first argument should be string.');
+      throw new Error('OKBlocksGroup constructor first argument should be string.');
     }
 
     delete options.loop;
@@ -141,7 +141,7 @@ class OKBlocksGroup {
     let lenOld = blocks.length;
 
     if (lenNew > lenOld) {
-      let blankArr = Array.from({ length: lenNew - lenOld }, () => new OKBlock(' ', { patternName: blocks.slice(-1)[0].patternName }));
+      let blankArr = Array.from({ length: lenNew - lenOld }, () => OKBlock.factory(' ', { pattern: blocks.slice(-1)[0].pattern }));
       this.blocks = blocks.concat(blankArr);
     } else if (lenNew < lenOld) {
       this.blocks = blocks.slice(0, lenNew);
@@ -191,12 +191,12 @@ class OKBlocksGroup {
   get distinct(): boolean[]      { return this.blocks.map(emb => emb.distinct); }
 }
 
-function _transformToOKBlockArray(arg: string | OKBlock[], opt: OKBlocksGroupConstructorOptions) { // (string | [OKBlock], object) => [OKBlock] | false
+function _transformToOKBlockArray(arg: string | OKBlock[], opt: OKBlocksGroupConstructorOptions) {
 
   let res;
   switch (typeof arg) {
   case 'string':
-    res = [...arg].map(c => new OKBlock(c, opt));
+    res = [...arg].map(c => OKBlock.factory(c, opt));
     break;
   case 'object':
     if (Array.isArray(arg) && arg.every(o => o instanceof OKBlock)) {

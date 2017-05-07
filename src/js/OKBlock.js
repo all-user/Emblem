@@ -10,9 +10,9 @@ import type {
 
 class OKBlock {
   static patterns: {
-    [patternName: string]: OKPatternsDefinition
+    [pattern: string]: OKPatternsDefinition
   };
-  patternName: string;
+  pattern: string;
   patternDefinition: OKPatternsDefinition;
   isAnimating: boolean;
   resumeAnimate: ?Function;
@@ -26,13 +26,19 @@ class OKBlock {
   _random: boolean;
   _distinct: boolean;
 
-  constructor(c: string, options: OKBlockConstructorOptions = { patternName: (null: ?string) }) {
+  static factory(c: string, options: OKBlockConstructorOptions): OKBlock {
+    if (options.pattern == null) { throw new Error('options.pattern is not set.'); }
+    if (this.patterns[options.pattern] == null) { throw new Error(`${ options.pattern } pattern is undefined.`); }
+    return new this.patterns[options.pattern]._Class(c, options);
+  }
 
-    if (options.patternName == null) { console.error('options.patternName is not set.'); return; }
-    if (this.constructor.patterns[options.patternName] == null) { console.error(`${ options.patternName } patternName is undefined.`); return; }
+  constructor(c: string, options: OKBlockConstructorOptions) {
 
-    this.patternName       = options.patternName;
-    this.patternDefinition = this.constructor.patterns[this.patternName];
+    if (options.pattern == null) { throw new Error('options.pattern is not set.'); }
+    if (this.constructor.patterns[options.pattern] == null) { throw new Error(`${ options.pattern } pattern is undefined.`); }
+
+    this.pattern           = options.pattern;
+    this.patternDefinition = this.constructor.patterns[this.pattern];
     this.isAnimating       = false;
     this.resumeAnimate     = null;
     this.char              = null;
@@ -83,7 +89,7 @@ class OKBlock {
     }
   }
 
-  animateFromString(str: string, opt: OKBlockOptions = {}) {
+  animateFromString(str: string | string[], opt: OKBlockOptions = {}) {
 
     this.isAnimating = true;
     this.resumeAnimate       = null;
@@ -221,7 +227,7 @@ class OKBlock {
   get allValidChars(): string[] { return Object.keys(this.patternDefinition._formationTable); }
 
   static define(name: string, patternDefinition: OKPatternsDefinition) {
-    if (!('_DEFAULT_OPTIONS' in patternDefinition) || !('_BASE_DOM' in patternDefinition) || !('_TRANSITION_PROPS' in patternDefinition) || !('_formationTable' in patternDefinition)) {
+    if (!('_DEFAULT_OPTIONS' in patternDefinition) || !('_BASE_DOM' in patternDefinition) || !('_TRANSITION_PROPS' in patternDefinition) || !('_formationTable' in patternDefinition) || !('_Class' in patternDefinition)) {
       console.error('Pattern is invalid.');
     }
     this.patterns[name] = patternDefinition;
@@ -266,7 +272,7 @@ function _changeStyle(c) { // @bind this
       const _formation = formation[0];
       node.className = `${ _formation } ${ pos }`;
     } else {
-      pos = _FORMATION_POS_TABLE[idx % 3 + (idx / 3 | 0)];
+      pos = _FORMATION_POS_TABLE[idx + (idx / 3 | 0)];
       node.className = `${ formation } ${ pos }`;
     }
     if (node.classList.contains('rotate-default')) { return; }
