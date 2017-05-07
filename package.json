@@ -27,8 +27,8 @@
   "author": "Keita Okamoto <ok@aaa.email.ne.jp>",
   "license": "MIT",
   "devDependencies": {
-    "@all-user/ok-patterns-lines": "0.0.3",
-    "@all-user/ok-patterns-olympic2020": "0.0.3",
+    "@all-user/ok-patterns-lines": "^0.2.0",
+    "@all-user/ok-patterns-olympic2020": "^0.1.0",
     "append-css": "^0.1.6",
     "babel-cli": "^6.6.5",
     "babel-core": "^6.7.4",
