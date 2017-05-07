@@ -1,11 +1,35 @@
 {
   "presets": [
-    "latest"
+    [
+      "env",
+      {
+        "targets" : {
+          "browsers": [
+            "last 2 versions",
+            "ie >= 11"
+          ]
+        },
+        "useBuiltIns": true
+      }
+    ],
+    "flow"
   ],
   "env": {
     "test": {
       "presets": [
-        "latest",
+        [
+          "env",
+          {
+            "targets" : {
+              "browsers": [
+                "last 2 versions",
+                "ie >= 11"
+              ]
+            },
+            "useBuiltIns": true
+          }
+        ],
+        "flow",
         "power-assert"
       ]
     }

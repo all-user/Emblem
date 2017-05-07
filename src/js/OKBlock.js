@@ -1,45 +1,60 @@
-const extend = require('xtend');
+// @flow
 
-const _PATTERN_NAME_PROP = Symbol();
-const _PATTERN_PROP      = Symbol();
-const _CHAR_PROP         = Symbol();
-const _DOM_PROP          = Symbol();
-const _DISPLAY_TIME_PROP = Symbol();
-const _DURATION_PROP     = Symbol();
-const _EASING_PROP       = Symbol();
-const _IS_ANIMATING_PROP = Symbol();
-const _RESUME_PROP       = Symbol();
-const _LOOP_PROP         = Symbol();
-const _RANDOM_PROP       = Symbol();
-const _PEDAL_PROP        = Symbol();
-const _CANSELLER_PROP    = Symbol();
-
-let patterns = {}; // initialized in OKBlock.define
+import type {
+  OKPatternsDefinition,
+  OKBlockConstructorOptions,
+  OKBlockReturnOptions,
+  OKBlockOptions,
+  OKPatternsFormationPos
+} from '@all-user/ok-blocks.types';
 
 class OKBlock {
-  constructor(c, options = {}) {
+  static patterns: {
+    [pattern: string]: OKPatternsDefinition
+  };
+  pattern: string;
+  patternDefinition: OKPatternsDefinition;
+  isAnimating: boolean;
+  resumeAnimate: ?Function;
+  char: ?string;
+  dom: HTMLElement;
+  cancelAnimation: Function;
+  _displayTime: number;
+  _duration: number;
+  _eaasing: string;
+  _loop: boolean;
+  _random: boolean;
+  _distinct: boolean;
 
-    if (options.pattern == null) { console.error('options.pattern is not set.'); }
-    if (patterns[options.pattern] == null) { console.error(`${ options.pattern } pattern is undefined.`); return; }
+  static factory(c: string, options: OKBlockConstructorOptions): OKBlock {
+    if (options.pattern == null) { throw new Error('options.pattern is not set.'); }
+    if (this.patterns[options.pattern] == null) { throw new Error(`${ options.pattern } pattern is undefined.`); }
+    return new this.patterns[options.pattern]._Class(c, options);
+  }
 
-    this[_PATTERN_NAME_PROP]  =   options.pattern;
-    this[_PATTERN_PROP]       =   patterns[options.pattern];
-    this[_IS_ANIMATING_PROP]  =   false;
-    this[_RESUME_PROP]        =   null;
-    this[_CHAR_PROP]          =   null;
-    this[_DOM_PROP]           =   _createDom.call(this);
-    this[_CANSELLER_PROP]     =   () => {};
+  constructor(c: string, options: OKBlockConstructorOptions) {
 
-    options = extend(this[_PATTERN_PROP]._DEFAULT_OPTIONS, options);
-    let { size, displayTime, duration, easing, loop, random, pedal } = options;
+    if (options.pattern == null) { throw new Error('options.pattern is not set.'); }
+    if (this.constructor.patterns[options.pattern] == null) { throw new Error(`${ options.pattern } pattern is undefined.`); }
+
+    this.pattern           = options.pattern;
+    this.patternDefinition = this.constructor.patterns[this.pattern];
+    this.isAnimating       = false;
+    this.resumeAnimate     = null;
+    this.char              = null;
+    this.dom               = _createDom.call(this);
+    this.cancelAnimation   = () => {};
+
+    const _options = Object.assign({}, this.patternDefinition._DEFAULT_OPTIONS, options);
+    let { size, displayTime, duration, easing, loop, random, distinct } = _options;
 
     // --- options ---
-    this.displayTime          =   +displayTime;
-    this.duration             =   +duration;
-    this.loop                 =   loop;
-    this.random               =   random;
-    this.easing               =   easing            || 'cubic-bezier(.26,.92,.41,.98)';
-    this.pedal                =   pedal;
+    this.displayTime = +displayTime;
+    this.duration    = +duration;
+    this.loop        = !!loop;
+    this.random      = !!random;
+    this.easing      = easing || 'cubic-bezier(.26,.92,.41,.98)';
+    this.distinct    = !!distinct;
 
     if (typeof size === 'number' && size >= 0) {
       this.size = size;
@@ -50,65 +65,67 @@ class OKBlock {
     this.to(c);
   }
 
-  to(c) {
+  to(c: string) {
     let _c = c && c.toLowerCase && c.toLowerCase();
-    if (!this[_PATTERN_PROP]._formationTable[_c]) { return false; }
-    if (this[_CHAR_PROP] === _c) { return false; }
+    if (!this.patternDefinition._formationTable[_c]) { return false; }
+    if (this.char === _c) { return false; }
     _changeStyle.call(this, _c);
-    this[_CHAR_PROP] = _c;
+    this.char = _c;
     return true;
   }
 
-  appendTo(parent) {
-    parent.appendChild(this[_DOM_PROP]);
+  appendTo(parent: HTMLElement) {
+    parent.appendChild(this.dom);
   }
 
   stopAnimate() {
-    this[_IS_ANIMATING_PROP] = false;
+    this.isAnimating = false;
   }
 
   resumeAnimate() {
-    this[_IS_ANIMATING_PROP] = true;
-    this[_RESUME_PROP]();
+    if (typeof this.resumeAnimate === 'function') {
+      this.isAnimating = true;
+      this.resumeAnimate();
+    }
   }
 
-  animateFromString(str, opt) {
+  animateFromString(str: string | string[], opt: OKBlockOptions = {}) {
 
-    this[_IS_ANIMATING_PROP] = true;
-    this[_RESUME_PROP]       = null;
-    this.options             = opt;
+    this.isAnimating = true;
+    this.resumeAnimate       = null;
+    this.options            = opt;
 
     [...str].reduce((p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
       let isLast = idx === str.length - 1;
       return p.then(() => {
         return new Promise((resolve, reject) => {
-          this[_CANSELLER_PROP] = reject;
-          if (this[_RANDOM_PROP]) {
+          this.cancelAnimation = reject;
+          if (this._random) {
             let _c = str[Math.random() * str.length | 0];
             this.to(_c);
           } else {
             this.to(c);
           }
           if (isLast) {
-            if (this[_LOOP_PROP]) {
+            if (this._loop) {
               setTimeout(() => {
                 resolve();
                 this.animateFromString.call(this, str);
-              }, this[_DISPLAY_TIME_PROP]);
+              }, this._displayTime);
             } else {
-              setTimeout(reject, this[_DISPLAY_TIME_PROP]);
+              setTimeout(reject, this._displayTime);
             }
             return;
           }
-          if (!this[_IS_ANIMATING_PROP]) {
-            this[_RESUME_PROP] = resolve;
+          if (!this.isAnimating) {
+            this.resumeAnimate = resolve;
           } else {
-            setTimeout(resolve, this[_DISPLAY_TIME_PROP]);
+            setTimeout(resolve, this._displayTime);
           }
         });
       });
-    }, Promise.resolve()).catch(err => {
-      this[_IS_ANIMATING_PROP] = false;
+    }, Promise.resolve()).catch((err: void | Error | string) => {
+      this.isAnimating = false;
       console.log('OKBlock: cansel before animation.');
       console.log(err);
     });
@@ -120,126 +137,115 @@ class OKBlock {
    */
 
   // --- options ---
-  set options(options = {}) {
-    Object.assign(this, options);
+  set options(options: OKBlockOptions = {}) {
+    const { size, displayTime, duration, easing, loop, random, distinct } = options;
+    if (size != null) { this.size = size; }
+    if (displayTime != null) { this.displayTime = displayTime; }
+    if (duration != null) { this.duration = duration; }
+    if (easing != null) { this.easing = easing; }
+    if (loop != null) { this.loop = loop; }
+    if (random != null) { this.random = random; }
+    if (distinct != null) { this.distinct = distinct; }
   }
-  get options() {
-    let { size, displayTime, duration, easing, loop, random, pedal } = this;
-    return { size, displayTime, duration, easing, loop, random, pedal };
+  get options(): OKBlockReturnOptions {
+    let { size, displayTime, duration, easing, loop, random, distinct } = this;
+    return { size, displayTime, duration, easing, loop, random, distinct };
   }
 
   // --- size ---
-  set size(size) {
+  set size(size: number) {
     if (size == null) { return; }
     if (typeof size === 'number' && size >= 0) {
-      let domStyle = this[_DOM_PROP].style;
+      let domStyle = this.dom.style;
       domStyle.width  = `${ size }px`;
       domStyle.height = `${ size }px`;
     } else {
       console.error('OKBlock.size should zero or positive number.');
     }
   }
-  get size() { return +this[_DOM_PROP].style.width.replace('px', ''); }
+  get size(): number { return +this.dom.style.width.replace('px', ''); }
 
 
   // --- displayTime ---
-  set displayTime(time) {
+  set displayTime(time: number) {
     if (time == null) { return; }
     if (typeof time === 'number' && time > 0) {
-      this[_DISPLAY_TIME_PROP] = time;
+      this._displayTime = time;
     } else {
       console.error('OKBlock.displayTime should be positive number.');
     }
   }
-  get displayTime() { return this[_DISPLAY_TIME_PROP]; }
+  get displayTime(): number { return this._displayTime; }
 
 
   // --- duration ---
-  set duration(time) {
+  set duration(time: number) {
     if (time == null) { return; }
     if (typeof time === 'number' && time >= 0) {
-      this[_DURATION_PROP] = time;
+      this._duration = time;
       _updateTransitionConfig.call(this);
     } else {
       console.error('OKBlock.duration should be zero or positive number.', time);
     }
   }
-  get duration() { return this[_DURATION_PROP]; }
+  get duration(): number { return this._duration; }
 
 
   // --- easing ---
-  set easing(val) {
+  set easing(val: string) {
     if (val == null) { return; }
-    this[_EASING_PROP] = val;
+    this._eaasing = val;
     _updateTransitionConfig.call(this);
   }
-  get easing() { return this[_EASING_PROP]; }
+  get easing(): string { return this._eaasing; }
 
 
   // --- loop ---
-  set loop(bool) {
+  set loop(bool: boolean) {
     if (bool == null) { return; }
-    this[_LOOP_PROP] = bool;
+    this._loop = bool;
   }
-  get loop() { return this[_LOOP_PROP]; }
+  get loop(): boolean { return this._loop; }
 
 
   // --- random ---
-  set random(bool) {
+  set random(bool: boolean) {
     if (bool == null) { return; }
-    this[_RANDOM_PROP] = bool;
+    this._random = bool;
   }
-  get random() { return this[_RANDOM_PROP]; }
+  get random(): boolean { return this._random; }
 
 
-  // --- pedal ---
-  set pedal(bool) {
+  // --- distinct ---
+  set distinct(bool: boolean) {
     if (bool == null) { return; }
-    this[_PEDAL_PROP] = bool;
+    this._distinct = bool;
   }
-  get pedal() { return this[_PEDAL_PROP]; }
-
-
-  // --- pattern ---
-  get pattern() { return this[_PATTERN_NAME_PROP]; }
-
-
-  // --- dom ---
-  get dom() { return this[_DOM_PROP]; }
-
-
-  // --- char ---
-  get char() { return this[_CHAR_PROP]; }
-
-
-  // --- isAnimating ---
-  get isAnimating() { return this[_IS_ANIMATING_PROP]; }
-
+  get distinct(): boolean { return this._distinct; }
 
   // --- allValidChars ---
-  get allValidChars() { return Object.keys(this[_PATTERN_PROP]._formationTable); }
+  get allValidChars(): string[] { return Object.keys(this.patternDefinition._formationTable); }
 
-  static define(name, obj) {
-    if (!('_DEFAULT_OPTIONS' in obj) || !('_BASE_DOM' in obj) || !('_TRANSITION_PROPS' in obj) || !('_formationTable' in obj)) {
+  static define(name: string, patternDefinition: OKPatternsDefinition) {
+    if (!('_DEFAULT_OPTIONS' in patternDefinition) || !('_BASE_DOM' in patternDefinition) || !('_TRANSITION_PROPS' in patternDefinition) || !('_formationTable' in patternDefinition) || !('_Class' in patternDefinition)) {
       console.error('Pattern is invalid.');
     }
-    patterns[name] = obj;
+    this.patterns[name] = patternDefinition;
   }
-
 }
 
 
 function _createDom() {
-  return this[_PATTERN_PROP]._BASE_DOM.cloneNode(true);
+  return this.patternDefinition._BASE_DOM.cloneNode(true);
 }
 
 function _changeStyle(c) { // @bind this
-  let oldC         = this[_CHAR_PROP];
-  let oldFormation = this[_PATTERN_PROP]._formationTable[oldC];
-  let newFormation = this[_PATTERN_PROP]._formationTable[c];
+  let oldC         = this.char;
+  let newFormation = this.patternDefinition._formationTable[c];
   if (!newFormation) { return; }
   let diffFormation;
   if (oldC) {
+    const oldFormation = this.patternDefinition._formationTable[oldC];
     diffFormation = newFormation.map((newStr, idx) => {
       let oldStr = oldFormation[idx];
       let newStrIsArr = Array.isArray(newStr);
@@ -256,37 +262,61 @@ function _changeStyle(c) { // @bind this
   } else {
     diffFormation = newFormation;
   }
-  [...this[_DOM_PROP].childNodes].forEach((node, idx) => {
+  [...this.dom.childNodes].forEach((node: Node, idx) => {
+    if (!(node instanceof HTMLElement)) { return; }
     let formation  = diffFormation[idx];
-    let specifyPos = Array.isArray(formation);
     if (!formation) { return; }
-    let pos;
-    if (specifyPos) {
+    let pos: OKPatternsFormationPos;
+    if (Array.isArray(formation)) {
       pos = formation[1];
+      const _formation = formation[0];
+      node.className = `${ _formation } ${ pos }`;
     } else {
-      pos = `pos_${ idx % 3 }_${ idx / 3 | 0 }`;
+      pos = _FORMATION_POS_TABLE[idx + (idx / 3 | 0)];
+      node.className = `${ formation } ${ pos }`;
     }
-    node.className = `${ specifyPos ? formation[0] : formation } ${ pos }`;
     if (node.classList.contains('rotate-default')) { return; }
     node.classList.add(_ROTATE_TABLE[Math.random() * 4 | 0]);
   });
 }
 
 function _updateTransitionConfig() { // @bind this
-  let val = this[_PATTERN_PROP]._TRANSITION_PROPS.reduce((str, prop, idx) => {
-    return `${ str }${ idx ? ',' : '' } ${ prop } ${ this[_DURATION_PROP] }ms ${ this[_EASING_PROP] }`;
-  }, '');
+  const val = this.patternDefinition._TRANSITION_PROPS
+  .map(prop => `${prop} ${this._duration}ms ${this._eaasing}`)
+  .join(',');
 
-  _updateStyle(this[_DOM_PROP].childNodes);
+  _updateStyle(this.dom.childNodes);
 
   function _updateStyle(list) {
     [...list].forEach(node => {
-      node.style.transition = val;
-      if (node.firstChild) { _updateStyle(node.childNodes); }
+      if (node instanceof HTMLElement) {
+        node.style.transition = val;
+        if (node.firstChild) { _updateStyle(node.childNodes); }
+      } else {
+        // $FlowFixMe
+        console.error(`node must be HTMLElement. ${ node }`);
+      }
     });
   }
 }
 
-const _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
+OKBlock.patterns = {}; // initialized in OKBlock.define
 
-module.exports = OKBlock;
+
+const _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
+const _FORMATION_POS_TABLE: OKPatternsFormationPos[] = [
+  'pos_0_0',
+  'pos_1_0',
+  'pos_2_0',
+  'pos_3_0',
+  'pos_0_1',
+  'pos_1_1',
+  'pos_2_1',
+  'pos_3_1',
+  'pos_0_2',
+  'pos_1_2',
+  'pos_2_2',
+  'pos_3_2'
+];
+
+export default OKBlock;

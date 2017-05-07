@@ -1,5 +1,11 @@
+// @flow
+declare var describe: (description: string, body: any) => void;
+declare var it: (description: string, body: any) => void;
+
+import type { TestCase } from '@all-user/ok-blocks.types';
+
 const assert = require('power-assert');
-let OKBlocksGroup = require('../src/js/OKBlocksGroup.js');
+import OKBlocksGroup from '../src/js/OKBlocksGroup.js';
 
 describe('OKBlocksGroup test', () => {
   const TITLE_COPY   = 'title copy';
@@ -8,13 +14,13 @@ describe('OKBlocksGroup test', () => {
   const BLANK_COPY   = '                                                        ';
 
   const argsVariation = {
-    onlyPattern:        [TITLE_COPY, { pattern: 'Lines' }],
-    containLongLength:  [TITLE_COPY, { pattern: 'Lines', length: LONG_COPY.length }],
-    containShortLength: [TITLE_COPY, { pattern: 'Lines', length: SHORT_COPY.length }]
+    onlyPattern:        [TITLE_COPY, { pattern: ('Lines': ?string) }],
+    containLongLength:  [TITLE_COPY, { pattern: ('Lines': ?string), length: LONG_COPY.length }],
+    containShortLength: [TITLE_COPY, { pattern: ('Lines': ?string), length: SHORT_COPY.length }]
   };
 
   describe('インスタンスの生成', () => {
-    let testCasess = [
+    let testCaseSet: TestCase[] = [
       {
         desc: 'patternを指定して初期化',
         args: argsVariation.onlyPattern,
@@ -32,17 +38,17 @@ describe('OKBlocksGroup test', () => {
       }
     ];
 
-    testCasess.forEach(testCases => {
-      it(`${ testCases.desc }: 文字列から生成`, done => {
-        let group = new OKBlocksGroup(...testCases.args);
-        assert.equal(group.toString(), testCases.result);
+    testCaseSet.forEach(testCase => {
+      it(`${ testCase.desc }: 文字列から生成`, done => {
+        let group = new OKBlocksGroup(...testCase.args);
+        assert.equal(group.toString(), testCase.result);
         done();
       });
     });
   });
 
   describe('OKBlocksGroup#map', () => {
-    let testCasess = [
+    let testCaseSet: TestCase[] = [
       {
         desc: 'patternを指定して初期化: より長い文字列を引数にする',
         args: {
@@ -93,18 +99,18 @@ describe('OKBlocksGroup test', () => {
       }
     ];
 
-    testCasess.forEach(testCases => {
-      it(`${ testCases.desc }`, done => {
-        let group = new OKBlocksGroup(...testCases.args.params);
-        group.map(testCases.args.copy);
-        assert.equal(group.toString(), testCases.result);
+    testCaseSet.forEach(testCase => {
+      it(`${ testCase.desc }`, done => {
+        let group = new OKBlocksGroup(...testCase.args.params);
+        group.map(testCase.args.copy);
+        assert.equal(group.toString(), testCase.result);
         done();
       });
     });
   });
 
   describe('OKBlocksGroup.optionsにパラメータオブジェクトを渡して設定', () => {
-    let testCases = [
+    let testCase = [
       {
         desc: 'patternを指定して初期化',
         args: argsVariation.onlyPattern
@@ -127,17 +133,18 @@ describe('OKBlocksGroup test', () => {
       easing:      'cubic-bezier(.1,.8,.5,.9)',
       loop:        false,
       random:      true,
-      pedal:       false
+      distinct:    false
     };
 
     let singleValueParamNames = ['length', 'displayTime', 'loop', 'random'];
-    let returnArrayParamNames = ['size', 'duration', 'easing', 'pedal'];
+    let returnArrayParamNames = ['size', 'duration', 'easing', 'distinct'];
 
-    testCases.forEach(testCase => {
+    testCase.forEach(testCase => {
       singleValueParamNames.forEach(paramName => {
         it(`${ testCase.desc }: Retrun single value: ${ paramName }が正しく設定されているか`, done => {
           let group = new OKBlocksGroup(...argsVariation.onlyPattern);
           group.options = opt;
+          // $FlowFixMe
           assert.equal(group[paramName], opt[paramName]);
           done();
         });
@@ -147,7 +154,8 @@ describe('OKBlocksGroup test', () => {
         it(`${ testCase.desc }: Retrun Array: ${ paramName }が正しく設定されているか`, done => {
           let group = new OKBlocksGroup(...argsVariation.onlyPattern);
           group.options = opt;
-          assert.deepEqual(group[paramName], group.emblems.map(e => e[paramName]));
+          // $FlowFixMe
+          assert.deepEqual(group[paramName], group.blocks.map(e => e[paramName]));
           done();
         });
       });
@@ -163,7 +171,7 @@ describe('OKBlocksGroup test', () => {
           size:        Array.from({ length: opt.length }, () => opt.size),
           duration:    Array.from({ length: opt.length }, () => opt.duration),
           easing:      Array.from({ length: opt.length }, () => opt.easing),
-          pedal:       Array.from({ length: opt.length }, () => opt.pedal)
+          distinct:    Array.from({ length: opt.length }, () => opt.distinct)
         };
         assert.deepEqual(group.options, obj);
         done();
