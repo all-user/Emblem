@@ -1,11 +1,8 @@
 // @flow
-declare var describe: (description: string, body: any) => void;
-declare var it: (description: string, body: any) => void;
-
-import type { TestCase } from '@all-user/ok-blocks.types';
+import type { TestCase } from '../src/index.js';
 
 const assert = require('power-assert');
-import OKBlocksGroup from '../src/js/OKBlocksGroup.js';
+import OKBlocksGroup from '../src/OKBlocksGroup.js';
 
 describe('OKBlocksGroup test', () => {
   const TITLE_COPY   = 'title copy';
@@ -14,9 +11,9 @@ describe('OKBlocksGroup test', () => {
   const BLANK_COPY   = '                                                        ';
 
   const argsVariation = {
-    onlyPattern:        [TITLE_COPY, { pattern: ('Lines': ?string) }],
-    containLongLength:  [TITLE_COPY, { pattern: ('Lines': ?string), length: LONG_COPY.length }],
-    containShortLength: [TITLE_COPY, { pattern: ('Lines': ?string), length: SHORT_COPY.length }]
+    onlyPattern:        [TITLE_COPY, { pattern: 'Dummy' }],
+    containLongLength:  [TITLE_COPY, { pattern: 'Dummy', length: LONG_COPY.length }],
+    containShortLength: [TITLE_COPY, { pattern: 'Dummy', length: SHORT_COPY.length }]
   };
 
   describe('インスタンスの生成', () => {

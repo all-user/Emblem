@@ -1,7 +1,7 @@
 // @flow
 
 import OKBlock from "./OKBlock.js";
-import type {OKBlocksGroupOptions, OKBlocksGroupConstructorOptions, OKBlocksGroupReturnOptions} from "@all-user/ok-blocks.types";
+import type {OKBlocksGroupOptions, OKBlocksGroupConstructorOptions, OKBlocksGroupReturnOptions} from "./index.js";
 declare export default class OKBlocksGroup {
 
   _displayTime: number;

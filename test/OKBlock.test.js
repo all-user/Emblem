@@ -1,11 +1,8 @@
 // @flow
-declare var describe: (description: string, body: any) => void;
-declare var it: (description: string, body: any) => void;
-
-import type { TestCase } from '@all-user/ok-blocks.types';
+import type { TestCase } from '../src/index.js';
 
 const assert = require('power-assert');
-import OKBlock from '../src/js/OKBlock.js';
+import OKBlock from '../src/OKBlock.js';
 
 describe('OKBlock', () => {
   const BASE_CHAR_LOWER   = 'a';
@@ -20,7 +17,7 @@ describe('OKBlock', () => {
 
     testCaseSet.forEach(testCase => {
       it(testCase.desc, done => {
-        let okblock = OKBlock.factory(testCase.args, { pattern: ('Lines': ?string) });
+        let okblock = OKBlock.factory(testCase.args, { pattern: 'Dummy' });
         assert.equal(okblock.char, testCase.result);
         done();
       });
@@ -35,7 +32,7 @@ describe('OKBlock', () => {
 
     testCaseSet.forEach(testCase => {
       it(testCase.desc, done => {
-        let okblock = OKBlock.factory(testCase.args, { pattern: ('Lines': ?string) });
+        let okblock = OKBlock.factory(testCase.args, { pattern: 'Dummy' });
         assert.ok(okblock instanceof testCase.result);
         done();
       });
@@ -50,7 +47,7 @@ describe('OKBlock', () => {
 
     testCaseSet.forEach(testCase => {
       it(testCase.desc, done => {
-        let okblock = OKBlock.factory(testCase.args, { pattern: ('Lines': ?string) });
+        let okblock = OKBlock.factory(testCase.args, { pattern: 'Dummy' });
         assert.equal(okblock.char, testCase.result);
         done();
       });
@@ -96,7 +93,7 @@ describe('OKBlock', () => {
 
       testCaseSet.forEach(testCase => {
         it(testCase.desc, done => {
-          let okblock = OKBlock.factory(testCase.args.from, { pattern: ('Lines': ?string) });
+          let okblock = OKBlock.factory(testCase.args.from, { pattern: 'Dummy' });
           okblock.to(testCase.args.to);
           assert.equal(okblock.char, testCase.result);
           done();
@@ -112,7 +109,7 @@ describe('OKBlock', () => {
 
       testCaseSet.forEach(testCase => {
         it(testCase.desc, done => {
-          let okblock = OKBlock.factory(testCase.args, { pattern: ('Lines': ?string) });
+          let okblock = OKBlock.factory(testCase.args, { pattern: 'Dummy' });
           okblock.to(BASE_CHAR_LOWER);
           let res = okblock.to(BASE_CHAR_LOWER);
           assert.equal(res, testCase.result);
@@ -129,7 +126,7 @@ describe('OKBlock', () => {
 
       testCaseSet.forEach(testCase => {
         it(testCase.desc, done => {
-          let okblock = OKBlock.factory(testCase.args, { pattern: ('Lines': ?string) });
+          let okblock = OKBlock.factory(testCase.args, { pattern: 'Dummy' });
           let res = okblock.to(BASE_CHAR_INVALID);
           assert.equal(res, testCase.result);
           done();
@@ -145,7 +142,7 @@ describe('OKBlock', () => {
 
       testCaseSet.forEach(testCase => {
         it(testCase.desc, done => {
-          let okblock = OKBlock.factory(testCase.args, { pattern: ('Lines': ?string) });
+          let okblock = OKBlock.factory(testCase.args, { pattern: 'Dummy' });
           okblock.to(BASE_CHAR_INVALID);
           assert.equal(okblock.char, testCase.args);
           done();
@@ -172,7 +169,7 @@ describe('OKBlock', () => {
 
     testCaseSet.forEach(testCase => {
       Object.keys(opt).forEach(paramName => {
-        let okblock = OKBlock.factory(testCase.args, { pattern: ('Lines': ?string) });
+        let okblock = OKBlock.factory(testCase.args, { pattern: 'Dummy' });
         okblock.options = opt;
         it(`${ testCase.desc }: ${ paramName }が正しく設定されている`, done => {
           // $FlowFixMe
@@ -182,7 +179,7 @@ describe('OKBlock', () => {
       });
 
       it(`${ testCase.desc }: OKBlock#optionsが正しいオブジェクトを返す`, done => {
-        let okblock = OKBlock.factory(testCase.args, { pattern: ('Lines': ?string) });
+        let okblock = OKBlock.factory(testCase.args, { pattern: 'Dummy' });
         okblock.options = opt;
         assert.deepEqual(okblock.options, opt);
         done();

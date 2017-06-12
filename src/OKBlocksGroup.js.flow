@@ -1,0 +1,31 @@
+// @flow
+
+import OKBlock from "./OKBlock.js";
+import type {OKBlocksGroupOptions, OKBlocksGroupConstructorOptions, OKBlocksGroupReturnOptions} from "./index.js";
+declare export default class OKBlocksGroup {
+
+  _displayTime: number;
+  _loop: boolean;
+  _random: boolean;
+  blocks: Array<OKBlock>;
+  cancelAnimation: Function;
+  displayTime: number;
+  distinct: Array<boolean>;
+  duration: Array<number>;
+  easing: Array<string>;
+  isAnimating: boolean;
+  length: number;
+  loop: boolean;
+  options: OKBlocksGroupOptions;
+  random: boolean;
+  resumeAnimation: ?Function;
+  size: Array<number>;
+  animateFromString(str: string | Array<string>, opt: OKBlocksGroupOptions): void;
+  animateFromStringArray(strArr: Array<string>, opt: OKBlocksGroupOptions): void;
+  appendTo(parent: HTMLElement): void;
+  constructor(chars: string, options?: OKBlocksGroupConstructorOptions): void;
+  map(str: string): void;
+  resumeAnimate(): void;
+  stopAnimate(): void;
+  toString(): string;
+}

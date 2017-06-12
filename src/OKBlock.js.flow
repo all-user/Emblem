@@ -1,0 +1,37 @@
+// @flow
+
+import type {OKPatternsDefinition, OKBlockConstructorOptions, OKBlockReturnOptions, OKBlockOptions, OKPatternsFormationPos} from "./index.js";
+declare export default class OKBlock {
+  static patterns: {[pattern: string]: OKPatternsDefinition};
+  static factory(c: string, options?: OKBlockConstructorOptions): OKBlock;
+  static define(name: string, patternDefinition: OKPatternsDefinition): void;
+
+  _displayTime: number;
+  _distinct: boolean;
+  _duration: number;
+  _eaasing: string;
+  _loop: boolean;
+  _random: boolean;
+  allValidChars: Array<string>;
+  cancelAnimation: Function;
+  char: ?string;
+  displayTime: number;
+  distinct: boolean;
+  dom: HTMLElement;
+  duration: number;
+  easing: string;
+  isAnimating: boolean;
+  loop: boolean;
+  options: OKBlockOptions;
+  patternDefinition: OKPatternsDefinition;
+  pattern: string;
+  random: boolean;
+  resumeAnimate: ?Function;
+  size: number;
+  animateFromString(str: string | string[], opt?: OKBlockOptions): void;
+  appendTo(parent: HTMLElement): void;
+  constructor(c: string, options?: OKBlockConstructorOptions): void;
+  resumeAnimate(): void;
+  stopAnimate(): void;
+  to(c: string): boolean;
+}
