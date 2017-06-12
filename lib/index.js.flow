@@ -37,11 +37,11 @@ export interface OKBlocksGroupOptions extends OKBlockOptions {
 }
 
 export interface OKBlockConstructorOptions extends OKBlockOptions {
-  pattern: ?string;
+  pattern: string;
 }
 
 export interface OKBlocksGroupConstructorOptions extends OKBlocksGroupOptions {
-  pattern: ?string;
+  pattern: string;
 }
 
 export type OKBlockReturnOptions = {
@@ -103,3 +103,7 @@ export interface TestCase {
   args: any;
   result: any;
 }
+
+import OKBlocksGroup from './OKBlocksGroup.js';
+import OKBlock from './OKBlock.js';
+declare module.exports: {OKBlock: typeof OKBlock, OKBlocksGroup: typeof OKBlocksGroup};

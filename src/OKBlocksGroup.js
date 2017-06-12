@@ -3,7 +3,7 @@ import type {
   OKBlocksGroupOptions,
   OKBlocksGroupConstructorOptions,
   OKBlocksGroupReturnOptions
-} from '@all-user/ok-blocks.types';
+} from './index.js';
 
 import OKBlock from './OKBlock.js';
 
@@ -17,7 +17,7 @@ class OKBlocksGroup {
   _random: boolean;
 
 
-  constructor(chars: string, options: OKBlocksGroupConstructorOptions = { pattern: (null: ?string) }) {
+  constructor(chars: string, options: OKBlocksGroupConstructorOptions) {
     let { length, displayTime, loop = false, random = false } = options;
     this.isAnimating     = false;
     this.resumeAnimation = null;
