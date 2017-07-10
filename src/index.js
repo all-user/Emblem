@@ -2,7 +2,7 @@
 import OKBlock from './OKBlock.js';
 import OKBlocksGroup from './OKBlocksGroup.js';
 
-module.exports = {
+export {
   OKBlock,
   OKBlocksGroup
 };

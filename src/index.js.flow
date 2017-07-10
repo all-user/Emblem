@@ -106,4 +106,5 @@ export interface TestCase {
 
 import OKBlocksGroup from './OKBlocksGroup.js';
 import OKBlock from './OKBlock.js';
-declare module.exports: {OKBlock: typeof OKBlock, OKBlocksGroup: typeof OKBlocksGroup};
+
+export { OKBlock, OKBlocksGroup };
