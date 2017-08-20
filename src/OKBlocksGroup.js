@@ -11,7 +11,7 @@ class OKBlocksGroup {
   isAnimating: boolean;
   resumeAnimation: ?Function;
   cancelAnimation: Function;
-  blocks: OKBlock[];
+  blocks: Array<$Subtype<OKBlock>>;
   _displayTime: number;
   _loop: boolean;
   _random: boolean;
