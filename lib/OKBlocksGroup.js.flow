@@ -7,7 +7,7 @@ declare export default class OKBlocksGroup {
   _displayTime: number;
   _loop: boolean;
   _random: boolean;
-  blocks: Array<OKBlock>;
+  blocks: Array<$Subtype<OKBlock>>;
   cancelAnimation: Function;
   displayTime: number;
   distinct: Array<boolean>;

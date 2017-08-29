@@ -282,8 +282,8 @@ function _changeStyle(c) { // @bind this
 
 function _updateTransitionConfig() { // @bind this
   const val = this.patternDefinition._TRANSITION_PROPS
-  .map(prop => `${prop} ${this._duration}ms ${this._eaasing}`)
-  .join(',');
+    .map(prop => `${prop} ${this._duration}ms ${this._eaasing}`)
+    .join(',');
 
   _updateStyle(this.dom.childNodes);
 
